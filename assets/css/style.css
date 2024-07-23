@@ -35,6 +35,10 @@ section {
 }
 a {
     text-decoration: none;
+    color: #32cd32;
+}
+a :visited{
+    color: #2D374C;
 }
 img {
     object-fit: cover;
