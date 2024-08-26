@@ -754,7 +754,7 @@ textarea {
 /* Copy Right Section Start */
 .d2c_copy_right_wrapper {
     padding: 12px 0px;
-    background: var(--secondary_color);
+    background: #1d2031;
 }
 .d2c_copy_right_wrapper p {
     color: var(--text_color);
