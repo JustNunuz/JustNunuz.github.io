@@ -94,6 +94,22 @@ export default function About() {
                   <span className="text-primary">{"//"}</span> Document decisions, not just code
                 </p>
               </div>
+
+              {/* Resume Download */}
+              <div className="opacity-0 animate-fade-in-up stagger-4 mt-8">
+                <CodeDivider label="Resume" />
+                <div className="mt-4 p-6 rounded-lg border border-border bg-card">
+                  <p className="text-muted-foreground text-sm mb-4">
+                    Download my resume for a full overview of my experience, certifications, and skills.
+                  </p>
+                  <Button asChild>
+                    <a href="/resume.pdf" download>
+                      <Download className="mr-2 h-4 w-4" />
+                      Download Resume
+                    </a>
+                  </Button>
+                </div>
+              </div>
             </div>
 
             {/* Sidebar */}
