@@ -1,6 +1,8 @@
 import { Layout } from "@/components/layout/Layout";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { TechTag } from "@/components/ui/TechTag";
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
 
 const skills = [
   "Systems Architecture",
