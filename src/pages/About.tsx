@@ -40,16 +40,6 @@ export default function About() {
           <div className="grid gap-16 lg:grid-cols-3">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Developer Photo */}
-              <div className="mb-8 opacity-0 animate-fade-in-up stagger-1">
-                <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-lg overflow-hidden border-2 border-primary/30 transition-all duration-300 hover:border-primary">
-                  <img
-                    src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400"
-                    alt="Diego Ramirez - Developer"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
 
               <div className="opacity-0 animate-fade-in-up stagger-1">
                 <p className="text-lg text-foreground leading-relaxed">
