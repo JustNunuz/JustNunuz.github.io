@@ -12,7 +12,7 @@ export default function Contact() {
   return (
     <Layout>
       <section className="py-20">
-        <div className="container">
+        <div className="container flex flex-col items-center text-center">
           <div className="max-w-2xl mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Contact
@@ -23,7 +23,7 @@ export default function Contact() {
             </p>
           </div>
 
-          <div className="max-w-md">
+          <div className="max-w-md w-full">
             <CodeDivider label="Connect" />
             
             <div className="space-y-6">
@@ -38,7 +38,7 @@ export default function Contact() {
                   <div className="flex items-center justify-center w-12 h-12 bg-secondary rounded-lg group-hover:bg-primary/10 transition-colors">
                     <link.icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>
-                  <div>
+                  <div className="text-left">
                     <p className="font-mono text-sm text-foreground group-hover:text-primary transition-colors">
                       {link.label}
                     </p>
