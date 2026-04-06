@@ -186,4 +186,17 @@
   .stagger-2 { animation-delay: 0.2s; }
   .stagger-3 { animation-delay: 0.3s; }
   .stagger-4 { animation-delay: 0.4s; }
+
+  /* Gradient text - neon pink to blue */
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(320 100% 60%), hsl(210 100% 60%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Gradient border glow */
+  .border-gradient {
+    border-image: linear-gradient(135deg, hsl(320 100% 60%), hsl(210 100% 60%)) 1;
+  }
 }

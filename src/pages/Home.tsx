@@ -50,7 +50,7 @@ export default function Home() {
 
             {/* Headline with typing cursor */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              Hi, I'm Nunudzai Mrewa.
+              Hi, I'm <span className="text-gradient">Nunudzai Mrewa.</span>
               <br />
               <span className="text-muted-foreground">I solve cybersecurity problems</span>
               <TypingCursor />
