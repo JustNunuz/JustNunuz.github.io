@@ -4,19 +4,19 @@ import { TechTag } from "@/components/ui/TechTag";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 
-const skills = [
-  "Data Protection Compliance",
-  "ISO 27001 & 42001 Lead Implementor",
-  "VAPT",
-  "Network Security Infrusture",
-  "Pre and post sales support",
+const expertise = [
+  { label: "Offensive Security", desc: "Conducting authorized penetration tests to identify and exploit vulnerabilities before the bad actors do." },
+  { label: "Defensive Architecture", desc: "Designing hardened network perimeters using Next-Gen Firewalls and SD-WAN." },
+  { label: "Data Protection & Privacy", desc: "Expert-level navigation of the ZCDPA and international data privacy frameworks (DPO)." },
+  { label: "Incident Response & Hunting", desc: "Utilizing honeypots and threat intelligence to detect and mitigate active breaches." },
+  { label: "Vulnerability Management", desc: "Systematically identifying, classifying, and remediating security weaknesses." },
 ];
 
-const stack = [
-  "Kali Linux",
-  "VS Code",
-  "Python",
-  "Parrot OS",
+const securityStack = [
+  { category: "Offensive", tools: ["Kali Linux", "Metasploit", "Nmap", "Burp Suite", "Wireshark", "SQLMap"] },
+  { category: "Defensive", tools: ["Sophos", "Fortinet", "Check Point", "Snort (IDS/IPS)", "Honeypots"] },
+  { category: "Infrastructure", tools: ["Linux Systems Administration", "SD-WAN", "FTTx", "Cisco Networking"] },
+  { category: "AI/LLM", tools: ["Tokenization Security", "LLM Prompt Injection Defense", "Modular Scraping"] },
 ];
 
 export default function About() {
@@ -43,7 +43,7 @@ export default function About() {
 
               <div className="opacity-0 animate-fade-in-up stagger-2">
                 <p className="text-muted-foreground leading-relaxed">
-                  With extensive experience in pre-sales and post-sales engineering, I don’t just implement firewalls or run penetration tests; I bridge the gap between deep technical risk and executive decision-making. My approach is rooted in the "ELI5" philosophy—breaking down the bare elements of security so that stakeholders don't just see a cost, but appreciate the underlying importance of digital resilience
+                  With extensive experience in pre-sales and post-sales engineering, I don't just implement firewalls or run penetration tests; I bridge the gap between deep technical risk and executive decision-making. My approach is rooted in the "ELI5" philosophy—breaking down the bare elements of security so that stakeholders don't just see a cost, but appreciate the underlying importance of digital resilience
                 </p>
               </div>
 
@@ -67,9 +67,26 @@ export default function About() {
                 <p className="text-muted-foreground transition-colors hover:text-foreground">
                   <span className="text-primary">{"//"}</span> Educate first implement later
                 </p>
-                <p className="text-muted-foreground transition-colors hover:text-foreground">
-                  <span className="text-primary">{"//"}</span> 
-                </p>
+              </div>
+
+              {/* Security Stack */}
+              <div className="opacity-0 animate-fade-in-up stagger-4">
+                <CodeDivider label="Security Stack" />
+              </div>
+
+              <div className="grid gap-6 sm:grid-cols-2 opacity-0 animate-fade-in-up stagger-4">
+                {securityStack.map((group) => (
+                  <div key={group.category} className="p-5 rounded-lg border border-border bg-card">
+                    <h3 className="font-mono text-sm text-primary mb-3">
+                      <span className="text-muted-foreground">{"/*"}</span> {group.category} <span className="text-muted-foreground">{"*/"}</span>
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {group.tools.map((tool) => (
+                        <TechTag key={tool}>{tool}</TechTag>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
 
               {/* Resume Download */}
@@ -91,31 +108,20 @@ export default function About() {
 
             {/* Sidebar */}
             <div className="space-y-8">
-              {/* Skills */}
+              {/* Expertise */}
               <div className="opacity-0 animate-fade-in-up stagger-2">
                 <h2 className="font-mono text-sm text-primary mb-4">
-                  <span className="text-muted-foreground">/*</span> Skills <span className="text-muted-foreground">*/</span>
+                  <span className="text-muted-foreground">/*</span> Expertise <span className="text-muted-foreground">*/</span>
                 </h2>
-                <ul className="space-y-2">
-                  {skills.map((skill) => (
-                    <li key={skill} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                <ul className="space-y-4">
+                  {expertise.map((item) => (
+                    <li key={item.label} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
                       <span className="text-primary mr-2">→</span>
-                      {skill}
+                      <span className="font-medium text-foreground">{item.label}:</span>{" "}
+                      {item.desc}
                     </li>
                   ))}
                 </ul>
-              </div>
-
-              {/* Tech Stack */}
-              <div className="opacity-0 animate-fade-in-up stagger-3">
-                <h2 className="font-mono text-sm text-primary mb-4">
-                  <span className="text-muted-foreground">/*</span> Stack <span className="text-muted-foreground">*/</span>
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {stack.map((tech) => (
-                    <TechTag key={tech}>{tech}</TechTag>
-                  ))}
-                </div>
               </div>
 
               {/* Experience */}
