@@ -16,7 +16,7 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           {/* Copyright */}
           <p className="font-mono text-sm text-muted-foreground">
-            <span className="text-primary">//</span> © {currentYear} Diego Ramirez
+            <span className="text-primary">//</span> © {currentYear} Nunudzai Mrewa
           </p>
 
           {/* Footer Links */}
