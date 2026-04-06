@@ -5,24 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 
 const skills = [
-  "Systems Architecture",
-  "Frontend Engineering",
-  "API Design",
-  "Performance Optimization",
-  "Technical Leadership",
-  "Product Development",
+  "Data Protection Compliance",
+  "ISO 27001 & 42001 Lead Implementor",
+  "VAPT",
+  "Network Security Infrusture",
+  "Pre and post sales support",
 ];
 
 const stack = [
-  "TypeScript",
-  "React",
-  "Node.js",
-  "PostgreSQL",
-  "Next.js",
-  "GraphQL",
-  "Redis",
-  "Docker",
-  "AWS",
+  "Kali Linux",
+  "VS Code",
+  "Python",
+  "Parrot OS",
 ];
 
 export default function About() {
@@ -43,26 +37,19 @@ export default function About() {
 
               <div className="opacity-0 animate-fade-in-up stagger-1">
                 <p className="text-lg text-foreground leading-relaxed">
-                  I'm <span className="text-primary font-medium">Diego Ramirez</span>, a developer based in Mexico focused on building systems that scale, perform, and last. 
-                  I work at the intersection of engineering, product, and design, turning 
-                  complex problems into reliable digital solutions.
+                  I'm <span className="text-primary font-medium">Nunudzai Mrewa</span>, a cybersecurity & compliance consultant at Compulink Systems based in Sunshine City, Zimbabwe. I work at the intersection of technical defense and regulatory compliance, turning complex security vulnerabilities into manageable, strategic assets for businesses.
                 </p>
               </div>
 
               <div className="opacity-0 animate-fade-in-up stagger-2">
                 <p className="text-muted-foreground leading-relaxed">
-                  With years of experience in the industry, I've worked on everything from 
-                  early-stage startups to enterprise-scale systems. My approach combines 
-                  technical depth with product thinking — always focused on delivering 
-                  real impact, not just shipping code.
+                  With extensive experience in pre-sales and post-sales engineering, I don’t just implement firewalls or run penetration tests; I bridge the gap between deep technical risk and executive decision-making. My approach is rooted in the "ELI5" philosophy—breaking down the bare elements of security so that stakeholders don't just see a cost, but appreciate the underlying importance of digital resilience
                 </p>
               </div>
 
               <div className="opacity-0 animate-fade-in-up stagger-3">
                 <p className="text-muted-foreground leading-relaxed">
-                  I believe in writing code that's maintainable, documented, and built to 
-                  evolve. Every system I design considers not just the current requirements, 
-                  but how it will need to change and scale over time.
+                  I believe that security is a conversation, not just a configuration. Whether I'm tracking the latest CVEs or navigating the Zimbabwe Cyber and Data Protection Act, my goal is to educate and empower clients to stay ahead of an ever-evolving threat landscape.
                 </p>
               </div>
 
@@ -72,16 +59,16 @@ export default function About() {
 
               <div className="space-y-4 font-mono text-sm opacity-0 animate-fade-in-up stagger-4">
                 <p className="text-muted-foreground transition-colors hover:text-foreground">
-                  <span className="text-primary">{"//"}</span> Build for reliability, not just speed
+                  <span className="text-primary">{"//"}</span> Commitment to Lifelong Learning
                 </p>
                 <p className="text-muted-foreground transition-colors hover:text-foreground">
-                  <span className="text-primary">{"//"}</span> Measure impact, not just output
+                  <span className="text-primary">{"//"}</span> Security is an enabler of business, not a barrier
                 </p>
                 <p className="text-muted-foreground transition-colors hover:text-foreground">
-                  <span className="text-primary">{"//"}</span> Simplify complexity, don't hide it
+                  <span className="text-primary">{"//"}</span> Educate first implement later
                 </p>
                 <p className="text-muted-foreground transition-colors hover:text-foreground">
-                  <span className="text-primary">{"//"}</span> Document decisions, not just code
+                  <span className="text-primary">{"//"}</span> 
                 </p>
               </div>
 
@@ -137,7 +124,7 @@ export default function About() {
                   <span className="text-muted-foreground">/*</span> Experience <span className="text-muted-foreground">*/</span>
                 </h2>
                 <div className="space-y-3 text-sm text-muted-foreground">
-                  <p>8+ years in software development</p>
+                  <p>5 year in Tech spanning I.T Support, Networking and Cybersecurity</p>
                   <p>Startups to enterprise scale</p>
                   <p>Remote-first since 2018</p>
                 </div>
