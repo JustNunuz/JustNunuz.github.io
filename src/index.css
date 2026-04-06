@@ -164,7 +164,7 @@
 
   .hover-lift:hover {
     @apply -translate-y-1;
-    box-shadow: 0 10px 40px hsl(130 100% 50% / 0.1);
+    box-shadow: 0 10px 40px hsl(320 100% 60% / 0.1);
   }
 
   /* Animated underline for links */
