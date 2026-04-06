@@ -46,7 +46,7 @@ export default function Home() {
         <div className="container">
           <div className="max-w-3xl opacity-0 animate-fade-in-up">
             {/* Code-style label */}
-            <CodeLabel className="mb-6">Senior Developer</CodeLabel>
+            <CodeLabel className="mb-6">Consultant</CodeLabel>
 
             {/* Headline with typing cursor */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
@@ -58,9 +58,7 @@ export default function Home() {
 
             {/* Subheadline */}
             <p className="text-lg text-muted-foreground mb-8 max-w-xl leading-relaxed opacity-0 animate-fade-in-up stagger-1">
-              A Mexico-based developer focused on building products that scale, perform, and deliver real impact. 
-              Working at the intersection of engineering, product, and design to turn 
-              complex problems into elegant solutions.
+              Nunudzai is a cybersecurity professional driven by strong curiosity and a passion for exploring cutting-edge technologies to enhance device security, guided by the motto: “Simplifying security, amplifying trust.”
             </p>
 
             {/* CTA */}
