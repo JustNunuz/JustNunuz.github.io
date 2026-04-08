@@ -6,32 +6,32 @@ import { Calendar, MapPin } from "lucide-react";
 
 const projects = [
   {
-    name: "Scalable Fintech Platform",
-    slug: "scalable-fintech-platform",
-    description: "Development of a scalable financial platform designed to handle millions of transactions with real-time processing capabilities. Built with a focus on security, reliability, and performance at scale.",
-    stack: ["React", "TypeScript", "Node.js", "PostgreSQL"],
-    impact: "35% latency reduction, support for millions of users",
+    name: "Z3ro Nois3",
+    slug: "z3ro-nois3",
+    description: "AI models are built for English, making them expensive and inaccurate for Shona speakers. I call this the \"Bantu Tax\" because Shona text gets fragmented, increasing processing costs. Z3ro Nois3 is a linguistic engine that audits these inefficiencies to make AI cheaper and more secure for our local languages.",
+    stack: ["Data Science", "Analytics", "Lingustics", "Bantu Tax"],
+    impact: "Linguistic auditing engine for LLM efficiency",
   },
   {
-    name: "Internal Design System",
-    slug: "internal-design-system",
-    description: "Creation of a comprehensive design system that enables multiple development teams to build consistent, accessible, and visually cohesive interfaces. Includes documentation, component library, and design tokens.",
-    stack: ["React", "Storybook", "CSS-in-JS", "TypeScript"],
-    impact: "40% increase in team productivity, improved visual consistency",
+    name: "Shona Rockyou",
+    slug: "shona-rockyou",
+    description: "Shona RockYou addresses the security gap where standard English wordlists fail to account for Shona names and cultural naming patterns. I am building a localized wordlist of names, totems, and linguistic mutations to enable accurate security audits for Shona-speaking users.",
+    stack: ["Corpus", "Wordlist", "Paswords", "Shona"],
+    impact: "Localized security wordlist for cultural naming patterns",
   },
   {
-    name: "Real-Time Analytics Dashboard",
-    slug: "real-time-analytics-dashboard",
-    description: "A real-time dashboard built for instant decision-making. Features live data visualization, customizable metrics, and seamless integration with multiple data sources for product and business intelligence.",
-    stack: ["Next.js", "WebSockets", "D3.js", "Redis"],
-    impact: "Instant insights for product and business teams",
+    name: "Payload Paradise",
+    slug: "payload-paradise",
+    description: "A collection of proof-of-concept scripts exploring \"what could go wrong\" with unflagged script execution vulnerabilities, using the WhatsApp for Windows vulnerability that allows Python execution without warnings as a case study.",
+    stack: ["Python", "Windows", "Remote Code Execution", "Reverse shell"],
+    impact: "Proof-of-concept research on script execution flaws",
   },
   {
-    name: "E-Commerce Microservices Architecture",
-    slug: "e-commerce-microservices-architecture",
-    description: "Complete microservices ecosystem for a high-traffic e-commerce platform. Features event-driven architecture, automated scaling, and distributed data management for maximum reliability and performance.",
-    stack: ["Go", "Kubernetes", "gRPC", "MongoDB"],
-    impact: "99.99% uptime, 10x throughput improvement",
+    name: "Corrupt PDF",
+    slug: "corrupt-pdf",
+    description: "There are multiple ways to corrupt a PDF especially using Python. This project explores flaws within the architecture of the PDF file format that could be abused.",
+    stack: ["PDF", "Python", "File Corruption", "Vulnerabilities"],
+    impact: "Architectural analysis of PDF file format vulnerabilities",
   },
 ];
 
@@ -91,9 +91,7 @@ export default function Work() {
               Projects
             </h1>
             <p className="text-muted-foreground leading-relaxed">
-              A selection of projects showcasing systems engineering, product development, 
-              and technical problem-solving. Each project represents real challenges solved 
-              with measurable impact.
+              I work on a variety of projects mostly focused on security, but spanning my broader interests, from cybersecurity to more niche, single-purpose ideas. They’re all linked below if you’d like to explore them in more detail.
             </p>
           </div>
 
