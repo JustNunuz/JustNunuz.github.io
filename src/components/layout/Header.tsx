@@ -41,9 +41,7 @@ export function Header() {
               to={item.href}
               className={cn(
                 "font-mono text-sm transition-colors hover:text-primary link-underline",
-                location.pathname === item.href
-                  ? "text-primary"
-                  : "text-muted-foreground"
+                "text-muted-foreground"
               )}
             >
               {item.label}
@@ -70,9 +68,7 @@ export function Header() {
                     to={item.href}
                     className={cn(
                       "font-mono text-lg transition-colors hover:text-primary py-2",
-                      location.pathname === item.href
-                        ? "text-primary"
-                        : "text-muted-foreground"
+                      "text-muted-foreground"
                     )}
                     onClick={() => setIsOpen(false)}
                   >
