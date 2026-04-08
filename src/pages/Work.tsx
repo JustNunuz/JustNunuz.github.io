@@ -88,7 +88,7 @@ export default function Work() {
           {/* Page Header */}
           <div className="max-w-2xl mb-12 opacity-0 animate-fade-in-up">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Projects
+              Tools & Experiments
             </h1>
             <p className="text-muted-foreground leading-relaxed">
               I work on a variety of projects mostly focused on security, but spanning my broader interests, from cybersecurity to more niche, single-purpose ideas. They’re all linked below if you’d like to explore them in more detail.
@@ -96,7 +96,7 @@ export default function Work() {
           </div>
 
           <div className="opacity-0 animate-fade-in-up stagger-1">
-            <CodeDivider label="Projects" />
+            <CodeDivider label="Tools & Experiments" />
           </div>
 
           {/* Projects Grid */}

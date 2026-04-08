@@ -78,7 +78,7 @@ export default function Home() {
       <section className="py-20">
         <div className="container">
           <div className="opacity-0 animate-fade-in-up">
-            <CodeDivider label="Featured Work" />
+            <CodeDivider label="Featured Tools" />
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -99,7 +99,7 @@ export default function Home() {
               className="inline-flex items-center font-mono text-sm text-muted-foreground hover:text-primary transition-colors link-underline"
             >
               <span className="text-primary mr-2">{"//"}</span>
-              View all projects
+              View all tools & experiments
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </div>

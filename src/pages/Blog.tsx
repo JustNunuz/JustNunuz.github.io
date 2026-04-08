@@ -13,9 +13,9 @@ export default function Blog() {
         <div className="container">
           {/* Page Header */}
           <div className="max-w-3xl mb-12 opacity-0 animate-fade-in-up">
-            <CodeLabel className="mb-4">Blog</CodeLabel>
+            <CodeLabel className="mb-4">Field Notes</CodeLabel>
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Thoughts & Insights
+              Field Notes
             </h1>
             <p className="text-muted-foreground leading-relaxed">
               Writing about cybersecurity, compliance, and the evolving threat landscape.

@@ -25,8 +25,8 @@ export default function About() {
           {/* Page Header */}
           <div className="max-w-3xl mb-12 opacity-0 animate-fade-in-up">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              About
-            </h1>
+               whoami
+             </h1>
           </div>
 
           <div className="grid gap-16 lg:grid-cols-3">
