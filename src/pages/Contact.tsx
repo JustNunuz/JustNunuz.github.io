@@ -15,8 +15,8 @@ export default function Contact() {
         <div className="container flex flex-col items-center text-center">
           <div className="max-w-2xl mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Contact
-            </h1>
+               Reach Out to Me
+             </h1>
             <p className="text-muted-foreground leading-relaxed">
               Have a project in mind or want to discuss opportunities? 
               I'm always open to interesting conversations and collaborations.
