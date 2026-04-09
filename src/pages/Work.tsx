@@ -37,46 +37,25 @@ const projects = [
 
 const speakingEngagements = [
   {
-    title: "Zero Trust Architecture in Practice",
-    event: "AfricaHackon Conference",
+    title: "Honeypot Demo Product",
+    event: "Cybersec Mindmap Community",
     date: "March 2026",
-    location: "Nairobi, Kenya",
-    topics: ["Zero Trust", "Network Security", "IAM"],
+    location: "",
+    topics: ["Honeypots", "Demo", "Defensive Security"],
   },
   {
-    title: "Building Resilient SOC Teams",
-    event: "CyberFest Harare",
+    title: "The Most Dangerous Input to AI Is You",
+    event: "AMLD Africa",
     date: "January 2026",
-    location: "Harare, Zimbabwe",
-    topics: ["SOC", "Incident Response", "Leadership"],
+    location: "",
+    topics: ["AI", "Vulnerabilities", "Hallucinations", "Sleeper Agent"],
   },
   {
-    title: "Compliance Frameworks for African Startups",
-    event: "TechConnect Summit",
-    date: "November 2025",
-    location: "Cape Town, South Africa",
-    topics: ["ISO 27001", "GDPR", "Compliance"],
-  },
-  {
-    title: "Threat Hunting with Open Source Tools",
-    event: "BSides Johannesburg",
+    title: "It's Just a File… Until It Isn't",
+    event: "PyCon Africa",
     date: "September 2025",
-    location: "Johannesburg, South Africa",
-    topics: ["Threat Hunting", "OSINT", "Blue Team"],
-  },
-  {
-    title: "Cloud Security Misconfigurations",
-    event: "DevSecOps Days",
-    date: "July 2025",
-    location: "Virtual",
-    topics: ["AWS", "Cloud Security", "DevSecOps"],
-  },
-  {
-    title: "Penetration Testing War Stories",
-    event: "Harare Tech Week",
-    date: "May 2025",
-    location: "Harare, Zimbabwe",
-    topics: ["Pentesting", "Red Team", "Vulnerability Assessment"],
+    location: "",
+    topics: ["Python", "Windows Vulnerability"],
   },
 ];
 
