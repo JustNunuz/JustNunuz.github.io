@@ -60,16 +60,23 @@ const speakingEngagements = [
   {
     title: "Speedrunning and the Python Community",
     event: "PyCon ZA",
-    date: "",
+    date: "2024",
     location: "Johannesburg, South Africa",
     topics: ["Community Talk", "Python"],
   },
   {
     title: "Speedrunners Are the Real Hackers",
     event: "BSides Cape Town",
-    date: "",
+    date: "2024",
     location: "Cape Town, South Africa",
     topics: ["Speedrunners", "Hacking", "Thinking Like a Hacker"],
+  },
+  {
+    title: "Cyber Trends and Risks",
+    event: "Annual Cyber Fraud Summit",
+    date: "2023",
+    location: "Victoria Falls, Zimbabwe",
+    topics: ["Cybersecurity", "AI", "Fraud", "Risks", "Hacking"],
   },
 ];
 export default function Work() {
