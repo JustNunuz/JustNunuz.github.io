@@ -97,7 +97,7 @@ export default function Work() {
               Tools & Experiments
             </h1>
             <p className="text-muted-foreground leading-relaxed">
-              I work on a variety of projects mostly focused on security, but spanning my broader interests, from cybersecurity to more niche, single-purpose ideas. They’re all linked below if you’d like to explore them in more detail.
+              I work on a variety of projects mostly focused on security, but spanning my broader interests, from cybersecurity to more niche, single-purpose ideas. Python is my go-to language — I'm proficient in it and genuinely enjoy building with it. They're all linked below if you'd like to explore them in more detail.
             </p>
           </div>
 
