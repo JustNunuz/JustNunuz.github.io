@@ -7,28 +7,28 @@ import { Calendar, MapPin } from "lucide-react";
 const projects = [
   {
     name: "Z3ro Nois3",
-    slug: "z3ro-nois3",
+    url: "https://github.com/JustNunuz/Z3ro-Nois3",
     description: "AI models are built for English, making them expensive and inaccurate for Shona speakers. I call this the \"Bantu Tax\" because Shona text gets fragmented, increasing processing costs. Z3ro Nois3 is a linguistic engine that audits these inefficiencies to make AI cheaper and more secure for our local languages.",
     stack: ["Data Science", "Analytics", "Lingustics", "Bantu Tax"],
     impact: "Linguistic auditing engine for LLM efficiency",
   },
   {
     name: "Shona Rockyou",
-    slug: "shona-rockyou",
+    url: "https://github.com/JustNunuz/Shona-Rockyou",
     description: "Shona RockYou addresses the security gap where standard English wordlists fail to account for Shona names and cultural naming patterns. I am building a localized wordlist of names, totems, and linguistic mutations to enable accurate security audits for Shona-speaking users.",
     stack: ["Corpus", "Wordlist", "Paswords", "Shona"],
     impact: "Localized security wordlist for cultural naming patterns",
   },
   {
     name: "Payload Paradise",
-    slug: "payload-paradise",
+    url: "https://github.com/JustNunuz/Payload-Paradise",
     description: "A collection of proof-of-concept scripts exploring \"what could go wrong\" with unflagged script execution vulnerabilities, using the WhatsApp for Windows vulnerability that allows Python execution without warnings as a case study.",
     stack: ["Python", "Windows", "Remote Code Execution", "Reverse shell"],
     impact: "Proof-of-concept research on script execution flaws",
   },
   {
     name: "Corrupt PDF",
-    slug: "corrupt-pdf",
+    url: "https://github.com/JustNunuz/Corrupt-PDF",
     description: "There are multiple ways to corrupt a PDF especially using Python. This project explores flaws within the architecture of the PDF file format that could be abused.",
     stack: ["PDF", "Python", "File Corruption", "Vulnerabilities"],
     impact: "Architectural analysis of PDF file format vulnerabilities",
