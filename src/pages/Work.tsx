@@ -78,6 +78,13 @@ const speakingEngagements = [
     location: "Victoria Falls, Zimbabwe",
     topics: ["Cybersecurity", "AI", "Fraud", "Risks", "Hacking"],
   },
+  {
+    title: "Corrupting PDFs",
+    event: "PyCon Zimbabwe",
+    date: "2024",
+    location: "Harare, Zimbabwe",
+    topics: ["PDF", "Forensics", "Vulnerabilities", "Python"],
+  },
 ];
 export default function Work() {
   return (
