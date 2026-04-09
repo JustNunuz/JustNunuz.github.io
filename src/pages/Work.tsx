@@ -40,25 +40,38 @@ const speakingEngagements = [
     title: "Honeypot Demo Product",
     event: "Cybersec Mindmap Community",
     date: "March 2026",
-    location: "",
+    location: "Online / Harare",
     topics: ["Honeypots", "Demo", "Defensive Security"],
   },
   {
     title: "The Most Dangerous Input to AI Is You",
     event: "AMLD Africa",
     date: "January 2026",
-    location: "",
+    location: "Harare, Zimbabwe",
     topics: ["AI", "Vulnerabilities", "Hallucinations", "Sleeper Agent"],
   },
   {
     title: "It's Just a File… Until It Isn't",
     event: "PyCon Africa",
     date: "September 2025",
-    location: "",
+    location: "Johannesburg, South Africa",
     topics: ["Python", "Windows Vulnerability"],
   },
+  {
+    title: "Speedrunning and the Python Community",
+    event: "PyCon ZA",
+    date: "",
+    location: "Johannesburg, South Africa",
+    topics: ["Community Talk", "Python"],
+  },
+  {
+    title: "Speedrunners Are the Real Hackers",
+    event: "BSides Cape Town",
+    date: "",
+    location: "Cape Town, South Africa",
+    topics: ["Speedrunners", "Hacking", "Thinking Like a Hacker"],
+  },
 ];
-
 export default function Work() {
   return (
     <Layout>
