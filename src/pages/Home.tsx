@@ -24,7 +24,7 @@ const featuredProjects = [
   },
   {
     name: "Payload Paradise",
-    url: "https://github.com/JustNunuz/Payload-Paradise",
+    url: "https://github.com/JustNunuz/PayloadParadise",
     description: "Proof-of-concept scripts exploring script execution vulnerabilities using WhatsApp for Windows as a case study.",
     stack: ["Python", "Windows", "Remote Code Execution", "Reverse shell"],
     impact: "Proof-of-concept research on script execution flaws",

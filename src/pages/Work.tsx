@@ -7,7 +7,7 @@ import { Calendar, MapPin } from "lucide-react";
 const projects = [
   {
     name: "Z3ro Nois3",
-    url: "https://github.com/JustNunuz/Z3ro-Nois3",
+    url: "https://github.com/JustNunuz/z3r0-Nois3",
     description: "AI models are built for English, making them expensive and inaccurate for Shona speakers. I call this the \"Bantu Tax\" because Shona text gets fragmented, increasing processing costs. Z3ro Nois3 is a linguistic engine that audits these inefficiencies to make AI cheaper and more secure for our local languages.",
     stack: ["Data Science", "Analytics", "Lingustics", "Bantu Tax"],
     impact: "Linguistic auditing engine for LLM efficiency",
@@ -21,7 +21,7 @@ const projects = [
   },
   {
     name: "Payload Paradise",
-    url: "https://github.com/JustNunuz/Payload-Paradise",
+    url: "https://github.com/JustNunuz/PayloadParadise",
     description: "A collection of proof-of-concept scripts exploring \"what could go wrong\" with unflagged script execution vulnerabilities, using the WhatsApp for Windows vulnerability that allows Python execution without warnings as a case study.",
     stack: ["Python", "Windows", "Remote Code Execution", "Reverse shell"],
     impact: "Proof-of-concept research on script execution flaws",
