@@ -18,9 +18,19 @@ const navItems = [
   { href: "/contact", label: "Reach Out to Me" },
 ];
 
+const routePrefixes: Record<string, string> = {
+  "/": "root",
+  "/work": "work",
+  "/blog": "notes",
+  "/about": "whoami",
+  "/contact": "contact",
+};
+
 export function Header() {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+
+  const prefix = routePrefixes[location.pathname] || "root";
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
@@ -30,7 +40,7 @@ export function Header() {
           to="/" 
           className="font-mono text-sm font-medium text-primary hover:opacity-80 transition-opacity"
         >
-          {"root@justnunuz"}
+          {`${prefix}@justnunuz`}
         </Link>
 
         {/* Desktop Navigation */}
