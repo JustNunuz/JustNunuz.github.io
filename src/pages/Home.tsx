@@ -10,7 +10,7 @@ import { ArrowRight } from "lucide-react";
 const featuredProjects = [
   {
     name: "Z3ro Nois3",
-    url: "https://github.com/JustNunuz/Z3ro-Nois3",
+    url: "https://github.com/JustNunuz/z3r0-Nois3",
     description: "A linguistic engine that audits LLM inefficiencies to make AI cheaper and more secure for Bantu languages.",
     stack: ["Data Science", "Analytics", "Lingustics", "Bantu Tax"],
     impact: "Linguistic auditing engine for LLM efficiency",
@@ -24,7 +24,7 @@ const featuredProjects = [
   },
   {
     name: "Payload Paradise",
-    url: "https://github.com/JustNunuz/Payload-Paradise",
+    url: "https://github.com/JustNunuz/PayloadParadise",
     description: "Proof-of-concept scripts exploring script execution vulnerabilities using WhatsApp for Windows as a case study.",
     stack: ["Python", "Windows", "Remote Code Execution", "Reverse shell"],
     impact: "Proof-of-concept research on script execution flaws",
