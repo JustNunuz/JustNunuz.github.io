@@ -10,7 +10,7 @@ import { ArrowRight } from "lucide-react";
 const featuredProjects = [
   {
     name: "Z3ro Nois3",
-    url: "https://github.com/JustNunuz/Z3ro-Nois3",
+    url: "https://github.com/JustNunuz/z3r0-Nois3",
     description: "A linguistic engine that audits LLM inefficiencies to make AI cheaper and more secure for Bantu languages.",
     stack: ["Data Science", "Analytics", "Lingustics", "Bantu Tax"],
     impact: "Linguistic auditing engine for LLM efficiency",
