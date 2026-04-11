@@ -57,8 +57,11 @@ export default function Home() {
             </h1>
 
             {/* Subheadline */}
-            <p className="text-lg text-muted-foreground mb-8 max-w-xl leading-relaxed opacity-0 animate-fade-in-up stagger-1">
-              Nunudzai is a cybersecurity professional driven by strong curiosity and a passion for exploring cutting-edge technologies to enhance device security, guided by the motto: “Simplifying security, amplifying trust.”
+            <p className="text-lg text-muted-foreground mb-8 max-w-xl leading-relaxed opacity-0 animate-fade-in-up stagger-1 whitespace-pre-line">
+              Most systems aren’t secure, they’re just untested.
+              I build tools, run experiments, and track signals to understand where things actually break.
+
+              This is where I document what I’m building, testing, and learning in real time.
             </p>
 
             {/* CTA */}
