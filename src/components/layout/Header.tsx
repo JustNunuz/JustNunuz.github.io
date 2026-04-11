@@ -30,7 +30,7 @@ export function Header() {
           to="/" 
           className="font-mono text-sm font-medium text-primary hover:opacity-80 transition-opacity"
         >
-          {"<Nunudzai />"}
+          {"root@justnunuz"}
         </Link>
 
         {/* Desktop Navigation */}
