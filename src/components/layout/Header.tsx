@@ -21,7 +21,7 @@ const navItems = [
 const routePrefixes: Record<string, string> = {
   "/": "root",
   "/work": "work",
-  "/blog": "notes",
+  "/blog": "blog",
   "/about": "whoami",
   "/contact": "contact",
 };
