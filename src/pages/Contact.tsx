@@ -1,12 +1,16 @@
+import { useState } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { Github, Linkedin, Mail } from "lucide-react";
 
 const socialLinks = [
-  { href: "https://github.com", icon: Github, label: "GitHub", handle: "@developer" },
-  { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn", handle: "/in/developer" },
-  { href: "mailto:nunudzaim@compulink.co.zw", icon: Mail, label: "Email", handle: "nunudzaim@compulink.co.zw" },
+  { href: "https://github.com/JustNunuz", icon: Github, label: "GitHub", handle: "@JustNunuz" },
+  { href: "https://www.linkedin.com/in/nunuz/", icon: Linkedin, label: "LinkedIn", handle: "/in/nunuz" },
 ];
+
+// Email split into parts and only assembled on user interaction to defeat scrapers.
+const EMAIL_PARTS = ["nunudzaim", "gmail", "com"];
+const obfuscatedDisplay = "nunudzaim [at] gmail [dot] com";
 
 export default function Contact() {
   return (
