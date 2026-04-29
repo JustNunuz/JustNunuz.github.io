@@ -18,7 +18,7 @@ export default function Blog() {
               Field Notes
             </h1>
             <p className="text-muted-foreground leading-relaxed">
-              Writing about cybersecurity, compliance, and the evolving threat landscape.
+              You may know it as a blog section. Writing about cybersecurity, compliance, and the evolving threat landscape.
             </p>
           </div>
 
