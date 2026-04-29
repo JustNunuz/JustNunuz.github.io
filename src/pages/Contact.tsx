@@ -13,6 +13,26 @@ const EMAIL_PARTS = ["nunudzaim", "gmail", "com"];
 const obfuscatedDisplay = "nunudzaim [at] gmail [dot] com";
 
 export default function Contact() {
+  const [revealed, setRevealed] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const assembleEmail = () =>
+    `${EMAIL_PARTS[0]}${String.fromCharCode(64)}${EMAIL_PARTS[1]}${String.fromCharCode(46)}${EMAIL_PARTS[2]}`;
+
+  const handleEmailClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const email = assembleEmail();
+    if (!revealed) setRevealed(true);
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // ignore
+    }
+    window.location.href = `mailto:${email}`;
+  };
+
   return (
     <Layout>
       <section className="py-20">
@@ -52,6 +72,29 @@ export default function Contact() {
                   </div>
                 </a>
               ))}
+
+              {/* Scrape-resistant email: no mailto in DOM, address split & assembled on click */}
+              <button
+                type="button"
+                onClick={handleEmailClick}
+                className="w-full flex items-center gap-4 p-4 bg-card border border-border rounded-lg hover:border-primary/50 transition-colors group text-left"
+                aria-label="Reveal and email me"
+              >
+                <div className="flex items-center justify-center w-12 h-12 bg-secondary rounded-lg group-hover:bg-primary/10 transition-colors">
+                  <Mail className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </div>
+                <div className="text-left flex-1">
+                  <p className="font-mono text-sm text-foreground group-hover:text-primary transition-colors">
+                    Email
+                  </p>
+                  <p className="font-mono text-xs text-muted-foreground select-none">
+                    {revealed ? assembleEmail() : obfuscatedDisplay}
+                  </p>
+                  {copied && (
+                    <p className="font-mono text-xs text-primary mt-1">Copied to clipboard</p>
+                  )}
+                </div>
+              </button>
             </div>
           </div>
         </div>
