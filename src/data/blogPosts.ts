@@ -10,6 +10,75 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "omg-cable-favorite-hacking-tool",
+    title: "My fave hacking tool: The OMG cable",
+    excerpt: "A reflection on the OMG cable — why it remains my favourite piece of offensive hardware, the experiment I'm running with it right now, and a friendly warning about borrowing cables from me.",
+    date: "2026-04-20",
+    readTime: "9 min read",
+    tags: ["Offensive Security", "Hardware", "Red Team", "OMG Cable"],
+    content: `Every offensive security practitioner has that one tool they keep coming back to. For some it's Burp Suite. For others, it's a battered copy of Metasploit and a stubborn refusal to let it die. For me, it's a cable. A small, unassuming, frankly *boring*-looking cable. The OMG cable.
+
+If you've never heard of it, picture this: a USB cable that looks identical to the one currently charging your phone. Same weight. Same flex. Same little branded moulding near the connector. You could throw it in a drawer with twenty other cables and never find it again. And yet, hidden inside the connector shell is a tiny implant — a microcontroller, a Wi-Fi radio, and just enough firmware to ruin somebody's week.
+
+## A short history
+
+The OMG cable started life as a research project by Mike Grover (MG), who wanted to prove a point that most of us in security had been making for years but rarely demonstrated convincingly: the supply chain for *cables* is just as untrustworthy as the supply chain for software. Early prototypes were hand-soldered, ugly, and unreliable. The current generation, produced in partnership with Hak5, is a polished commercial product that fits an entire offensive platform inside a connector smaller than my thumbnail.
+
+What I love about the origin story is that it didn't come from a vendor trying to sell us a new category of "next-gen endpoint cable threat detection." It came from a researcher with a soldering iron and a hunch. That's the lineage of nearly every tool I actually trust.
+
+## Why I love it
+
+### 1. Stealth
+
+This is the headline feature and it deserves the top spot. The cable looks like an ordinary cable. It *behaves* like an ordinary cable. You can plug it into a phone and it will charge. You can plug it into a laptop and transfer files. There is no blinking light, no suspicious enumeration, no "Unknown HID device" prompt unless the operator wants one. In a world where most offensive hardware screams its presence the moment it touches a USB port, the OMG cable whispers.
+
+I've watched seasoned engineers — people who would never plug a random USB stick into their machine — happily accept a "spare charging cable" without a second thought. Cables are invisible. We've trained ourselves to be paranoid about the wrong shape of plastic.
+
+### 2. Configured over a Wi-Fi interface
+
+The cable hosts its own Wi-Fi access point. You connect to it from your phone or laptop, open a web UI, and you're staring at a payload editor. No need to be in the same room as the target. No need to retrieve the cable to reprogram it. If the cable is plugged in somewhere on the other side of an office, and you're within Wi-Fi range, you can push new payloads, trigger them on demand, or exfiltrate small amounts of data back through the same channel.
+
+This is the part that turns it from a clever party trick into a genuine red-team primitive. Persistence and remote control on a device that the target literally bought as a "charger."
+
+### 3. Ducky Script
+
+The payload language is Ducky Script — a human-readable DSL originally built for the USB Rubber Ducky. I've written things in x86 assembly. I've fought with C and its many opinions about memory. I've spent more hours than I'd like to admit chasing segfaults that turned out to be a missing semicolon three files away. After all of that, opening a Ducky Script file feels like a small holiday.
+
+\`\`\`
+DELAY 1000
+GUI r
+DELAY 500
+STRING powershell -w hidden -c "..."
+ENTER
+\`\`\`
+
+That's it. That's a payload. You can read it out loud. You can hand it to a junior analyst and they'll understand what it does in thirty seconds. The barrier to entry is so low that the limiting factor becomes *creativity*, not syntax — which is exactly how a tool should feel.
+
+## The experiment I'm running
+
+Right now I'm using the cable for a small, self-contained experiment on cross-machine lateral capability. The cable's "active" end — the one with the implant — is the USB-A side. That means whichever machine the USB-A end is plugged into is the one being attacked, regardless of which device is on the other end of the cable.
+
+The setup is deliberately mundane. A laptop on a desk. The cable runs from the laptop's USB-A port to a phone sitting innocently next to it, apparently charging. From the outside, it looks like the laptop is the host and the phone is the peripheral. In reality, the laptop is the target. The phone is just set dressing.
+
+What I'm measuring isn't whether the attack *works* — that part is well established. I'm measuring **time-to-detection** under different endpoint configurations: a stock corporate image, a hardened image with HID filtering, and an image with a behavioural EDR tuned for keystroke-injection patterns. I want to know how long a realistic payload — one that doesn't try to be clever, just types like a slightly impatient human — can run before something, anything, notices.
+
+Early results are humbling. The stock image notices nothing. The hardened image notices the *type* of device but not the behaviour. The EDR notices the behaviour but only after enough keystrokes that a competent operator would already have what they came for. I'll write up the full results in a follow-up post once I've run the test against a few more configurations.
+
+The broader point I keep coming back to: most of our defensive stack assumes the threat is software. The OMG cable is a reminder that the threat can be the *cable*.
+
+## A reflection
+
+I've been doing this work long enough to be a little tired of "shiny new tool" energy. Most things that get hyped at conferences end up gathering dust in a Pelican case six months later. The OMG cable is one of the rare exceptions. I bought mine years ago and it has earned its place in my kit on every single engagement since. It's quiet. It's reliable. It does one thing extraordinarily well. And it forces every client I show it to to rethink an assumption they didn't even know they were making.
+
+That last part is, honestly, the reason I love offensive security. The best tools aren't the ones that pop the most shells. They're the ones that change how someone thinks about their environment. The OMG cable does that every time I pull it out of my bag.
+
+## P.S.
+
+Never borrow a cable from me.
+
+I mean it kindly. I really do. But also — never borrow a cable from me.`,
+  },
+  {
     slug: "understanding-zcdpa",
     title: "Understanding the Zimbabwe Cyber and Data Protection Act",
     excerpt: "A breakdown of Zimbabwe's landmark data protection legislation and what it means for businesses operating in the region.",
