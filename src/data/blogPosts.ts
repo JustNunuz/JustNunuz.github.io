@@ -74,9 +74,9 @@ That last part is, honestly, the reason I love offensive security. The best tool
 
 ## P.S.
 
-Never borrow a cable from me.
+Never borrow a cable from anyone.
 
-I mean it kindly. I really do. But also — never borrow a cable from me.`,
+I mean it kindly. I really do. But also — never borrow a cable from anyone.`,
   },
   {
     slug: "understanding-zcdpa",
