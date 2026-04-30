@@ -139,29 +139,23 @@ The key takeaway: treat LLMs as untrusted components in your architecture. Defen
   {
     slug: "honeypots-threat-detection",
     title: "Cyber Deception: Your Next Line of Defence",
-    excerpt: "A practical guide to deploying honeypots as early warning systems in your network security architecture.",
+    excerpt: "Why deception belongs in every defender's toolkit, and how Thinkst Canary and canary tokens turn attacker curiosity into high signal alerts.",
     date: "2026-02-10",
     readTime: "5 min read",
     tags: ["Defensive Security", "Honeypots", "Threat Detection"],
-    content: `Honeypots are one of the most underutilized tools in a defender's arsenal. By deploying decoy systems that mimic real assets, you can detect attackers early in the kill chain — often before they reach your actual infrastructure.
+    content: `Before an attacker can do real damage, they have to gather information. They need to know what hosts exist, what services run on them, where the sensitive data lives, which accounts have privilege, and which paths through the network will get them closer to the prize. The depth and accuracy of that reconnaissance directly determines how cleanly they execute and how much damage they ultimately cause.
 
-## Why Honeypots?
+That single observation is the foundation of cyber deception. If you feed an attacker inaccurate information, they cannot operate effectively. They burn time on systems that do not matter, they reach for credentials that do not work, and they reveal their techniques to you in the process. You learn how they think, what tools they prefer, and which assumptions they make. They lose the asymmetry that usually favours the offence.
 
-Traditional security tools are reactive. Firewalls block known threats, IDS/IPS systems detect known signatures. Honeypots flip the script: any interaction with a honeypot is suspicious by definition, because legitimate users have no reason to access them.
+## Why Honeypots
 
-## Types of Honeypots
-
-### Low-Interaction
-Simulate basic services (SSH, HTTP, FTP) to capture initial reconnaissance. Easy to deploy, lower maintenance.
-
-### High-Interaction
-Full operating systems and services that allow deeper attacker engagement. More intelligence gathered, but higher risk and maintenance.
+Traditional security tools are reactive. Firewalls block known threats and IDS/IPS systems detect known signatures. Honeypots flip the script. Any interaction with a honeypot is suspicious by definition, because legitimate users have no reason to touch them. Every alert is a free lesson in attacker behaviour, and every minute the attacker spends inside your decoy is a minute they are not spending inside something that matters.
 
 ## Thinkst Canary
 
-If I had to recommend a single product to a defender who wants high-signal alerts with minimal effort, it would be the Thinkst Canary. You unbox it, pick a personality (Windows file server, Linux box, network switch, SCADA device, you name it), and drop it on your network. That's basically the deployment.
+If I had to recommend a single product to a defender who wants high signal alerts with minimal effort, it would be the Thinkst Canary. You unbox it, pick a personality (Windows file server, Linux box, network switch, SCADA device, you name it), and drop it on your network. That is basically the deployment.
 
-What makes it special is the **low false positive rate**. You don't get drowned in noise. Most days you get *no* alerts at all — and that's the point. When the Canary does fire, it almost certainly means something interesting is happening. An attacker has moved laterally, or someone internal is poking at a share they have no business touching. Either way, you want to know immediately.
+What makes it special is the **low false positive rate**. You do not get drowned in noise. Most days you get *no* alerts at all, and that is the point. When the Canary does fire, it almost certainly means something interesting is happening. An attacker has moved laterally, or someone internal is poking at a share they have no business touching. Either way, you want to know immediately.
 
 Compare that to a traditional SIEM, where defenders spend their week tuning rules and triaging alerts that turn out to be a backup job or a misconfigured scanner. Canaries flip the economics: fewer alerts, higher confidence per alert.
 
@@ -171,25 +165,25 @@ Canary tokens are the free, lightweight cousin of the Canary appliance, and hone
 
 Where they really shine is in catching the things traditional tooling never sees:
 
-- **Dumpster diving and physical snooping** — drop a printed "Q1 Salaries 2026.pdf" token on a desk or in a recycling bin. If anyone fishes it out, scans it, and opens it, you'll know.
-- **Insider curiosity** — a file called \`Resignation_Letter_Draft.docx\` in a personal folder, or \`board_minutes_confidential.pdf\` on a shared drive, is irresistible to the wrong kind of nosy.
-- **Post-breach detection** — credentials seeded in a config file that nobody legitimate should ever read. The moment they show up in a login attempt, you have ground truth that something is wrong.
+- **Dumpster diving and physical snooping**: drop a printed "Q1 Salaries 2026.pdf" token on a desk or in a recycling bin. If anyone fishes it out, scans it, and opens it, you'll know.
+- **Insider curiosity**: a file called \`Resignation_Letter_Draft.docx\` in a personal folder, or \`board_minutes_confidential.pdf\` on a shared drive, is irresistible to the wrong kind of nosy.
+- **Post-breach detection**: credentials seeded in a config file that nobody legitimate should ever read. The moment they show up in a login attempt, you have ground truth that something is wrong.
 
 The beauty is that legitimate users have no reason to interact with these files. Any hit is, by definition, worth investigating.
 
 ## Deployment Best Practices
 
-1. **Place Strategically** — Deploy honeypots and tokens in segments where they'll catch lateral movement and curious insiders.
-2. **Make Them Realistic** — Use realistic hostnames, plausible filenames, and content that matches the surrounding environment.
-3. **Monitor Religiously** — Every alert from a honeypot or token deserves investigation. The whole value proposition is that there are very few of them.
-4. **Integrate with SIEM** — Feed alerts into your SIEM and your on-call rotation, not just an inbox nobody reads.
-5. **Keep Them Updated** — An outdated decoy can become a liability rather than an asset.
+1. **Place Strategically**: deploy honeypots and tokens in segments where they'll catch lateral movement and curious insiders.
+2. **Make Them Realistic**: use realistic hostnames, plausible filenames, and content that matches the surrounding environment.
+3. **Monitor Religiously**: every alert from a honeypot or token deserves investigation. The whole value proposition is that there are very few of them.
+4. **Integrate with SIEM**: feed alerts into your SIEM and your on-call rotation, not just an inbox nobody reads.
+5. **Keep Them Updated**: an outdated decoy can become a liability rather than an asset.
 
 Honeypots won't replace your firewall, but they'll tell you things your firewall can't.
 
 ## A small reflection
 
-I gave a talk on this with the Cybersecurity Mindmap community — a hands-on demo webinar walking through Canary tokens live, dropping them into folders, triggering them, and watching the alerts land. It was genuinely fun to teach, and also genuinely stressful when a few things didn't go as planned (live demos, as always, have opinions of their own). But that's part of the craft. You learn more from the demo that almost falls apart than from the one that goes perfectly.`,
+I gave a talk on this with the Cybersecurity Mindmap community, a hands on demo webinar walking through Canary tokens live, dropping them into folders, triggering them, and watching the alerts land. It was genuinely fun to teach, and also genuinely stressful when a few things didn't go as planned (live demos, as always, have opinions of their own). But that is part of the craft. You learn more from the demo that almost falls apart than from the one that goes perfectly.`,
   },
   {
     slug: "sdwan-security-architecture",
