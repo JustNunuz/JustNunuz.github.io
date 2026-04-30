@@ -45,9 +45,6 @@ export default function Home() {
       <section className="relative min-h-[80vh] flex items-center bg-grid">
         <div className="container">
           <div className="max-w-3xl opacity-0 animate-fade-in-up">
-            {/* Code-style label */}
-            <CodeLabel className="mb-6">Consultant</CodeLabel>
-
             {/* Headline with typing cursor */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
               Hi, I'm <span className="text-gradient">Nunudzai Mrewa.</span>

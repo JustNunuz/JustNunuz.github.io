@@ -9,11 +9,10 @@ import { ArrowRight } from "lucide-react";
 export default function Blog() {
   return (
     <Layout>
-      <section className="py-20">
+      <section className="py-20 bg-grid">
         <div className="container">
           {/* Page Header */}
           <div className="max-w-3xl mb-12 opacity-0 animate-fade-in-up">
-            <CodeLabel className="mb-4">Field Notes</CodeLabel>
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Field Notes
             </h1>
