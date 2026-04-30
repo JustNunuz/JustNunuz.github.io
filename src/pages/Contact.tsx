@@ -35,9 +35,9 @@ export default function Contact() {
 
   return (
     <Layout>
-      <section className="py-20 bg-grid">
+      <section className="pt-20 pb-12 bg-grid">
         <div className="container flex flex-col items-center text-center">
-          <div className="max-w-2xl mb-12">
+          <div className="max-w-2xl">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                Reach Out to Me
              </h1>
@@ -46,7 +46,11 @@ export default function Contact() {
               I'm always open to interesting conversations and collaborations.
             </p>
           </div>
+        </div>
+      </section>
 
+      <section className="py-12">
+        <div className="container flex flex-col items-center text-center">
           <div className="max-w-md w-full">
             <CodeDivider label="Connect" />
             
