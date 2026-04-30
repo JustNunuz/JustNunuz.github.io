@@ -88,7 +88,7 @@ export default function BlogPost() {
 
   return (
     <Layout>
-      <section className="py-20">
+      <section className="py-20 bg-grid">
         <div className="container max-w-3xl">
           {/* Back link */}
           <div className="mb-8 opacity-0 animate-fade-in-up">
