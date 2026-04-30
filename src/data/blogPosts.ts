@@ -138,7 +138,7 @@ The key takeaway: treat LLMs as untrusted components in your architecture. Defen
   },
   {
     slug: "honeypots-threat-detection",
-    title: "Using Honeypots for Proactive Threat Detection",
+    title: "Cyber Deception: Your Next Line of Defence",
     excerpt: "A practical guide to deploying honeypots as early warning systems in your network security architecture.",
     date: "2026-02-10",
     readTime: "5 min read",
