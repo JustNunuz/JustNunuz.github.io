@@ -20,15 +20,19 @@ const securityStack = [
 export default function About() {
   return (
     <Layout>
-      <section className="py-20 bg-grid">
+      <section className="pt-20 pb-12 bg-grid">
         <div className="container">
           {/* Page Header */}
-          <div className="max-w-3xl mb-12 opacity-0 animate-fade-in-up">
+          <div className="max-w-3xl opacity-0 animate-fade-in-up">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                whoami
              </h1>
           </div>
+        </div>
+      </section>
 
+      <section className="py-12">
+        <div className="container">
           <div className="grid gap-16 lg:grid-cols-3">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-6">

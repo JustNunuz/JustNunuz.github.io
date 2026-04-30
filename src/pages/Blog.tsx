@@ -9,10 +9,10 @@ import { ArrowRight } from "lucide-react";
 export default function Blog() {
   return (
     <Layout>
-      <section className="py-20 bg-grid">
+      <section className="pt-20 pb-12 bg-grid">
         <div className="container">
           {/* Page Header */}
-          <div className="max-w-3xl mb-12 opacity-0 animate-fade-in-up">
+          <div className="max-w-3xl opacity-0 animate-fade-in-up">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Field Notes
             </h1>
@@ -20,7 +20,11 @@ export default function Blog() {
               You may know it as a blog section. Writing about cybersecurity, compliance, and the evolving threat landscape.
             </p>
           </div>
+        </div>
+      </section>
 
+      <section className="py-12">
+        <div className="container">
           <CodeDivider label="Latest Posts" />
 
           {/* Blog Posts Grid */}
