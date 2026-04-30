@@ -89,7 +89,7 @@ const speakingEngagements = [
 export default function Work() {
   return (
     <Layout>
-      <section className="py-20">
+      <section className="py-20 bg-grid">
         <div className="container">
           {/* Page Header */}
           <div className="max-w-2xl mb-12 opacity-0 animate-fade-in-up">
