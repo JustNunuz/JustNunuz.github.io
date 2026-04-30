@@ -35,7 +35,7 @@ export default function Contact() {
 
   return (
     <Layout>
-      <section className="py-20">
+      <section className="py-20 bg-grid">
         <div className="container flex flex-col items-center text-center">
           <div className="max-w-2xl mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">

@@ -20,7 +20,7 @@ const securityStack = [
 export default function About() {
   return (
     <Layout>
-      <section className="py-20">
+      <section className="py-20 bg-grid">
         <div className="container">
           {/* Page Header */}
           <div className="max-w-3xl mb-12 opacity-0 animate-fade-in-up">
