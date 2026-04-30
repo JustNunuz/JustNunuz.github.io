@@ -89,10 +89,10 @@ const speakingEngagements = [
 export default function Work() {
   return (
     <Layout>
-      <section className="py-20 bg-grid">
+      <section className="pt-20 pb-12 bg-grid">
         <div className="container">
           {/* Page Header */}
-          <div className="max-w-2xl mb-12 opacity-0 animate-fade-in-up">
+          <div className="max-w-2xl opacity-0 animate-fade-in-up">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Tools & Experiments
             </h1>
@@ -100,7 +100,11 @@ export default function Work() {
               I work on a variety of projects mostly focused on security, but spanning my broader interests, from cybersecurity to more niche, single-purpose ideas. Python is my go-to language — I'm proficient in it and genuinely enjoy building with it. They're all linked below if you'd like to explore them in more detail.
             </p>
           </div>
+        </div>
+      </section>
 
+      <section className="py-12">
+        <div className="container">
           <div className="opacity-0 animate-fade-in-up stagger-1">
             <CodeDivider label="Tools & Experiments" />
           </div>
