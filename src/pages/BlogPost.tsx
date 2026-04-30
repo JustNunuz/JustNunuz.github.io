@@ -88,7 +88,7 @@ export default function BlogPost() {
 
   return (
     <Layout>
-      <section className="py-20 bg-grid">
+      <section className="pt-20 pb-12 bg-grid">
         <div className="container max-w-3xl">
           {/* Back link */}
           <div className="mb-8 opacity-0 animate-fade-in-up">
@@ -101,7 +101,7 @@ export default function BlogPost() {
           </div>
 
           {/* Post Header */}
-          <div className="mb-8 opacity-0 animate-fade-in-up stagger-1">
+          <div className="opacity-0 animate-fade-in-up stagger-1">
             <div className="flex flex-wrap gap-2 mb-4">
               {post.tags.map((tag) => (
                 <TechTag key={tag}>{tag}</TechTag>
@@ -116,7 +116,11 @@ export default function BlogPost() {
               <span>{post.readTime}</span>
             </div>
           </div>
+        </div>
+      </section>
 
+      <section className="py-12">
+        <div className="container max-w-3xl">
           {/* Post Content */}
           <div className="opacity-0 animate-fade-in-up stagger-2">
             {renderContent(post.content)}
