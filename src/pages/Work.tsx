@@ -79,7 +79,7 @@ const speakingEngagements = [
     topics: ["Speedrunners", "Hacking", "Thinking Like a Hacker"],
   },
   {
-    title: "Corrupting PDFs",
+    title: "Using Forensics and Python to Corrupt PDF files",
     event: "PyCon Zimbabwe",
     date: "2024",
     location: "Harare, Zimbabwe",
