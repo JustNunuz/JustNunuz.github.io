@@ -37,6 +37,13 @@ const projects = [
 
 const speakingEngagements = [
   {
+    title: "Z3ro Nois3: The Algorithm That Understands African Languages",
+    event: "GDG Harare BuildWithAI",
+    date: "May 2026",
+    location: "Harare, Zimbabwe",
+    topics: ["AI Localization", "Tokenization Equity", "African Datasets", "Linguistic Bias", "Data Sovereignty"],
+  },
+  {
     title: "Honeypot Demo Product",
     event: "Cybersec Mindmap Community",
     date: "March 2026",
