@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import { Github, Linkedin, Mail } from "lucide-react";
 
+// Email split into parts and assembled on click to defeat scrapers.
+const EMAIL_PARTS = ["nunudzaim", "gmail", "com"];
+const assembleEmail = () =>
+  `${EMAIL_PARTS[0]}${String.fromCharCode(64)}${EMAIL_PARTS[1]}${String.fromCharCode(46)}${EMAIL_PARTS[2]}`;
+
 const socialLinks = [
-  { href: "https://github.com", icon: Github, label: "GitHub" },
-  { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-  { href: "mailto:hello@developer.dev", icon: Mail, label: "Email" },
+  { href: "https://github.com/JustNunuz", icon: Github, label: "GitHub" },
+  { href: "https://www.linkedin.com/in/nunuz/", icon: Linkedin, label: "LinkedIn" },
 ];
 
 export function Footer() {
