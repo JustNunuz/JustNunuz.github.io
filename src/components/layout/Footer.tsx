@@ -47,6 +47,17 @@ export function Footer() {
                 <link.icon className="h-5 w-5" />
               </a>
             ))}
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = `mailto:${assembleEmail()}`;
+              }}
+              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Email"
+            >
+              <Mail className="h-5 w-5" />
+            </a>
           </div>
         </div>
       </div>
