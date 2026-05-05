@@ -116,11 +116,14 @@ export default function About() {
                 <h2 className="font-mono text-sm text-primary mb-4">
                   <span className="text-muted-foreground">/*</span> Experience <span className="text-muted-foreground">*/</span>
                 </h2>
-                <div className="space-y-3 text-sm text-muted-foreground">
-                  <p>5 year in Tech spanning I.T Support, Networking and Cybersecurity</p>
-                  <p>Startups to enterprise scale</p>
-                  <p>Remote-first since 2018</p>
-                </div>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li><span className="text-primary mr-2">→</span>5+ years in tech across IT support, networking, and cybersecurity</li>
+                  <li><span className="text-primary mr-2">→</span>Started in helpdesk and IT support, building strong troubleshooting and user focused foundations</li>
+                  <li><span className="text-primary mr-2">→</span>Progressed into networking, working on infrastructure and system performance</li>
+                  <li><span className="text-primary mr-2">→</span>Currently focused on cybersecurity: red teaming, compliance, and governance</li>
+                  <li><span className="text-primary mr-2">→</span>Experience across startups and enterprise environments</li>
+                  <li><span className="text-primary mr-2">→</span>Remote first since 2018, collaborating across distributed teams</li>
+                </ul>
               </div>
             </div>
           </div>
