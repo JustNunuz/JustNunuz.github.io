@@ -37,12 +37,21 @@ const projects = [
 
 const speakingEngagements = [
   {
+    title: "The Human Firewall",
+    event: "Evolve Africa ICT Summit (Panel Moderator)",
+    date: "June 2026",
+    location: "Harare, Zimbabwe",
+    topics: ["Panel Moderation", "Human Firewall", "Awareness", "Women in Cyber", "Regulation"],
+    url: "https://www.linkedin.com/posts/nunuz_as-the-evolve-africa-ict-summit-comes-to-ugcPost-7472324526777720832-DhlY/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADIXSugBmwIKQCJyTu8GVijPKGJ7Y4u-SPs",
+  },
+  {
     title: "Z3ro Nois3: The Algorithm That Understands African Languages",
     event: "GDG Harare BuildWithAI",
     date: "May 2026",
     location: "Harare, Zimbabwe",
     topics: ["AI Localization", "Tokenization Equity", "African Datasets", "Linguistic Bias", "Data Sovereignty"],
   },
+
   {
     title: "Honeypot Demo Product",
     event: "Cybersec Mindmap Community",
