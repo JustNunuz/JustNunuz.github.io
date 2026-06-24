@@ -7,6 +7,13 @@ import { ProjectCard } from "@/components/ui/ProjectCard";
 import { TypingCursor } from "@/components/ui/TypingCursor";
 import { ArrowRight } from "lucide-react";
 
+const stats = [
+  { value: "5+", label: "years in tech" },
+  { value: "10+", label: "talks delivered" },
+  { value: "4", label: "shipped tools" },
+  { value: "2018", label: "remote-first since" },
+];
+
 const featuredProjects = [
   {
     name: "Z3ro Nois3",
@@ -42,7 +49,7 @@ export default function Home() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center bg-grid">
+      <section className="relative min-h-[60vh] flex items-center bg-grid pt-20 pb-16">
         <div className="container">
           <div className="max-w-3xl opacity-0 animate-fade-in-up">
             {/* Headline with typing cursor */}
@@ -74,8 +81,30 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Stat strip */}
+      <section className="border-y border-border bg-card/30">
+        <div className="container">
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-border">
+            {stats.map((stat, i) => (
+              <div
+                key={stat.label}
+                className={`px-4 py-6 md:py-8 opacity-0 animate-fade-in-up stagger-${i + 1}`}
+              >
+                <div className="font-mono text-2xl md:text-3xl font-bold text-gradient">
+                  {stat.value}
+                </div>
+                <div className="font-mono text-xs text-muted-foreground mt-1">
+                  <span className="text-primary">{"// "}</span>
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Featured Projects */}
-      <section className="py-20">
+      <section className="py-16">
         <div className="container">
           <div className="opacity-0 animate-fade-in-up">
             <CodeDivider label="Featured Tools" />

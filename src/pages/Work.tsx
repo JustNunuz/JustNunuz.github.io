@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { TechTag } from "@/components/ui/TechTag";
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, MapPin, Mic, ExternalLink } from "lucide-react";
 
 const projects = [
   {
@@ -160,8 +160,19 @@ export default function Work() {
                 <Tag
                   key={talk.title}
                   {...linkProps}
-                  className={`group block p-6 bg-card border border-border rounded-lg transition-all hover:border-primary/50 hover:bg-card/80 opacity-0 animate-fade-in-up stagger-${Math.min(index + 1, 4)}`}
+                  className={`group relative block p-6 pl-7 bg-card border border-border border-l-2 border-l-primary/60 rounded-lg transition-all hover:border-primary/50 hover:border-l-primary hover:bg-card/80 opacity-0 animate-fade-in-up stagger-${Math.min(index + 1, 4)}`}
                 >
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex items-center gap-2">
+                      <Mic className="h-4 w-4 text-primary shrink-0" />
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-primary/80">
+                        Talk
+                      </span>
+                    </div>
+                    {talk.url && (
+                      <ExternalLink className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+                    )}
+                  </div>
                   <h3 className="font-mono text-lg font-medium text-foreground group-hover:text-primary transition-colors mb-2">
                     {talk.title}
                   </h3>
