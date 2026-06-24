@@ -45,6 +45,14 @@ const speakingEngagements = [
     url: "https://www.linkedin.com/posts/nunuz_as-the-evolve-africa-ict-summit-comes-to-ugcPost-7472324526777720832-DhlY/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADIXSugBmwIKQCJyTu8GVijPKGJ7Y4u-SPs",
   },
   {
+    title: "Evolving Laws vs Stagnating Legislation",
+    event: "ISACA Harare Chapter Webinar",
+    date: "June 2026",
+    location: "Zoom",
+    topics: ["Governance", "Invisible Technology", "AI Surveillance", "Privacy", "Regulation"],
+  },
+
+  {
     title: "Z3ro Nois3: The Algorithm That Understands African Languages",
     event: "GDG Harare BuildWithAI",
     date: "May 2026",
