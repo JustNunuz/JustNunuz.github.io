@@ -143,33 +143,41 @@ export default function Work() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            {speakingEngagements.map((talk, index) => (
-              <article
-                key={talk.title}
-                className={`group p-6 bg-card border border-border rounded-lg transition-all hover:border-primary/50 hover:bg-card/80 opacity-0 animate-fade-in-up stagger-${Math.min(index + 1, 4)}`}
-              >
-                <h3 className="font-mono text-lg font-medium text-foreground group-hover:text-primary transition-colors mb-2">
-                  {talk.title}
-                </h3>
-                <p className="text-sm text-muted-foreground mb-3">{talk.event}</p>
-                <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" />
-                    {talk.date}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <MapPin className="h-3 w-3" />
-                    {talk.location}
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {talk.topics.map((topic) => (
-                    <TechTag key={topic}>{topic}</TechTag>
-                  ))}
-                </div>
-              </article>
-            ))}
+            {speakingEngagements.map((talk, index) => {
+              const Tag: any = talk.url ? "a" : "article";
+              const linkProps = talk.url
+                ? { href: talk.url, target: "_blank", rel: "noopener noreferrer" }
+                : {};
+              return (
+                <Tag
+                  key={talk.title}
+                  {...linkProps}
+                  className={`group block p-6 bg-card border border-border rounded-lg transition-all hover:border-primary/50 hover:bg-card/80 opacity-0 animate-fade-in-up stagger-${Math.min(index + 1, 4)}`}
+                >
+                  <h3 className="font-mono text-lg font-medium text-foreground group-hover:text-primary transition-colors mb-2">
+                    {talk.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-3">{talk.event}</p>
+                  <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="h-3 w-3" />
+                      {talk.date}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <MapPin className="h-3 w-3" />
+                      {talk.location}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {talk.topics.map((topic) => (
+                      <TechTag key={topic}>{topic}</TechTag>
+                    ))}
+                  </div>
+                </Tag>
+              );
+            })}
           </div>
+
         </div>
       </section>
     </Layout>
