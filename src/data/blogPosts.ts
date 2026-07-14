@@ -10,6 +10,168 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "whatsapp-usernames-security",
+    title: "WhatsApp Usernames Are a Bigger Security Win Than They Look",
+    excerpt: "Why WhatsApp's new username feature is one of the most meaningful privacy improvements the platform has introduced in years.",
+    date: "2026-07-13",
+    readTime: "6 min read",
+    tags: ["Privacy", "WhatsApp", "Social Engineering", "Opinion"],
+    content: `For years, your phone number was your identity on WhatsApp.
+
+Every time you joined a community group, sold something online, attended an event, or networked professionally, you were effectively giving away a piece of your digital identity. That same number is often linked to your bank, your two-factor authentication, your recovery accounts, and countless other services.
+
+That's changing.
+
+With the introduction of WhatsApp Usernames, Meta has quietly made one of the biggest privacy improvements the platform has seen in years.
+
+Instead of giving someone your phone number, you can now simply share a username such as @nunudzai. Your phone number remains hidden unless you choose otherwise.
+
+At first glance, it sounds like a convenience feature.
+
+From a cybersecurity perspective, it's much bigger than that.
+
+## Your Phone Number Is More Valuable Than You Think
+
+A phone number isn't just a way to call someone anymore.
+
+It has become one of the strongest identifiers we have online.
+
+It's commonly used for:
+
+- Banking verification
+- Password recovery
+- Multi-factor authentication
+- SIM registration
+- Social media recovery
+- Identity verification
+
+Once someone has your number, they've already collected one important piece of information about you.
+
+Cybercriminals know this.
+
+Phone numbers are routinely harvested from public WhatsApp groups, business listings, leaked databases and social media profiles before being used in phishing campaigns, scams and targeted social engineering.
+
+Reducing how often you expose your number immediately reduces your attack surface.
+
+## Security Through Separation
+
+One thing I particularly like about usernames is that they separate your communication identity from your personal identity.
+
+Instead of saying:
+
+"Here's my phone number."
+
+You can now say:
+
+"Message me on @username."
+
+That might sound like a small difference, but it's actually an important security principle:
+
+**Expose only what is necessary.**
+
+The fewer personal identifiers you share publicly, the harder it becomes for someone to build a profile around you.
+
+## A Nice Win Against Enumeration
+
+Historically, attackers could generate or collect large lists of phone numbers and determine which ones were registered on WhatsApp.
+
+Usernames change that model.
+
+Now, someone needs to know your specific username to find you, rather than simply cycling through phone numbers. Even better, WhatsApp has introduced an additional protection called the Username Key.
+
+If enabled, knowing your username alone isn't enough.
+
+The person contacting you must also know your unique key before they can start a conversation.
+
+This creates another barrier against unsolicited messages, spam and automated abuse.
+
+## Better Security for Businesses and Professionals
+
+This is one of my favourite use cases.
+
+If you're:
+
+- a consultant,
+- freelancer,
+- recruiter,
+- content creator,
+- security researcher,
+- or business owner,
+
+you've probably had to choose between:
+
+protecting your privacy, or
+
+making yourself easy to contact.
+
+Now you can do both.
+
+Instead of publishing your personal number everywhere, you can simply share:
+
+**@YourBusiness**
+
+or
+
+**@YourName**
+
+without exposing the phone number tied to your personal accounts.
+
+## Consistency Across Platforms
+
+Another underrated benefit is branding.
+
+Most people already use the same username across:
+
+- LinkedIn
+- GitHub
+- Instagram
+- X
+- Facebook
+
+Now WhatsApp joins that list.
+
+Keeping a consistent identity across platforms makes it easier for legitimate contacts to find you while making it easier to spot impersonation attempts.
+
+## This Doesn't Eliminate Risk
+
+No security feature is perfect.
+
+Usernames will almost certainly introduce new phishing and impersonation attempts.
+
+Attackers will register usernames that closely resemble legitimate people or businesses.
+
+Think:
+
+- @Net0ne
+- @0penAl
+- @MicrosoftHelp
+
+(where the characters look almost identical.)
+
+This means users should continue verifying who they're talking to, especially before sharing sensitive information or making payments.
+
+Security is always layered.
+
+Usernames improve privacy but they don't replace good cyber hygiene.
+
+## My Take
+
+I think this is one of the most meaningful security improvements WhatsApp has introduced in years.
+
+Not because usernames are revolutionary — they've existed on countless platforms — but because they finally separate your real-world identity (your phone number) from your messaging identity.
+
+As cybersecurity professionals, we're constantly encouraging people to reduce unnecessary exposure.
+
+This feature finally helps millions of people do exactly that.
+
+Sometimes the best security improvements aren't the flashy ones.
+
+They're the ones that quietly reduce your attack surface every single day.
+
+> "Now excuse me while I go make sure nobody has claimed @nunudzai."`,
+  },
+
+  {
     slug: "omg-cable-favorite-hacking-tool",
     title: "My fave hacking tool: The OMG cable",
     excerpt: "A reflection on the OMG cable — why it remains my favourite piece of offensive hardware, the experiment I'm running with it right now, and a friendly warning about borrowing cables from me.",
