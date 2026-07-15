@@ -16,6 +16,13 @@ const stats = [
 
 const featuredProjects = [
   {
+    name: "Mimir",
+    url: "https://github.com/JustNunuz/Mimir",
+    description: "A multi-layer Python engine for AI image provenance and detection, combining metadata forensics, invisible watermark decoding, perceptual hashing, and AI-model fingerprinting.",
+    stack: ["Python", "AI Forensics", "Streamlit", "FastAPI", "Provenance"],
+    impact: "AI image provenance and detection engine",
+  },
+  {
     name: "Z3ro Nois3",
     url: "https://github.com/JustNunuz/z3r0-Nois3",
     description: "A linguistic engine that audits LLM inefficiencies to make AI cheaper and more secure for Bantu languages.",
