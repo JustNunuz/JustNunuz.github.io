@@ -6,6 +6,13 @@ import { Calendar, MapPin, Mic, ExternalLink, ArrowRight } from "lucide-react";
 
 const projects = [
   {
+    name: "Mimir",
+    url: "https://github.com/JustNunuz/Mimir",
+    description: "A production-quality Python application for AI image provenance and detection. Mimir combines metadata analysis, invisible watermark decoding, perceptual hashing, AI-model fingerprinting, and forensic error-level analysis into a unified multi-layer verification pipeline. It includes a Streamlit dashboard for researchers and journalists, a FastAPI backend for bot integrations, and a SQLite registry for provenance tracking.",
+    stack: ["Python", "AI Forensics", "Streamlit", "FastAPI", "Provenance"],
+    impact: "Multi-layer AI image provenance and detection engine",
+  },
+  {
     name: "Z3ro Nois3",
     url: "https://github.com/JustNunuz/z3r0-Nois3",
     description: "AI models are built for English, making them expensive and inaccurate for Shona speakers. I call this the \"Bantu Tax\" because Shona text gets fragmented, increasing processing costs. Z3ro Nois3 is a linguistic engine that audits these inefficiencies to make AI cheaper and more secure for our local languages.",
