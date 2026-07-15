@@ -10,11 +10,18 @@ import { ArrowRight } from "lucide-react";
 const stats = [
   { value: "5+", label: "years in tech" },
   { value: "10+", label: "talks delivered" },
-  { value: "4", label: "shipped tools" },
+  { value: "5+", label: "shipped tools" },
   { value: "2018", label: "remote-first since" },
 ];
 
 const featuredProjects = [
+  {
+    name: "Mimir",
+    url: "https://github.com/JustNunuz/Mimir",
+    description: "A multi-layer Python engine for AI image provenance and detection, combining metadata forensics, invisible watermark decoding, perceptual hashing, and AI-model fingerprinting.",
+    stack: ["Python", "AI Forensics", "Streamlit", "FastAPI", "Provenance"],
+    impact: "AI image provenance and detection engine",
+  },
   {
     name: "Z3ro Nois3",
     url: "https://github.com/JustNunuz/z3r0-Nois3",
