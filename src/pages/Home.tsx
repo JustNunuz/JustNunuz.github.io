@@ -10,7 +10,7 @@ import { ArrowRight } from "lucide-react";
 const stats = [
   { value: "5+", label: "years in tech" },
   { value: "10+", label: "talks delivered" },
-  { value: "4", label: "shipped tools" },
+  { value: "5+", label: "shipped tools" },
   { value: "2018", label: "remote-first since" },
 ];
 
