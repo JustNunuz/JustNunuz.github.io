@@ -8,7 +8,7 @@ const projects = [
   {
     name: "Mimir",
     url: "https://github.com/JustNunuz/Mimir",
-    description: "A production-quality Python application for AI image provenance and detection. Mimir combines metadata analysis, invisible watermark decoding, perceptual hashing, AI-model fingerprinting, and forensic error-level analysis into a unified multi-layer verification pipeline. It includes a Streamlit dashboard for researchers and journalists, a FastAPI backend for bot integrations, and a SQLite registry for provenance tracking.",
+    description: "Mimir is a tool that helps people check whether an image is real, edited, or created using artificial intelligence. It looks for hidden clues inside an image and explains what it finds in a simple, easy-to-understand way. The goal is to make image verification accessible to everyone — not just cybersecurity experts or researchers.",
     stack: ["Python", "AI Forensics", "Streamlit", "FastAPI", "Provenance"],
     impact: "Multi-layer AI image provenance and detection engine",
   },

@@ -18,7 +18,7 @@ const featuredProjects = [
   {
     name: "Mimir",
     url: "https://github.com/JustNunuz/Mimir",
-    description: "A multi-layer Python engine for AI image provenance and detection, combining metadata forensics, invisible watermark decoding, perceptual hashing, and AI-model fingerprinting.",
+    description: "Mimir is a tool that helps people check whether an image is real, edited, or created using artificial intelligence. It looks for hidden clues inside an image and explains what it finds in a simple, easy-to-understand way.",
     stack: ["Python", "AI Forensics", "Streamlit", "FastAPI", "Provenance"],
     impact: "AI image provenance and detection engine",
   },
