@@ -79,7 +79,7 @@ export default function About() {
               <div className="grid gap-6 sm:grid-cols-2 opacity-0 animate-fade-in-up stagger-4">
                 {securityStack.map((group) => (
                   <div key={group.category} className="p-5 rounded-lg border border-border bg-card">
-                    <h3 className="font-mono text-sm text-primary mb-3">
+                    <h3 className="text-sm font-semibold text-primary mb-3">
                       <span className="text-muted-foreground">{"/*"}</span> {group.category} <span className="text-muted-foreground">{"*/"}</span>
                     </h3>
                     <div className="flex flex-wrap gap-2">
@@ -97,7 +97,7 @@ export default function About() {
             <div className="space-y-8">
               {/* Expertise */}
               <div className="opacity-0 animate-fade-in-up stagger-2">
-                <h2 className="font-mono text-sm text-primary mb-4">
+                <h2 className="text-sm font-semibold text-primary mb-4">
                   <span className="text-muted-foreground">/*</span> Expertise <span className="text-muted-foreground">*/</span>
                 </h2>
                 <ul className="space-y-4">
@@ -113,7 +113,7 @@ export default function About() {
 
               {/* Experience */}
               <div className="opacity-0 animate-fade-in-up stagger-4">
-                <h2 className="font-mono text-sm text-primary mb-4">
+                <h2 className="text-sm font-semibold text-primary mb-4">
                   <span className="text-muted-foreground">/*</span> Experience <span className="text-muted-foreground">*/</span>
                 </h2>
                 <ul className="space-y-3 text-sm text-muted-foreground">
