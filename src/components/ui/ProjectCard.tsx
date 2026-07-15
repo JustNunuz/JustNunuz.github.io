@@ -21,7 +21,7 @@ export function ProjectCard({ name, description, stack, impact, url, className }
         )}
       >
         <div className="flex items-center justify-between mb-2">
-          <h3 className="font-mono text-lg font-medium text-foreground group-hover:text-primary transition-colors">
+          <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
             {name}
           </h3>
           <ArrowUpRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />

@@ -8,7 +8,7 @@ const projects = [
   {
     name: "Mimir",
     url: "https://github.com/JustNunuz/Mimir",
-    description: "Mimir is a tool that helps people check whether an image is real, edited, or created using artificial intelligence. It looks for hidden clues inside an image and explains what it finds in a simple, easy-to-understand way. The goal is to make image verification accessible to everyone — not just cybersecurity experts or researchers.",
+    description: "Mimir is a tool that helps people check whether an image is real, edited, or created using artificial intelligence. It looks for hidden clues inside an image and explains what it finds in a simple, easy-to-understand way. The goal is to make image verification accessible to everyone, not just cybersecurity experts or researchers.",
     stack: ["Python", "AI Forensics", "Streamlit", "FastAPI", "Provenance"],
     impact: "Multi-layer AI image provenance and detection engine",
   },
@@ -213,7 +213,7 @@ export default function Work() {
                       <ExternalLink className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
                     )}
                   </div>
-                  <h3 className="font-mono text-lg font-medium text-foreground group-hover:text-primary transition-colors mb-2">
+                  <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
                     {talk.title}
                   </h3>
                   <p className="text-sm text-muted-foreground mb-3">{talk.event}</p>
