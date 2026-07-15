@@ -140,9 +140,42 @@ export default function Work() {
             <CodeDivider label="Tools & Experiments" />
           </div>
 
+          {/* Focus Project */}
+          {projects[0] && (
+            <a
+              href={projects[0].url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block p-8 md:p-10 rounded-lg border border-border bg-card hover:border-primary/50 transition-all duration-300 relative overflow-hidden opacity-0 animate-fade-in-up mb-10"
+            >
+              <div className="absolute top-4 right-4 font-mono text-[10px] uppercase tracking-wider text-primary/80 px-2 py-1 border border-primary/30 rounded">
+                // focus
+              </div>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {projects[0].stack.map((tech) => (
+                  <TechTag key={tech}>{tech}</TechTag>
+                ))}
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors max-w-3xl">
+                {projects[0].name}
+              </h2>
+              <p className="text-base text-muted-foreground mb-6 max-w-2xl leading-relaxed">
+                {projects[0].description}
+              </p>
+              <div className="flex items-center justify-between pt-4 border-t border-border">
+                <span className="font-mono text-xs text-primary">
+                  <span className="text-muted-foreground">{"//"}</span> {projects[0].impact}
+                </span>
+                <span className="flex items-center gap-1 text-sm font-mono text-primary">
+                  View project <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                </span>
+              </div>
+            </a>
+          )}
+
           {/* Projects Grid */}
           <div className="grid gap-8">
-            {projects.map((project, index) => (
+            {projects.slice(1).map((project, index) => (
               <div 
                 key={project.name}
                 className={`opacity-0 animate-fade-in-up stagger-${Math.min(index + 2, 4)}`}
