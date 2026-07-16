@@ -51,14 +51,14 @@ export default function BlogPost() {
         );
       } else if (line.match(/^\d+\.\s\*\*/)) {
         // Numbered list item with bold
-        const match = line.match(/^(\d+\.)\s\*\*(.+?)\*\*\s*—?\s*(.*)/);
+        const match = line.match(/^(\d+\.)\s\*\*(.+?)\*\*\s*-?\s*(.*)/);
         if (match) {
           elements.push(
             <div key={i} className="flex gap-3 mb-3 text-muted-foreground">
               <span className="text-primary font-mono text-sm">{match[1]}</span>
               <p>
                 <span className="font-medium text-foreground">{match[2]}</span>
-                {match[3] && ` — ${match[3]}`}
+                {match[3] && ` - ${match[3]}`}
               </p>
             </div>
           );

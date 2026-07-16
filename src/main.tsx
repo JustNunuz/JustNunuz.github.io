@@ -8,7 +8,7 @@ const container = document.getElementById("root")!;
 const originalRemoveChild = Node.prototype.removeChild;
 Node.prototype.removeChild = function <T extends Node>(child: T): T {
   if (child.parentNode !== this) {
-    console.warn("removeChild: node is not a child of this parent — skipping.");
+    console.warn("removeChild: node is not a child of this parent - skipping.");
     return child;
   }
   return originalRemoveChild.call(this, child) as T;

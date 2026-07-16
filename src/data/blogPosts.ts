@@ -158,7 +158,7 @@ Usernames improve privacy but they don't replace good cyber hygiene.
 
 I think this is one of the most meaningful security improvements WhatsApp has introduced in years.
 
-Not because usernames are revolutionary — they've existed on countless platforms — but because they finally separate your real-world identity (your phone number) from your messaging identity.
+Not because usernames are revolutionary - they've existed on countless platforms - but because they finally separate your real-world identity (your phone number) from your messaging identity.
 
 As cybersecurity professionals, we're constantly encouraging people to reduce unnecessary exposure.
 
@@ -174,13 +174,13 @@ They're the ones that quietly reduce your attack surface every single day.
   {
     slug: "omg-cable-favorite-hacking-tool",
     title: "My fave hacking tool: The OMG cable",
-    excerpt: "A reflection on the OMG cable — why it remains my favourite piece of offensive hardware, the experiment I'm running with it right now, and a friendly warning about borrowing cables from me.",
+    excerpt: "A reflection on the OMG cable - why it remains my favourite piece of offensive hardware, the experiment I'm running with it right now, and a friendly warning about borrowing cables from me.",
     date: "2026-04-20",
     readTime: "9 min read",
     tags: ["Offensive Security", "Hardware", "Red Team", "OMG Cable"],
     content: `Every offensive security practitioner has that one tool they keep coming back to. For some it's Burp Suite. For others, it's a battered copy of Metasploit and a stubborn refusal to let it die. For me, it's a cable. A small, unassuming, frankly *boring*-looking cable. The OMG cable.
 
-If you've never heard of it, picture this: a USB cable that looks identical to the one currently charging your phone. Same weight. Same flex. Same little branded moulding near the connector. You could throw it in a drawer with twenty other cables and never find it again. And yet, hidden inside the connector shell is a tiny implant — a microcontroller, a Wi-Fi radio, and just enough firmware to ruin somebody's week.
+If you've never heard of it, picture this: a USB cable that looks identical to the one currently charging your phone. Same weight. Same flex. Same little branded moulding near the connector. You could throw it in a drawer with twenty other cables and never find it again. And yet, hidden inside the connector shell is a tiny implant - a microcontroller, a Wi-Fi radio, and just enough firmware to ruin somebody's week.
 
 ## A short history
 
@@ -194,7 +194,7 @@ What I love about the origin story is that it didn't come from a vendor trying t
 
 This is the headline feature and it deserves the top spot. The cable looks like an ordinary cable. It *behaves* like an ordinary cable. You can plug it into a phone and it will charge. You can plug it into a laptop and transfer files. There is no blinking light, no suspicious enumeration, no "Unknown HID device" prompt unless the operator wants one. In a world where most offensive hardware screams its presence the moment it touches a USB port, the OMG cable whispers.
 
-I've watched seasoned engineers — people who would never plug a random USB stick into their machine — happily accept a "spare charging cable" without a second thought. Cables are invisible. We've trained ourselves to be paranoid about the wrong shape of plastic.
+I've watched seasoned engineers - people who would never plug a random USB stick into their machine - happily accept a "spare charging cable" without a second thought. Cables are invisible. We've trained ourselves to be paranoid about the wrong shape of plastic.
 
 ### 2. Configured over a Wi-Fi interface
 
@@ -204,7 +204,7 @@ This is the part that turns it from a clever party trick into a genuine red-team
 
 ### 3. Ducky Script
 
-The payload language is Ducky Script — a human-readable DSL originally built for the USB Rubber Ducky. I've written things in x86 assembly. I've fought with C and its many opinions about memory. I've spent more hours than I'd like to admit chasing segfaults that turned out to be a missing semicolon three files away. After all of that, opening a Ducky Script file feels like a small holiday.
+The payload language is Ducky Script - a human-readable DSL originally built for the USB Rubber Ducky. I've written things in x86 assembly. I've fought with C and its many opinions about memory. I've spent more hours than I'd like to admit chasing segfaults that turned out to be a missing semicolon three files away. After all of that, opening a Ducky Script file feels like a small holiday.
 
 \`\`\`
 DELAY 1000
@@ -214,15 +214,15 @@ STRING powershell -w hidden -c "..."
 ENTER
 \`\`\`
 
-That's it. That's a payload. You can read it out loud. You can hand it to a junior analyst and they'll understand what it does in thirty seconds. The barrier to entry is so low that the limiting factor becomes *creativity*, not syntax — which is exactly how a tool should feel.
+That's it. That's a payload. You can read it out loud. You can hand it to a junior analyst and they'll understand what it does in thirty seconds. The barrier to entry is so low that the limiting factor becomes *creativity*, not syntax - which is exactly how a tool should feel.
 
 ## The experiment I'm running
 
-Right now I'm using the cable for a small, self-contained experiment on cross-machine lateral capability. The cable's "active" end — the one with the implant — is the USB-A side. That means whichever machine the USB-A end is plugged into is the one being attacked, regardless of which device is on the other end of the cable.
+Right now I'm using the cable for a small, self-contained experiment on cross-machine lateral capability. The cable's "active" end - the one with the implant - is the USB-A side. That means whichever machine the USB-A end is plugged into is the one being attacked, regardless of which device is on the other end of the cable.
 
 The setup is deliberately mundane. A laptop on a desk. The cable runs from the laptop's USB-A port to a phone sitting innocently next to it, apparently charging. From the outside, it looks like the laptop is the host and the phone is the peripheral. In reality, the laptop is the target. The phone is just set dressing.
 
-What I'm measuring isn't whether the attack *works* — that part is well established. I'm measuring **time-to-detection** under different endpoint configurations: a stock corporate image, a hardened image with HID filtering, and an image with a behavioural EDR tuned for keystroke-injection patterns. I want to know how long a realistic payload — one that doesn't try to be clever, just types like a slightly impatient human — can run before something, anything, notices.
+What I'm measuring isn't whether the attack *works* - that part is well established. I'm measuring **time-to-detection** under different endpoint configurations: a stock corporate image, a hardened image with HID filtering, and an image with a behavioural EDR tuned for keystroke-injection patterns. I want to know how long a realistic payload - one that doesn't try to be clever, just types like a slightly impatient human - can run before something, anything, notices.
 
 Early results are humbling. The stock image notices nothing. The hardened image notices the *type* of device but not the behaviour. The EDR notices the behaviour but only after enough keystrokes that a competent operator would already have what they came for. I'll write up the full results in a follow-up post once I've run the test against a few more configurations.
 
@@ -238,12 +238,12 @@ That last part is, honestly, the reason I love offensive security. The best tool
 
 Never borrow a cable from anyone.
 
-I mean it kindly. I really do. But also — never borrow a cable from anyone.`,
+I mean it kindly. I really do. But also - never borrow a cable from anyone.`,
   },
   {
     slug: "understanding-zcdpa",
     title: "Zimbabwe's Cyber and Data Protection Act: A GDPR Fork With Local Baggage",
-    excerpt: "Implementation realities of the Cyber and Data Protection Act — from data residency headaches to why forking GDPR was clever, cowardly, and a little bit lazy.",
+    excerpt: "Implementation realities of the Cyber and Data Protection Act - from data residency headaches to why forking GDPR was clever, cowardly, and a little bit lazy.",
     date: "2026-03-15",
     readTime: "8 min read",
     tags: ["Compliance", "CDPA", "GDPR", "Data Protection"],
@@ -307,7 +307,7 @@ Instead, we got a translation. A competent translation, but a translation. And t
 
 ## Where This Leaves Us
 
-The CDPA is here, it is not going away, and organisations that treat it as a paper exercise will eventually get caught out. The pragmatic path is to take the parts of GDPR practice that transfer cleanly — data mapping, records of processing, DPIAs, breach response playbooks — and adopt them properly. Then be honest with the regulator about the parts that do not transfer cleanly, particularly on residency, and document your compensating controls. Regulators respect organisations that engage seriously with the intent of the law even when the letter of it is impossible.
+The CDPA is here, it is not going away, and organisations that treat it as a paper exercise will eventually get caught out. The pragmatic path is to take the parts of GDPR practice that transfer cleanly - data mapping, records of processing, DPIAs, breach response playbooks - and adopt them properly. Then be honest with the regulator about the parts that do not transfer cleanly, particularly on residency, and document your compensating controls. Regulators respect organisations that engage seriously with the intent of the law even when the letter of it is impossible.
 
 And if you are in a position to talk to the regulator about the next amendment: please, ask them to write the second version for Zimbabwe. Not for Brussels.`,
   },
@@ -330,15 +330,15 @@ Prompt injection occurs when an attacker crafts input that overrides or manipula
 The attacker directly provides malicious instructions to the model, attempting to override its system prompt.
 
 ### Indirect Injection
-Malicious instructions are embedded in external data sources that the LLM processes — such as web pages, documents, or emails.
+Malicious instructions are embedded in external data sources that the LLM processes - such as web pages, documents, or emails.
 
 ## Defense Strategies
 
-1. **Input Sanitization** — Filter and validate all user inputs before passing them to the LLM.
-2. **Output Validation** — Verify that LLM outputs conform to expected patterns before acting on them.
-3. **Privilege Separation** — Limit the actions an LLM can perform. Never give it direct database access.
-4. **Monitoring & Logging** — Track all LLM interactions for anomalous behavior.
-5. **Human-in-the-Loop** — Require human approval for sensitive operations.
+1. **Input Sanitization** - Filter and validate all user inputs before passing them to the LLM.
+2. **Output Validation** - Verify that LLM outputs conform to expected patterns before acting on them.
+3. **Privilege Separation** - Limit the actions an LLM can perform. Never give it direct database access.
+4. **Monitoring & Logging** - Track all LLM interactions for anomalous behavior.
+5. **Human-in-the-Loop** - Require human approval for sensitive operations.
 
 The key takeaway: treat LLMs as untrusted components in your architecture. Defense in depth applies to AI just as it does to traditional systems.`,
   },
@@ -417,11 +417,11 @@ Modern SD-WAN solutions integrate firewall, IPS, URL filtering, and malware dete
 
 ## Key Recommendations
 
-1. **Segment Your Network** — Use micro-segmentation to limit blast radius.
-2. **Centralize Policy Management** — Define security policies centrally and push them to all edges.
-3. **Monitor East-West Traffic** — Don't just watch north-south. Lateral movement between sites is a real risk.
-4. **Plan for Failover** — Ensure security controls remain active even when primary links fail.
-5. **Regular Audits** — Continuously validate that your SD-WAN configuration matches your security policies.
+1. **Segment Your Network** - Use micro-segmentation to limit blast radius.
+2. **Centralize Policy Management** - Define security policies centrally and push them to all edges.
+3. **Monitor East-West Traffic** - Don't just watch north-south. Lateral movement between sites is a real risk.
+4. **Plan for Failover** - Ensure security controls remain active even when primary links fail.
+5. **Regular Audits** - Continuously validate that your SD-WAN configuration matches your security policies.
 
 SD-WAN is powerful, but power without control is just risk.`,
   },
@@ -441,7 +441,7 @@ Before touching a keyboard, define the scope. What systems are in scope? What's 
 ## Phase 2: Reconnaissance
 
 ### Passive Recon
-Gather intelligence without directly interacting with the target. OSINT, DNS records, WHOIS data, social media — all fair game.
+Gather intelligence without directly interacting with the target. OSINT, DNS records, WHOIS data, social media - all fair game.
 
 ### Active Recon
 Nmap scans, service enumeration, banner grabbing. Now you're directly probing the target, so stay within scope.
@@ -452,7 +452,7 @@ Map discovered services against known vulnerability databases. Tools like Nessus
 
 ## Phase 4: Exploitation
 
-This is where tools like Metasploit, Burp Suite, and SQLMap come into play. But exploitation isn't about running scripts — it's about understanding the vulnerability deeply enough to demonstrate real business impact.
+This is where tools like Metasploit, Burp Suite, and SQLMap come into play. But exploitation isn't about running scripts - it's about understanding the vulnerability deeply enough to demonstrate real business impact.
 
 ## Phase 5: Post-Exploitation
 
@@ -462,7 +462,7 @@ What can you access after the initial breach? Can you escalate privileges? Move 
 
 The report is the product. Write for two audiences: executives who need to understand risk, and engineers who need to fix the vulnerabilities. Include clear severity ratings, evidence, and remediation guidance.
 
-A penetration test without a clear, actionable report is just hacking. We're professionals — act like it.`,
+A penetration test without a clear, actionable report is just hacking. We're professionals - act like it.`,
   },
   {
     slug: "iso-27001-implementation-lessons",
@@ -479,18 +479,18 @@ A penetration test without a clear, actionable report is just hacking. We're pro
 ISO 27001 requires documentation, but the standard is about building a living security culture. If your ISMS lives only in SharePoint, you've failed.
 
 ### Ignoring Context
-Clause 4 requires understanding your organization's context. This isn't a checkbox — it's the foundation. An ISMS for a fintech startup looks very different from one for a mining company.
+Clause 4 requires understanding your organization's context. This isn't a checkbox - it's the foundation. An ISMS for a fintech startup looks very different from one for a mining company.
 
 ### Underestimating Training
 Your controls are only as strong as the people implementing them. Budget for ongoing security awareness training, not just a one-time session.
 
 ## What Works
 
-1. **Executive Buy-In** — Get leadership commitment early. Without it, the ISMS will be undermined at every turn.
-2. **Start with Risk Assessment** — Let your risks drive your controls, not the other way around.
-3. **Integrate with Business Processes** — Security controls should enhance operations, not hinder them.
-4. **Measure and Improve** — Use metrics to demonstrate value and identify areas for improvement.
-5. **Internal Audits Matter** — Don't treat internal audits as a formality. They're your early warning system.
+1. **Executive Buy-In** - Get leadership commitment early. Without it, the ISMS will be undermined at every turn.
+2. **Start with Risk Assessment** - Let your risks drive your controls, not the other way around.
+3. **Integrate with Business Processes** - Security controls should enhance operations, not hinder them.
+4. **Measure and Improve** - Use metrics to demonstrate value and identify areas for improvement.
+5. **Internal Audits Matter** - Don't treat internal audits as a formality. They're your early warning system.
 
 ISO 27001 certification is a milestone, not a destination. The real value is in the continuous improvement cycle it establishes.`,
   },
