@@ -428,41 +428,163 @@ SD-WAN is powerful, but power without control is just risk.`,
   {
     slug: "penetration-testing-methodology",
     title: "My Penetration Testing Methodology: A Practitioner's Guide",
-    excerpt: "A walkthrough of my structured approach to conducting thorough and ethical penetration tests.",
+    excerpt: "A practical, adversarial approach to penetration testing - from recursive reconnaissance that asks why, to stealth and loud scanning, and a remediation framework that separates quick fixes from proper fixes.",
     date: "2026-01-05",
-    readTime: "10 min read",
+    readTime: "12 min read",
     tags: ["Offensive Security", "VAPT", "Methodology"],
-    content: `Penetration testing is as much about methodology as it is about technical skill. A structured approach ensures thorough coverage, reproducible results, and clear communication with stakeholders.
+    content: `Penetration testing is not a checklist. It is a disciplined, adversarial investigation into how a real attacker would break something you care about, and what you should do about it before they get the chance.
 
-## Phase 1: Scoping & Rules of Engagement
+Over the years I have moved away from rigid phase-based methodologies and toward something more recursive. The stages still exist, but they overlap, repeat, and inform each other. Reconnaissance never really ends. Exploitation teaches you what to scan for next. Reporting starts the moment you find something worth explaining. This post is how I actually run an engagement, not how a textbook says I should.
 
-Before touching a keyboard, define the scope. What systems are in scope? What's off-limits? What are the testing windows? Document everything in a formal Rules of Engagement (RoE) document.
+## Scoping: Know What You Are Allowed to Break
 
-## Phase 2: Reconnaissance
+Before I touch anything, the scope has to be tight. Not because paperwork is fun, but because the alternative is a panicked phone call from a client whose production database you just crashed while proving a point.
 
-### Passive Recon
-Gather intelligence without directly interacting with the target. OSINT, DNS records, WHOIS data, social media - all fair game.
+I want to know: which hosts, which users, which applications, which time windows, and which attack paths are fair game. I also want to know what is explicitly off-limits. More importantly, I want to know why. Off-limits systems often sit adjacent to the most interesting paths, and understanding the reasoning helps me avoid collateral damage while still testing the boundary intelligently.
 
-### Active Recon
-Nmap scans, service enumeration, banner grabbing. Now you're directly probing the target, so stay within scope.
+The Rules of Engagement should be a living document. If mid-test you discover that a supposedly out-of-scope subsidiary shares credentials with the in-scope environment, you stop, you tell the client, and you agree on a path forward. Professionals ask permission. Criminals do not.
 
-## Phase 3: Vulnerability Analysis
+## Reconnaissance: Recursive and Skeptical
 
-Map discovered services against known vulnerability databases. Tools like Nessus and OpenVAS help, but manual analysis catches what scanners miss.
+This is where most testers collect facts. I try to collect questions.
 
-## Phase 4: Exploitation
+Recursive reconnaissance means every piece of information you find should prompt another question. You do not stop at "I found an email address." You ask why that email address is discoverable, what it implies about the organisation's naming convention, what other accounts might share that pattern, and whether that exposure matters at all.
 
-This is where tools like Metasploit, Burp Suite, and SQLMap come into play. But exploitation isn't about running scripts - it's about understanding the vulnerability deeply enough to demonstrate real business impact.
+Let me give a few concrete examples.
 
-## Phase 5: Post-Exploitation
+### Email Addresses Are Not Just Email Addresses
 
-What can you access after the initial breach? Can you escalate privileges? Move laterally? Access sensitive data? This phase demonstrates the true risk.
+You found a list of employee emails on a public conference website or a GitHub commit log. Great. But ask why they are public. Is it because marketing intentionally published them? Is it because a developer accidentally committed a contact export? Or is it because the company has no process for reviewing public repositories?
 
-## Phase 6: Reporting
+Each answer points to a different risk. The first might be acceptable. The second is a process failure. The third is a culture problem. The vulnerability is rarely the email itself. The vulnerability is the mechanism that put it there.
 
-The report is the product. Write for two audiences: executives who need to understand risk, and engineers who need to fix the vulnerabilities. Include clear severity ratings, evidence, and remediation guidance.
+### Public IPs Are Not Automatically Bad
 
-A penetration test without a clear, actionable report is just hacking. We're professionals - act like it.`,
+A client once panicked because I reported a public IP pointing to a VPN gateway. They wanted it treated as critical. But the VPN gateway was public by design. Remote employees needed to reach it. The real questions were: is it patched, does it enforce MFA, does it log and alert on brute force attempts, and is it segmented once you are inside?
+
+A public IP is only a finding when something on it is exposed that should not be, or when the thing exposed is configured badly. Otherwise you are reporting architecture, not risk. That distinction matters because it keeps your report credible.
+
+### Ask Why, Then Ask Why Again
+
+The goal of recon is not to build the biggest possible list of assets. It is to build the most accurate mental model of how the target operates, where its trust boundaries are, and which of those trust boundaries look brittle.
+
+Every time you find something, ask:
+
+- Why is this here?
+- Who put it here?
+- Is it supposed to be public?
+- Does it lead somewhere more sensitive?
+- Is the real problem the exposure, or the process that allowed it?
+
+If you keep doing this, you stop finding random vulnerabilities and start finding systemic weaknesses. That is the difference between a tester and an attacker who happens to be billing by the day.
+
+## Scanning: Sometimes Whisper, Sometimes Shout
+
+Once I have a target surface, I scan it. But I do not scan the same way every time. The approach depends on what question I am trying to answer.
+
+### Stealth Scanning: Think Like an Attacker
+
+Stealth scanning is about simulating a real adversary. Slow Nmap sweeps, targeted service probes, avoiding obvious IDS signatures, blending into normal traffic patterns. The goal is to see what an attacker with patience and a low profile can discover without setting off alarms.
+
+This is important because it tests detection, not just defense. A firewall rule might block port 445, but does anyone notice a slow SYN scan across the network over six hours? Does the SOC see the probe? Does the EDR flag the behaviour? If the answer is no, then the organisation is not really defending itself. It is just hoping attackers are loud.
+
+Stealth scanning also teaches you discipline. When you remove the noise, you have to pay attention to small signals. You learn to read banners, infer versions from timing, and spot anomalies that a default Nessus scan would drown out.
+
+### Loud Scanning: Test the Defenses
+
+Then there is loud scanning. Full port sweeps, aggressive service detection, vulnerability scanners firing on all cylinders, directory brute forcing, password spraying with a visible rhythm. This is not how a sophisticated attacker behaves. It is how you find out whether the defensive stack is awake.
+
+Loud scanning answers different questions. Does the WAF block repeated requests? Does the SIEM generate an alert? Does the account lockout policy actually work? Does someone get paged, or does the scan finish in total silence while the client insists they have "24/7 monitoring"?
+
+Both modes are valid. The mistake is using only one. If you only scan stealthily, you might miss broken controls that would have caught a noisy attack. If you only scan loudly, you miss the subtle paths a patient adversary would use. A good test uses both and compares the results.
+
+## Vulnerability Analysis: Tools Plus Judgment
+
+Scanners like Nessus, OpenVAS, and Burp Suite's automated scanner are useful for coverage. They find the obvious stuff fast. But I never trust a scanner score without reading the finding.
+
+A critical Nessus finding might be a false positive, a theoretically exploitable but practically unreachable service, or a legacy system the client already plans to decommission. A medium finding might be trivially exploitable in the client's specific environment. Context is everything.
+
+Manual validation is where the real work happens. I look at the service, the version, the configuration, the surrounding network, and the business process it supports. Then I decide whether the vulnerability is exploitable, what exploitation would actually achieve, and whether it is worth reporting.
+
+## Exploitation: Prove Impact, Not Possibility
+
+Exploitation is not about running Metasploit modules until something pops. It is about demonstrating that a finding has real consequences.
+
+If I find SQL injection, I do not need to dump the entire database. I need to show enough to prove that I could. A few rows of evidence, a screenshot of the query result, and a clear explanation of what an attacker could do next is usually more valuable than a 40GB exfiltration that gets the legal team involved.
+
+If I find a weak password policy, I do not need to crack every hash. I need to show that one weak credential led to a sensitive interface, and explain what that interface controls.
+
+The best exploitation is surgical. It proves the risk without creating unnecessary damage. It also respects the scope. A tester who goes further than necessary is not being thorough. They are being reckless.
+
+## Post-Exploitation: Follow the Value
+
+After the initial foothold, the question becomes: so what?
+
+Can I escalate privileges? Can I move laterally? Can I access sensitive data? Can I persist? Can I reach the domain controller, the production database, or the source code repository? Each answer increases or decreases the severity of the original finding.
+
+This phase also reveals whether the environment has segmentation that actually works. A flat network where one compromised workstation leads to crown jewels is a very different story from a segmented one where the same foothold leads nowhere interesting.
+
+I document everything. Screenshots, commands, timestamps, paths taken. The client should be able to reconstruct exactly how I moved through their environment. If they cannot, the report is not detailed enough.
+
+## Reporting: The Product Is the Fix, Not the Finding
+
+A penetration test without a useful report is just an expensive story. The report is what the client pays for, even if they do not realise it until they read it.
+
+I write for at least two audiences. Executives need the risk in business language: what was found, what it means, what could happen, and what to prioritise. Engineers need the technical detail: exact reproduction steps, affected systems, root causes, and clear instructions on how to fix it.
+
+Severity ratings matter, but they should be contextual. A critical remote code execution on an internal staging server is not the same as a critical remote code execution on the public-facing customer portal. Good reporting explains that context instead of hiding behind a CVSS score.
+
+## Remediation: Quick Fix vs Recommended Fix
+
+This is the part of the report that separates useful consultants from people who just dump vulnerabilities and run.
+
+For every finding, I provide two remediation paths.
+
+### The Quick Fix
+
+The quick fix is what you do today, or this week, because you have budget constraints, change control windows, or the proper fix is genuinely complex. It is temporary. It reduces risk fast without pretending to solve the underlying problem.
+
+Examples:
+
+- **Finding**: Default credentials on an admin panel.
+  - **Quick fix**: Change the password immediately and restrict access by source IP.
+  - **Recommended fix**: Deploy centralised authentication, enforce MFA, and remove the panel from the public internet entirely.
+
+- **Finding**: Unpatched service with a known public exploit.
+  - **Quick fix**: Apply the vendor patch or implement a compensating control such as an IPS signature or WAF rule.
+  - **Recommended fix**: Establish a vulnerability management programme with defined patching SLAs, asset ownership, and exception tracking.
+
+- **Finding**: Sensitive files exposed in a public S3 bucket.
+  - **Quick fix**: Remove the public access control list and rotate any credentials found in the files.
+  - **Recommended fix**: Implement bucket policies by default, enable logging, tag ownership, and run periodic access reviews.
+
+The quick fix is honest about being incomplete. It is not a substitute. It is a bridge.
+
+### The Recommended Fix
+
+The recommended fix is what actually solves the issue. It addresses the root cause, not the symptom. It might take a quarter, a budget cycle, or a full architecture change, but it is the standard the client should be working toward.
+
+When I write a recommended fix, I try to be specific enough to be actionable. "Improve security awareness" is useless. "Deploy phishing-resistant MFA for all remote access and retire SMS-based OTP within 90 days" is useful. The client should know what done looks like.
+
+I also explain why the recommended fix matters. If the quick fix is a bandage, the recommended fix is the surgery. Clients are more likely to prioritise it when they understand what failure mode the bandage will eventually allow.
+
+## The Two Mindsets: Attacker and Professional
+
+A good penetration tester has to hold two mindsets at once.
+
+The attacker mindset is creative, opportunistic, and impatient with assumptions. It asks: where is the weakest point? What did they forget? What would I do if I actually wanted to win? This is the mindset that finds the good stuff.
+
+The professional mindset is disciplined, scoped, and accountable. It asks: am I allowed to do this? Did I document it? Did I minimise harm? Did I explain the risk clearly? This is the mindset that keeps you employed and out of court.
+
+You need both. Pure attacker energy without professionalism is just vandalism with a contract. Pure professionalism without attacker creativity is a compliance checkbox exercise that misses the real risks.
+
+The best testers I know switch between these modes constantly. They think like a criminal when they are probing, and like a consultant when they are writing. They get excited by the break-in and then sober about the consequences.
+
+## Final Thought
+
+Methodology is not there to make penetration testing boring. It is there to make it reliable, repeatable, and useful. A good methodology does not stop you from being creative. It gives you a structure within which creativity can actually produce value for the client.
+
+Test like an attacker. Report like a professional. Fix like you will be the one on call when it breaks.`,
   },
   {
     slug: "iso-27001-implementation-lessons",
