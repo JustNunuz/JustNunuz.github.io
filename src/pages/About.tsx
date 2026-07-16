@@ -45,7 +45,7 @@ export default function About() {
 
               <div className="opacity-0 animate-fade-in-up stagger-2">
                 <p className="text-muted-foreground leading-relaxed">
-                  With extensive experience in pre-sales and post-sales engineering, I don't just implement firewalls or run penetration tests; I bridge the gap between deep technical risk and executive decision-making. My approach is rooted in the "ELI5" philosophy—breaking down the bare elements of security so that stakeholders don't just see a cost, but appreciate the underlying importance of digital resilience
+                  With extensive experience in pre-sales and post-sales engineering, I don't just implement firewalls or run penetration tests; I bridge the gap between deep technical risk and executive decision-making. My approach is rooted in the "ELI5" philosophy-breaking down the bare elements of security so that stakeholders don't just see a cost, but appreciate the underlying importance of digital resilience
                 </p>
               </div>
 
