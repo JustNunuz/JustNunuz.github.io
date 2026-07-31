@@ -14,7 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      threat_cache: {
+        Row: {
+          id: string
+          payload: Json
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          payload: Json
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          payload?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
