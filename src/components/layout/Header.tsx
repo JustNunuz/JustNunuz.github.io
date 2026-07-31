@@ -14,6 +14,7 @@ const navItems = [
   { href: "/", label: "Overview" },
   { href: "/about", label: "whoami" },
   { href: "/work", label: "Tools & Experiments" },
+  { href: "/threat-map", label: "Threat Map" },
   { href: "/blog", label: "Field Notes" },
   { href: "/contact", label: "Reach Out to Me" },
 ];
@@ -24,6 +25,7 @@ const routePrefixes: Record<string, string> = {
   "/blog": "blog",
   "/about": "whoami",
   "/contact": "contact",
+  "/threat-map": "threats",
 };
 
 export function Header() {
