@@ -170,12 +170,13 @@ async function collectThreatFox(): Promise<RawRow[]> {
       seen.add(host);
       const family = titleCase(entry.malware_printable ?? entry.malware ?? "Unknown");
       const port = rawPort ? Number(rawPort) : null;
-      const type = entry.threat_type_desc ?? entry.threat_type ?? "malware infrastructure";
+      const rawType = String(entry.threat_type_desc ?? entry.threat_type ?? "malware infrastructure");
+      const type = rawType.replace(/[_-]+/g, " ").replace(/\bcc\b/gi, "command and control").toLowerCase();
       rows.push({
         ip: host,
         kind: "malware_c2",
         family,
-        detail: `${family} ${String(type).toLowerCase()}${port ? ` on port ${port}` : ""}`,
+        detail: `${family} ${type}${port ? ` on port ${port}` : ""}`,
         port,
         source: "ThreatFox",
         seenAt: entry.first_seen_utc ?? new Date().toISOString(),
