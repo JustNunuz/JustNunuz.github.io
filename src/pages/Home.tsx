@@ -5,7 +5,7 @@ import { CodeDivider } from "@/components/ui/CodeDivider";
 import { CodeLabel } from "@/components/ui/CodeLabel";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { TypingCursor } from "@/components/ui/TypingCursor";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Radar } from "lucide-react";
 
 const stats = [
   { value: "5+", label: "years in tech" },
@@ -107,6 +107,32 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Live Threat Map callout */}
+      <section className="py-12">
+        <div className="container">
+          <Link
+            to="/threat-map"
+            className="group block rounded-lg border border-border bg-card p-6 md:p-8 hover:border-primary/60 transition-colors opacity-0 animate-fade-in-up"
+          >
+            <div className="flex flex-wrap items-center gap-4">
+              <Radar className="h-6 w-6 text-primary shrink-0" />
+              <div className="flex-1 min-w-[240px]">
+                <div className="font-mono text-xs text-primary mb-1">{"// live"}</div>
+                <h2 className="text-xl font-bold text-foreground mb-1">Threat Map</h2>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Malware hosts and command and control nodes that are online right now, pulled from open
+                  threat intelligence feeds and geolocated by IP. Refreshes every 10 minutes.
+                </p>
+              </div>
+              <span className="font-mono text-sm text-muted-foreground group-hover:text-primary transition-colors inline-flex items-center">
+                open map
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </span>
+            </div>
+          </Link>
         </div>
       </section>
 

@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { Seo } from "@/components/Seo";
 import { CodeLabel } from "@/components/ui/CodeLabel";
 import { TechTag } from "@/components/ui/TechTag";
 import { blogPosts } from "@/data/blogPosts";
@@ -88,6 +89,20 @@ export default function BlogPost() {
 
   return (
     <Layout>
+      <Seo
+        title={`${post.title} | JustNunuz Field Notes`}
+        description={post.excerpt}
+        type="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.excerpt,
+          datePublished: post.date,
+          keywords: post.tags.join(", "),
+          author: { "@type": "Person", name: "Nunudzai Mrewa" },
+        }}
+      />
       <section className="pt-20 pb-12 bg-grid">
         <div className="container max-w-3xl">
           {/* Back link */}

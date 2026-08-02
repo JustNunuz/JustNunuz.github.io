@@ -13,10 +13,10 @@ import { Button } from "@/components/ui/button";
 const navItems = [
   { href: "/", label: "Overview" },
   { href: "/about", label: "whoami" },
-  { href: "/work", label: "Tools & Experiments" },
-  { href: "/threat-map", label: "Threat Map" },
-  { href: "/blog", label: "Field Notes" },
-  { href: "/contact", label: "Reach Out to Me" },
+  { href: "/work", label: "Tools" },
+  { href: "/threat-map", label: "Threats" },
+  { href: "/blog", label: "Notes" },
+  { href: "/contact", label: "Contact" },
 ];
 
 const routePrefixes: Record<string, string> = {

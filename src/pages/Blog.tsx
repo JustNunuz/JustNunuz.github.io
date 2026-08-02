@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { Seo } from "@/components/Seo";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { CodeLabel } from "@/components/ui/CodeLabel";
 import { TechTag } from "@/components/ui/TechTag";
@@ -9,6 +10,10 @@ import { ArrowRight } from "lucide-react";
 export default function Blog() {
   return (
     <Layout>
+      <Seo
+        title="Field Notes | JustNunuz"
+        description="Writing about cybersecurity, compliance, and the evolving threat landscape by Nunudzai Mrewa."
+      />
       <section className="pt-20 pb-12 bg-grid">
         <div className="container">
           {/* Page Header */}
@@ -18,6 +23,13 @@ export default function Blog() {
             </h1>
             <p className="text-muted-foreground leading-relaxed">
               You may know it as a blog section. Writing about cybersecurity, compliance, and the evolving threat landscape.
+              {" "}
+              <a
+                href="/rss.xml"
+                className="font-mono text-xs text-primary hover:underline whitespace-nowrap"
+              >
+                {"// rss"}
+              </a>
             </p>
           </div>
         </div>
