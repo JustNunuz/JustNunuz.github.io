@@ -59,13 +59,31 @@ export default function Home() {
       <section className="relative min-h-[60vh] flex items-center bg-grid pt-20 pb-16">
         <div className="container">
           <div className="max-w-3xl opacity-0 animate-fade-in-up">
-            {/* Headline with typing cursor */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              Hi, I'm <span className="text-gradient">Nunudzai Mrewa.</span>
-              <br />
-              <span className="text-muted-foreground">I solve cybersecurity problems</span>
-              <TypingCursor />
-            </h1>
+            {/* Meta label */}
+            <div className="flex items-center gap-3 mb-4">
+              <span className="h-px w-6 bg-primary/30" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary/80">
+                system.overview
+              </span>
+            </div>
+
+            {/* Headline with typing cursor and ghost shadow */}
+            <div className="relative">
+              <h1 className="relative text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+                Hi, I'm <span className="text-gradient">Nunudzai Mrewa.</span>
+                <br />
+                <span className="text-muted-foreground">I solve cybersecurity problems</span>
+                <TypingCursor />
+              </h1>
+              <h1
+                className="absolute top-0 left-0 text-4xl md:text-5xl lg:text-6xl font-bold text-primary/10 blur-sm translate-y-1 select-none pointer-events-none leading-tight"
+                aria-hidden="true"
+              >
+                Hi, I'm Nunudzai Mrewa.
+                <br />
+                I solve cybersecurity problems
+              </h1>
+            </div>
 
             {/* Subheadline */}
             <p className="text-lg text-muted-foreground mb-8 max-w-xl leading-relaxed opacity-0 animate-fade-in-up stagger-1 whitespace-pre-line">
