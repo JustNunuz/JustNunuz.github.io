@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { CodeDivider } from "@/components/ui/CodeDivider";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { TechTag } from "@/components/ui/TechTag";
 import { Calendar, MapPin, Mic, ExternalLink, ArrowRight } from "lucide-react";
