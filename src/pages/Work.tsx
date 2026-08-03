@@ -125,12 +125,11 @@ export default function Work() {
         <div className="container">
           {/* Page Header */}
           <div className="max-w-2xl opacity-0 animate-fade-in-up">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Tools & Experiments
-            </h1>
-            <p className="text-muted-foreground leading-relaxed">
-              I work on a variety of projects mostly focused on security, but spanning my broader interests, from cybersecurity to more niche, single-purpose ideas. Python is my go-to language - I'm proficient in it and genuinely enjoy building with it. They're all linked below if you'd like to explore them in more detail.
-            </p>
+            <PageTitle
+              title="Tools & Experiments"
+              meta="work.experiments"
+              subtitle="I work on a variety of projects mostly focused on security, but spanning my broader interests, from cybersecurity to more niche, single-purpose ideas. Python is my go-to language - I'm proficient in it and genuinely enjoy building with it. They're all linked below if you'd like to explore them in more detail."
+            />
           </div>
         </div>
       </section>
