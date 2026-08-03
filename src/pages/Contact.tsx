@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { CodeDivider } from "@/components/ui/CodeDivider";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { Github, Linkedin, Mail } from "lucide-react";
 
 const socialLinks = [
@@ -38,13 +39,12 @@ export default function Contact() {
       <section className="pt-20 pb-12 bg-grid">
         <div className="container flex flex-col items-center text-center">
           <div className="max-w-2xl">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-               Reach Out to Me
-             </h1>
-            <p className="text-muted-foreground leading-relaxed">
-              Have a project in mind or want to discuss opportunities? 
-              I'm always open to interesting conversations and collaborations.
-            </p>
+            <PageTitle
+              title="Reach Out to Me"
+              meta="system.contact"
+              subtitle="Have a project in mind or want to discuss opportunities? I'm always open to interesting conversations and collaborations."
+              align="center"
+            />
           </div>
         </div>
       </section>

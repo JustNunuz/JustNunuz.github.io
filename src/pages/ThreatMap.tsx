@@ -3,6 +3,7 @@ import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps
 import worldTopo from "world-atlas/countries-110m.json";
 import { Layout } from "@/components/layout/Layout";
 import { CodeDivider } from "@/components/ui/CodeDivider";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { supabase } from "@/integrations/supabase/client";
 import { Activity, Globe, RefreshCw, ShieldAlert, Radio, MapPin, X } from "lucide-react";
 
@@ -127,13 +128,11 @@ export default function ThreatMap() {
       <section className="pt-20 pb-12 bg-grid">
         <div className="container">
           <div className="max-w-2xl opacity-0 animate-fade-in-up">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Threat Map</h1>
-            <p className="text-muted-foreground leading-relaxed">
-              A live view of malicious infrastructure that is currently online, built from open threat
-              intelligence feeds. Each marker is a real host serving malware or acting as a command and
-              control node, geolocated by IP and labelled with the malware family, port and network it
-              sits on. Data refreshes every 10 minutes.
-            </p>
+            <PageTitle
+              title="Threat Map"
+              meta="live.feed"
+              subtitle="A live view of malicious infrastructure that is currently online, built from open threat intelligence feeds. Each marker is a real host serving malware or acting as a command and control node, geolocated by IP and labelled with the malware family, port and network it sits on. Data refreshes every 10 minutes."
+            />
           </div>
         </div>
       </section>

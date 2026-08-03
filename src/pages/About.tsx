@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { CodeDivider } from "@/components/ui/CodeDivider";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { TechTag } from "@/components/ui/TechTag";
 
 const expertise = [
@@ -24,9 +25,7 @@ export default function About() {
         <div className="container">
           {/* Page Header */}
           <div className="max-w-3xl opacity-0 animate-fade-in-up">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-               whoami
-             </h1>
+            <PageTitle title="whoami" meta="system.identity" />
           </div>
         </div>
       </section>

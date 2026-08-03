@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Seo } from "@/components/Seo";
-import { CodeLabel } from "@/components/ui/CodeLabel";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { TechTag } from "@/components/ui/TechTag";
 import { blogPosts } from "@/data/blogPosts";
 import { ArrowLeft } from "lucide-react";
@@ -122,9 +122,7 @@ export default function BlogPost() {
                 <TechTag key={tag}>{tag}</TechTag>
               ))}
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              {post.title}
-            </h1>
+            <PageTitle title={post.title} meta="field.note" className="mb-4" />
             <div className="flex items-center gap-4 font-mono text-sm text-muted-foreground">
               <span>{post.date}</span>
               <span className="text-primary">•</span>

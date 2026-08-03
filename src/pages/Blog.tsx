@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { Seo } from "@/components/Seo";
 import { CodeDivider } from "@/components/ui/CodeDivider";
-import { CodeLabel } from "@/components/ui/CodeLabel";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { TechTag } from "@/components/ui/TechTag";
 import { Link } from "react-router-dom";
 import { blogPosts } from "@/data/blogPosts";
@@ -18,19 +18,21 @@ export default function Blog() {
         <div className="container">
           {/* Page Header */}
           <div className="max-w-3xl opacity-0 animate-fade-in-up">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Field Notes
-            </h1>
-            <p className="text-muted-foreground leading-relaxed">
-              You may know it as a blog section. Writing about cybersecurity, compliance, and the evolving threat landscape.
-              {" "}
-              <a
-                href="/rss.xml"
-                className="font-mono text-xs text-primary hover:underline whitespace-nowrap"
-              >
-                {"// rss"}
-              </a>
-            </p>
+            <PageTitle
+              title="Field Notes"
+              meta="field.notes"
+              subtitle={
+                <>
+                  You may know it as a blog section. Writing about cybersecurity, compliance, and the evolving threat landscape.{" "}
+                  <a
+                    href="/rss.xml"
+                    className="font-mono text-xs text-primary hover:underline whitespace-nowrap"
+                  >
+                    {"// rss"}
+                  </a>
+                </>
+              }
+            />
           </div>
         </div>
       </section>
