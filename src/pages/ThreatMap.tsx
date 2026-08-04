@@ -130,7 +130,8 @@ export default function ThreatMap() {
   }, [events, tick, filtered]);
 
   const perHour = useMemo(() => {
-    if (data?.perHour?.length) return data.perHour;
+    const server = data?.perHour ?? [];
+    if (server.length && server.some((b) => b.count > 0)) return server;
     const now = Date.now();
     return Array.from({ length: 24 }, (_, i) => {
       const start = now - (23 - i) * 3600_000;
