@@ -56,7 +56,7 @@ export function Header() {
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
           </span>
           <span>{`${prefix}@justnunuz`}</span>
-          <span className="animate-caret-blink text-primary">_</span>
+          <span className="animate-blink text-primary">_</span>
         </Link>
 
         {/* Desktop Navigation */}
