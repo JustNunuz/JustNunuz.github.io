@@ -138,20 +138,27 @@ export default function ThreatMap() {
     [data, allEvents],
   );
 
-  const perHour = useMemo(() => {
-    const server = data?.perHour ?? [];
-    if (server.length && server.some((b) => b.count > 0)) return server;
+  const ageBuckets = useMemo(() => {
     const now = Date.now();
-    return Array.from({ length: 24 }, (_, i) => {
-      const start = now - (23 - i) * 3600_000;
-      const end = start + 3600_000;
+    const defs: { label: string; maxDays: number }[] = [
+      { label: "24h", maxDays: 1 },
+      { label: "7d", maxDays: 7 },
+      { label: "30d", maxDays: 30 },
+      { label: "90d", maxDays: 90 },
+      { label: "1y", maxDays: 365 },
+      { label: "older", maxDays: Infinity },
+    ];
+    return defs.map((d, i) => {
+      const min = i === 0 ? 0 : defs[i - 1].maxDays;
       const count = allEvents.filter((e) => {
         const t = parseTs(e.seenAt);
-        return Number.isFinite(t) && t >= start && t < end;
+        if (!Number.isFinite(t)) return false;
+        const days = (now - t) / 86_400_000;
+        return days >= min && days < d.maxDays;
       }).length;
-      return { hour: new Date(start).toISOString(), count };
+      return { label: d.label, count };
     });
-  }, [data, allEvents]);
+  }, [allEvents]);
 
   const pulseIndex = events.length ? tick % events.length : 0;
   const detail = pinned ?? active;
@@ -292,30 +299,40 @@ export default function ThreatMap() {
             <div className="md:col-span-2 rounded-lg border border-border bg-card p-4">
               <div className="flex items-center justify-between mb-3">
                 <div className="font-mono text-[10px] uppercase tracking-wider text-primary">
-                  indicators per hour, last 24h
+                  age of indicator, first seen
                 </div>
                 <div className="font-mono text-[10px] text-muted-foreground">
-                  {perHour.reduce((a, b) => a + b.count, 0)} timestamped
+                  {ageBuckets.reduce((a, b) => a + b.count, 0)} dated
                 </div>
               </div>
-              <div className="flex items-end gap-1 h-16">
-                {perHour.map((bucket) => {
-                  const max = Math.max(1, ...perHour.map((b) => b.count));
-                  const pct = (bucket.count / max) * 100;
+              <div className="flex items-end gap-2 h-16">
+                {ageBuckets.map((bucket) => {
+                  const max = Math.max(1, ...ageBuckets.map((b) => b.count));
                   return (
-                    <div
-                      key={bucket.hour}
-                      title={`${new Date(bucket.hour).getUTCHours()}:00 UTC - ${bucket.count} indicators`}
-                      className="flex-1 rounded-sm bg-primary/70 hover:bg-primary transition-colors"
-                      style={{ height: `${Math.max(4, pct)}%` }}
-                    />
+                    <div key={bucket.label} className="flex-1 flex flex-col justify-end h-full">
+                      <span className="font-mono text-[9px] text-muted-foreground text-center mb-1">
+                        {bucket.count}
+                      </span>
+                      <div
+                        title={`${bucket.count} indicators first seen within ${bucket.label}`}
+                        className="w-full rounded-sm bg-primary/70 hover:bg-primary transition-colors"
+                        style={{ height: `${Math.max(3, (bucket.count / max) * 100)}%` }}
+                      />
+                    </div>
                   );
                 })}
               </div>
               <div className="flex justify-between font-mono text-[9px] text-muted-foreground mt-2">
-                <span>24h ago</span>
-                <span>now</span>
+                {ageBuckets.map((b) => (
+                  <span key={b.label} className="flex-1 text-center">
+                    {b.label}
+                  </span>
+                ))}
               </div>
+              <p className="font-mono text-[9px] text-muted-foreground mt-2 leading-relaxed">
+                {"// "}long tails are normal, C2 addresses often stay online for months while malware
+                URLs rotate within days.
+              </p>
             </div>
           </div>
 
