@@ -28,6 +28,15 @@ const routePrefixes: Record<string, string> = {
   "/threat-map": "threats",
 };
 
+const routePaths: Record<string, string> = {
+  "/": "~",
+  "/about": "~/whoami",
+  "/work": "~/work",
+  "/threat-map": "~/threats",
+  "/blog": "~/notes",
+  "/contact": "~/contact",
+};
+
 export function Header() {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -40,9 +49,14 @@ export function Header() {
         {/* Logo */}
         <Link 
           to="/" 
-          className="font-mono text-sm font-medium text-primary hover:opacity-80 transition-opacity"
+          className="group flex items-center gap-2 font-mono text-sm font-medium text-primary hover:opacity-80 transition-opacity"
         >
-          {`${prefix}@justnunuz`}
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-70" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+          </span>
+          <span>{`${prefix}@justnunuz`}</span>
+          <span className="animate-blink text-primary">_</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -52,11 +66,14 @@ export function Header() {
               key={item.href}
               to={item.href}
               className={cn(
-                "font-mono text-sm transition-colors hover:text-primary link-underline",
+                "group relative font-mono text-sm transition-colors hover:text-primary link-underline",
                 "text-muted-foreground"
               )}
             >
               {item.label}
+              <span className="pointer-events-none absolute -bottom-5 left-0 whitespace-nowrap text-[10px] text-primary/70 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                {routePaths[item.href]}
+              </span>
             </Link>
           ))}
         </nav>
@@ -86,6 +103,9 @@ export function Header() {
                   >
                     <span className="text-primary mr-2">→</span>
                     {item.label}
+                    <span className="ml-2 text-[11px] text-muted-foreground/60">
+                      {routePaths[item.href]}
+                    </span>
                   </Link>
                 </SheetClose>
               ))}
