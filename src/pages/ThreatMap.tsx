@@ -525,15 +525,22 @@ export default function ThreatMap() {
           {/* Operational context */}
           <div className="mt-12">
             <CodeDivider label="How I Use This" />
+            <p className="mb-4 text-sm text-muted-foreground leading-relaxed max-w-3xl">
+              A payload served from a bare IP address with no domain in front of it is already a
+              signal: legitimate software distribution buys a hostname and a certificate, throwaway
+              infrastructure does not. So I read this feed for three things, which networks keep
+              reappearing, which ports the traffic hides in, and whether anything is being staged on
+              providers close to home.
+            </p>
             <div className="grid gap-4 md:grid-cols-3 font-mono text-xs">
               {[
                 {
                   title: "blocklist hygiene",
-                  body: "Live C2 addresses get checked against perimeter blocklists. If a node is active in the wild and not blocked at the firewall, that gap is the finding.",
+                  body: "Live C2 addresses get checked against perimeter blocklists and egress rules. If a workstation can still reach an active control node, that gap is the finding, not the malware.",
                 },
                 {
-                  title: "regional exposure",
-                  body: "Filtering to Africa hosted infrastructure shows when local providers are being used for staging, which usually means a compromised VPS rather than a bought one.",
+                  title: "asn reputation",
+                  body: "Repeat offender ASNs matter more than single IPs. When the same network keeps appearing across batches, the whole block earns a lower trust score in my rules.",
                 },
                 {
                   title: "detection tuning",
