@@ -437,11 +437,95 @@ export default function ThreatMap() {
             </div>
           </div>
 
+          {/* Longer form briefing */}
+          <div className="mt-16">
+            <CodeDivider label="Threat Briefing" />
+            <div className="grid gap-8 lg:grid-cols-3">
+              <div className="lg:col-span-2 space-y-6 text-sm text-muted-foreground leading-relaxed">
+                <p>
+                  <span className="font-mono text-primary">{"// "}what you are actually looking at</span>
+                  <br />
+                  Every dot on the map is a machine that is online right now and doing something it
+                  should not be doing. Some are hosting a payload behind a normal looking URL. Others
+                  are command and control nodes waiting for an infected laptop somewhere to call home.
+                  Nothing here is theoretical. These are addresses that were confirmed active within
+                  the last few hours by researchers who submit to open abuse databases.
+                </p>
+                <p>
+                  <span className="font-mono text-primary">{"// "}why the geography lies a little</span>
+                  <br />
+                  An IP address tells you where a server sits, not where the operator sits. A cluster
+                  in Amsterdam or Frankfurt usually means cheap bulletproof hosting, not Dutch or
+                  German attackers. When something shows up on a small African provider it is almost
+                  always a compromised virtual machine that someone forgot to patch, quietly rented
+                  out to whoever wants a staging box. So read the map as infrastructure, never as
+                  attribution.
+                </p>
+                <p>
+                  <span className="font-mono text-primary">{"// "}the lifecycle of one of these hosts</span>
+                  <br />
+                  A host appears, serves a loader for a few days, gets flagged, then either goes dark
+                  or gets rotated to a new address on the same network. That rotation is the reason
+                  static blocklists age badly. What survives is the pattern: the same autonomous
+                  system, the same ports, the same malware family, wearing a new IP. Tracking the
+                  network is durable. Tracking the address is not.
+                </p>
+                <p>
+                  <span className="font-mono text-primary">{"// "}what to do with it on a Monday morning</span>
+                  <br />
+                  Pull the active C2 addresses and test them against your egress filtering. If a
+                  workstation can open a connection to a known control node, you do not have a
+                  malware problem yet, you have a network policy problem, which is much cheaper to
+                  fix. Then look at the ports. Most of this traffic is not exotic, it hides in
+                  ordinary web ports because that is what firewalls are told to allow.
+                </p>
+                <p>
+                  <span className="font-mono text-primary">{"// "}the honest limitation</span>
+                  <br />
+                  Open feeds only see what someone bothered to report. Targeted intrusions, the kind
+                  that matter most to a bank or a telco, rarely show up in public data at all. Treat
+                  this as ambient weather, useful for understanding the climate you operate in, not
+                  as a radar covering your own building.
+                </p>
+              </div>
+
+              <div className="space-y-4 font-mono text-xs">
+                <div className="rounded-lg border border-border bg-card p-4">
+                  <div className="text-primary mb-3">{"// "}glossary</div>
+                  <dl className="space-y-3">
+                    {[
+                      ["c2", "Command and control. The server an infected machine talks to for instructions."],
+                      ["loader", "Small first stage payload whose only job is to fetch the real malware."],
+                      ["asn", "The network block an IP belongs to. More stable than the IP itself."],
+                      ["family", "The malware lineage, for example a known stealer or banking trojan."],
+                      ["ioc", "Indicator of compromise. An address, hash or domain you can hunt for."],
+                    ].map(([term, def]) => (
+                      <div key={term}>
+                        <dt className="text-foreground">{term}</dt>
+                        <dd className="text-muted-foreground leading-relaxed">{def}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+                <div className="rounded-lg border border-border bg-card p-4">
+                  <div className="text-primary mb-3">{"// "}reading order</div>
+                  <ol className="space-y-2 text-muted-foreground">
+                    <li>1. filter by kind to separate hosting from control</li>
+                    <li>2. check which networks repeat across batches</li>
+                    <li>3. note the ports, then compare to your egress rules</li>
+                    <li>4. keep the family names, discard the addresses</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <p className="mt-10 font-mono text-[11px] text-muted-foreground leading-relaxed">
             {"// "}sources: {(data?.sources ?? ["URLhaus", "ThreatFox", "Feodo Tracker"]).join(", ")} by
             abuse.ch, geolocated with ip-api.com. IPs are partially masked. This is open threat
             intelligence shown for research and awareness, not a blocklist.
           </p>
+
         </div>
       </section>
     </Layout>
