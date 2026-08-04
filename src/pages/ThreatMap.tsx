@@ -63,6 +63,8 @@ function maskIp(ip: string) {
   return parts.length === 4 ? `${parts[0]}.${parts[1]}.${parts[2]}.x` : ip;
 }
 
+const SOUTHERN_AFRICA = new Set(["ZW", "ZA", "ZM", "MZ", "BW", "NA", "MW", "LS", "SZ", "AO"]);
+
 function parseTs(value?: string) {
   if (!value) return NaN;
   const v = value.trim();
@@ -128,6 +130,13 @@ export default function ThreatMap() {
     const start = (tick * 3) % events.length;
     return Array.from({ length: Math.min(12, events.length) }, (_, i) => events[(start + i) % events.length]);
   }, [events, tick, filtered]);
+
+  const southernCount = useMemo(
+    () =>
+      data?.totals.southernAfrica ??
+      allEvents.filter((e) => SOUTHERN_AFRICA.has(e.countryCode)).length,
+    [data, allEvents],
+  );
 
   const perHour = useMemo(() => {
     const server = data?.perHour ?? [];
@@ -272,7 +281,7 @@ export default function ThreatMap() {
                 southern africa
               </div>
               <div className="text-2xl font-bold text-foreground">
-                {data?.totals.southernAfrica ?? 0}
+                {southernCount}
               </div>
               <p className="font-mono text-[10px] text-muted-foreground mt-1 leading-relaxed">
                 indicators hosted in ZW, ZA, ZM, MZ, BW, NA, MW, LS, SZ, AO. click to filter the
