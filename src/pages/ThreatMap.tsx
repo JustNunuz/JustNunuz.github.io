@@ -37,9 +37,13 @@ interface FeedPayload {
     botnetC2: number;
     countries: number;
     africa?: number;
+    southernAfrica?: number;
   };
   sources?: string[];
+  perHour?: { hour: string; count: number }[];
   generatedAt: string;
+  cached?: boolean;
+  stale?: boolean;
 }
 
 const kindLabel: Record<Kind, string> = {
@@ -57,6 +61,11 @@ const kindColor: Record<Kind, string> = {
 function maskIp(ip: string) {
   const parts = ip.split(".");
   return parts.length === 4 ? `${parts[0]}.${parts[1]}.${parts[2]}.x` : ip;
+}
+
+function shortenAsn(value?: string) {
+  if (!value) return "unknown network";
+  return value.length > 42 ? `${value.slice(0, 42)}...` : value;
 }
 
 export default function ThreatMap() {
@@ -113,6 +122,20 @@ export default function ThreatMap() {
     const start = (tick * 3) % events.length;
     return Array.from({ length: Math.min(12, events.length) }, (_, i) => events[(start + i) % events.length]);
   }, [events, tick, filtered]);
+
+  const perHour = useMemo(() => {
+    if (data?.perHour?.length) return data.perHour;
+    const now = Date.now();
+    return Array.from({ length: 24 }, (_, i) => {
+      const start = now - (23 - i) * 3600_000;
+      const end = start + 3600_000;
+      const count = allEvents.filter((e) => {
+        const t = new Date(e.seenAt).getTime();
+        return Number.isFinite(t) && t >= start && t < end;
+      }).length;
+      return { hour: new Date(start).toISOString(), count };
+    });
+  }, [data, allEvents]);
 
   const pulseIndex = events.length ? tick % events.length : 0;
   const detail = pinned ?? active;
@@ -222,6 +245,64 @@ export default function ThreatMap() {
             </div>
           )}
 
+          {data?.stale && (
+            <div className="rounded-lg border border-primary/40 bg-primary/5 p-3 mb-6 font-mono text-[11px] text-primary">
+              {"// "}upstream feeds did not answer on this pass, showing the last cached batch from{" "}
+              {new Date(data.generatedAt).toUTCString()}.
+            </div>
+          )}
+
+          {/* Southern Africa callout */}
+          <div className="grid gap-4 md:grid-cols-3 mb-6">
+            <button
+              type="button"
+              onClick={() => setAfricaOnly((v) => !v)}
+              className={`md:col-span-1 text-left rounded-lg border p-4 transition-colors ${
+                africaOnly ? "border-primary" : "border-border hover:border-primary/60"
+              } bg-card`}
+            >
+              <div className="font-mono text-[10px] uppercase tracking-wider text-primary mb-2">
+                southern africa
+              </div>
+              <div className="text-2xl font-bold text-foreground">
+                {data?.totals.southernAfrica ?? 0}
+              </div>
+              <p className="font-mono text-[10px] text-muted-foreground mt-1 leading-relaxed">
+                indicators hosted in ZW, ZA, ZM, MZ, BW, NA, MW, LS, SZ, AO. click to filter the
+                whole continent.
+              </p>
+            </button>
+
+            <div className="md:col-span-2 rounded-lg border border-border bg-card p-4">
+              <div className="flex items-center justify-between mb-3">
+                <div className="font-mono text-[10px] uppercase tracking-wider text-primary">
+                  indicators per hour, last 24h
+                </div>
+                <div className="font-mono text-[10px] text-muted-foreground">
+                  {perHour.reduce((a, b) => a + b.count, 0)} timestamped
+                </div>
+              </div>
+              <div className="flex items-end gap-1 h-16">
+                {perHour.map((bucket) => {
+                  const max = Math.max(1, ...perHour.map((b) => b.count));
+                  const pct = (bucket.count / max) * 100;
+                  return (
+                    <div
+                      key={bucket.hour}
+                      title={`${new Date(bucket.hour).getUTCHours()}:00 UTC - ${bucket.count} indicators`}
+                      className="flex-1 rounded-sm bg-primary/70 hover:bg-primary transition-colors"
+                      style={{ height: `${Math.max(4, pct)}%` }}
+                    />
+                  );
+                })}
+              </div>
+              <div className="flex justify-between font-mono text-[9px] text-muted-foreground mt-2">
+                <span>24h ago</span>
+                <span>now</span>
+              </div>
+            </div>
+          </div>
+
           {error && (
             <div className="rounded-lg border border-destructive/40 bg-card p-4 font-mono text-sm text-destructive mb-8">
               {error}
@@ -229,7 +310,8 @@ export default function ThreatMap() {
           )}
 
           {/* Map */}
-          <div className="relative rounded-lg border border-border bg-card overflow-hidden">
+          <div className="relative rounded-lg border border-border bg-card overflow-x-auto md:overflow-hidden">
+            <div className="min-w-[640px] md:min-w-0">
             <ComposableMap
               projection="geoEqualEarth"
               projectionConfig={{ scale: 165 }}
@@ -282,6 +364,7 @@ export default function ThreatMap() {
                 </Marker>
               ))}
             </ComposableMap>
+            </div>
 
             {detail && (
               <div className="absolute bottom-3 left-3 max-w-xs rounded border border-primary/40 bg-background/95 backdrop-blur p-3 font-mono text-[11px] space-y-0.5">
@@ -312,7 +395,7 @@ export default function ThreatMap() {
               </div>
             )}
 
-            <div className="absolute top-3 right-3 flex flex-wrap justify-end gap-3 font-mono text-[10px] text-muted-foreground">
+            <div className="hidden md:flex absolute top-3 right-3 flex-wrap justify-end gap-3 font-mono text-[10px] text-muted-foreground">
               {(Object.keys(kindLabel) as Kind[]).map((k) => (
                 <button
                   key={k}
@@ -326,6 +409,22 @@ export default function ThreatMap() {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Mobile legend */}
+          <div className="md:hidden flex flex-wrap gap-4 mt-3 font-mono text-[10px] text-muted-foreground">
+            {(Object.keys(kindLabel) as Kind[]).map((k) => (
+              <button
+                key={k}
+                onClick={() => setKindFilter((v) => (v === k ? null : k))}
+                className={`flex items-center gap-1 transition-colors ${
+                  kindFilter === k ? "text-foreground" : ""
+                }`}
+              >
+                <span className="h-2 w-2 rounded-full inline-block" style={{ background: kindColor[k] }} />
+                {kindLabel[k].toLowerCase()}
+              </button>
+            ))}
           </div>
 
           {/* Live feed + breakdowns */}
@@ -349,10 +448,22 @@ export default function ThreatMap() {
                       className="h-1.5 w-1.5 rounded-full shrink-0"
                       style={{ background: kindColor[event.kind] }}
                     />
-                    <span className="text-primary w-28 shrink-0">{maskIp(event.ip)}</span>
-                    <span className="text-muted-foreground w-10 shrink-0">{event.countryCode}</span>
-                    <span className="text-foreground truncate">{event.detail}</span>
-                    <span className="text-muted-foreground ml-auto shrink-0 hidden sm:inline">
+                    <span className="text-primary w-28 shrink-0">
+                      {maskIp(event.ip)}
+                      {event.port ? <span className="text-muted-foreground">:{event.port}</span> : null}
+                    </span>
+                    <span className="text-muted-foreground w-8 shrink-0">{event.countryCode}</span>
+                    <span
+                      className="w-32 shrink-0 truncate"
+                      style={{ color: kindColor[event.kind] }}
+                      title={event.family}
+                    >
+                      {event.family && event.family !== "Unclassified" ? event.family : "unlabelled"}
+                    </span>
+                    <span className="text-muted-foreground truncate" title={event.asn ?? event.isp}>
+                      {shortenAsn(event.asn ?? event.isp)}
+                    </span>
+                    <span className="text-muted-foreground/70 ml-auto shrink-0 hidden lg:inline">
                       {kindLabel[event.kind]}
                     </span>
                   </button>
