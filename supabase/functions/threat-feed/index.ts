@@ -14,6 +14,8 @@ const AFRICA_CODES = new Set([
   "GH", "UG", "RW", "ET", "EG", "MA", "TN", "DZ", "SN", "CI", "CM", "CD", "MU",
 ]);
 
+const SOUTHERN_AFRICA = new Set(["ZW", "ZA", "ZM", "MZ", "BW", "NA", "MW", "LS", "SZ", "AO"]);
+
 type Kind = "malware_url" | "botnet_c2" | "malware_c2";
 
 interface RawRow {
@@ -47,6 +49,13 @@ interface GeoResult {
   isp?: string;
   as?: string;
   query: string;
+}
+
+function normalizeTs(value?: string) {
+  if (!value) return new Date().toISOString();
+  const v = value.trim();
+  const t = Date.parse(/[TZ]/.test(v) ? v : `${v.replace(" ", "T")}Z`);
+  return Number.isFinite(t) ? new Date(t).toISOString() : new Date().toISOString();
 }
 
 function titleCase(value: string) {
@@ -119,9 +128,9 @@ async function collectUrlhaus(): Promise<RawRow[]> {
           : `${threat} payload host`,
         port,
         source: "URLhaus",
-        seenAt: String(entry.dateadded ?? new Date().toISOString()),
+        seenAt: normalizeTs(entry.dateadded ? String(entry.dateadded) : undefined),
       });
-      if (rows.length >= 110) break;
+      if (rows.length >= 150) break;
     }
     return rows;
   } catch (err) {
@@ -135,7 +144,7 @@ async function collectFeodo(): Promise<RawRow[]> {
     const res = await fetch("https://feodotracker.abuse.ch/downloads/ipblocklist.json");
     if (!res.ok) return [];
     const data = await res.json() as Array<Record<string, string>>;
-    return data.slice(0, 70).filter((row) => IPV4.test(row.ip_address ?? "")).map((row) => {
+    return data.filter((row) => IPV4.test(row.ip_address ?? "")).map((row) => {
       const family = titleCase(row.malware ?? "Botnet");
       const port = row.port ? Number(row.port) : null;
       return {
@@ -145,7 +154,7 @@ async function collectFeodo(): Promise<RawRow[]> {
         detail: `${family} command and control${port ? ` on port ${port}` : ""}`,
         port,
         source: "Feodo Tracker",
-        seenAt: row.last_online ?? row.first_seen ?? new Date().toISOString(),
+        seenAt: normalizeTs(row.last_online ?? row.first_seen),
       };
     });
   } catch (err) {
@@ -179,9 +188,9 @@ async function collectThreatFox(): Promise<RawRow[]> {
         detail: `${family} ${type}${port ? ` on port ${port}` : ""}`,
         port,
         source: "ThreatFox",
-        seenAt: entry.first_seen_utc ?? new Date().toISOString(),
+        seenAt: normalizeTs(entry.first_seen_utc),
       });
-      if (rows.length >= 90) break;
+      if (rows.length >= 150) break;
     }
     return rows;
   } catch (err) {
@@ -233,6 +242,19 @@ async function buildPayload() {
     });
   }
 
+  // Cap indicators per country so one heavily hosted ASN cannot dominate the map
+  const MAX_PER_COUNTRY = 12;
+  const perCountry: Record<string, number> = {};
+  const balanced: ThreatEvent[] = [];
+  for (const e of events) {
+    const n = perCountry[e.countryCode] ?? 0;
+    if (n >= MAX_PER_COUNTRY) continue;
+    perCountry[e.countryCode] = n + 1;
+    balanced.push(e);
+  }
+  events.length = 0;
+  events.push(...balanced);
+
   const byCountry: Record<string, number> = {};
   const byFamily: Record<string, number> = {};
   for (const e of events) {
@@ -241,6 +263,18 @@ async function buildPayload() {
       byFamily[e.family] = (byFamily[e.family] ?? 0) + 1;
     }
   }
+  // Indicators per hour over the last 24h, from the feed timestamps
+  const now = Date.now();
+  const hourly = Array.from({ length: 24 }, (_, i) => {
+    const start = now - (23 - i) * 3600_000;
+    const end = start + 3600_000;
+    const count = events.filter((e) => {
+      const t = new Date(e.seenAt).getTime();
+      return Number.isFinite(t) && t >= start && t < end;
+    }).length;
+    return { hour: new Date(start).toISOString(), count };
+  });
+
   const rank = (obj: Record<string, number>, limit: number) =>
     Object.entries(obj).sort((a, b) => b[1] - a[1]).slice(0, limit);
 
@@ -254,7 +288,9 @@ async function buildPayload() {
       botnetC2: events.filter((e) => e.kind !== "malware_url").length,
       countries: Object.keys(byCountry).length,
       africa: events.filter((e) => e.region === "africa").length,
+      southernAfrica: events.filter((e) => SOUTHERN_AFRICA.has(e.countryCode)).length,
     },
+    perHour: hourly,
     sources: ["URLhaus", "ThreatFox", "Feodo Tracker"],
     generatedAt: new Date().toISOString(),
   };
@@ -278,7 +314,8 @@ Deno.serve(async (req) => {
       .maybeSingle();
 
     const fresh = cached && Date.now() - new Date(cached.updated_at).getTime() < CACHE_TTL_MS;
-    const cachedHasFamilies = cached && Array.isArray((cached.payload as { topFamilies?: unknown[] })?.topFamilies);
+    const cachedHasFamilies =
+      cached && Array.isArray((cached.payload as { perHour?: unknown[] })?.perHour);
 
     if (fresh && cachedHasFamilies) {
       return new Response(JSON.stringify({ ...cached.payload, cached: true }), {
