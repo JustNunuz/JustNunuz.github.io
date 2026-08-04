@@ -28,13 +28,13 @@ const routePrefixes: Record<string, string> = {
   "/threat-map": "threats",
 };
 
-const routePaths: Record<string, string> = {
-  "/": "~",
-  "/about": "~/whoami",
-  "/work": "~/work",
-  "/threat-map": "~/threats",
-  "/blog": "~/notes",
-  "/contact": "~/contact",
+const routeHints: Record<string, string> = {
+  "/": "// start here",
+  "/about": "// about me",
+  "/work": "// projects built",
+  "/threat-map": "// threat map",
+  "/blog": "// blog posts",
+  "/contact": "// reach out",
 };
 
 export function Header() {
@@ -60,7 +60,7 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-12">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -71,8 +71,8 @@ export function Header() {
               )}
             >
               {item.label}
-              <span className="pointer-events-none absolute -bottom-5 left-0 whitespace-nowrap text-[10px] text-primary/70 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                {routePaths[item.href]}
+              <span className="pointer-events-none absolute -bottom-5 left-0 whitespace-nowrap text-[10px] text-primary/70 opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0">
+                {routeHints[item.href]}
               </span>
             </Link>
           ))}
@@ -104,7 +104,7 @@ export function Header() {
                     <span className="text-primary mr-2">→</span>
                     {item.label}
                     <span className="ml-2 text-[11px] text-muted-foreground/60">
-                      {routePaths[item.href]}
+                      {routeHints[item.href]}
                     </span>
                   </Link>
                 </SheetClose>
