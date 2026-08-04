@@ -51,6 +51,13 @@ interface GeoResult {
   query: string;
 }
 
+function normalizeTs(value?: string) {
+  if (!value) return new Date().toISOString();
+  const v = value.trim();
+  const t = Date.parse(/[TZ]/.test(v) ? v : `${v.replace(" ", "T")}Z`);
+  return Number.isFinite(t) ? new Date(t).toISOString() : new Date().toISOString();
+}
+
 function titleCase(value: string) {
   return value
     .replace(/[_-]+/g, " ")
@@ -121,7 +128,7 @@ async function collectUrlhaus(): Promise<RawRow[]> {
           : `${threat} payload host`,
         port,
         source: "URLhaus",
-        seenAt: String(entry.dateadded ?? new Date().toISOString()),
+        seenAt: normalizeTs(entry.dateadded ? String(entry.dateadded) : undefined),
       });
       if (rows.length >= 150) break;
     }
@@ -147,7 +154,7 @@ async function collectFeodo(): Promise<RawRow[]> {
         detail: `${family} command and control${port ? ` on port ${port}` : ""}`,
         port,
         source: "Feodo Tracker",
-        seenAt: row.last_online ?? row.first_seen ?? new Date().toISOString(),
+        seenAt: normalizeTs(row.last_online ?? row.first_seen),
       };
     });
   } catch (err) {
@@ -181,7 +188,7 @@ async function collectThreatFox(): Promise<RawRow[]> {
         detail: `${family} ${type}${port ? ` on port ${port}` : ""}`,
         port,
         source: "ThreatFox",
-        seenAt: entry.first_seen_utc ?? new Date().toISOString(),
+        seenAt: normalizeTs(entry.first_seen_utc),
       });
       if (rows.length >= 150) break;
     }

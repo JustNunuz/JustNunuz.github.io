@@ -63,6 +63,12 @@ function maskIp(ip: string) {
   return parts.length === 4 ? `${parts[0]}.${parts[1]}.${parts[2]}.x` : ip;
 }
 
+function parseTs(value?: string) {
+  if (!value) return NaN;
+  const v = value.trim();
+  return Date.parse(/[TZ]/.test(v) ? v : `${v.replace(" ", "T")}Z`);
+}
+
 function shortenAsn(value?: string) {
   if (!value) return "unknown network";
   return value.length > 42 ? `${value.slice(0, 42)}...` : value;
@@ -130,7 +136,7 @@ export default function ThreatMap() {
       const start = now - (23 - i) * 3600_000;
       const end = start + 3600_000;
       const count = allEvents.filter((e) => {
-        const t = new Date(e.seenAt).getTime();
+        const t = parseTs(e.seenAt);
         return Number.isFinite(t) && t >= start && t < end;
       }).length;
       return { hour: new Date(start).toISOString(), count };
