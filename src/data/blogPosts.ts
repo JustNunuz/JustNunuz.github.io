@@ -10,6 +10,101 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "whatsapp-windows-unpatched-two-years-later",
+    title: "The Unpatched Vulnerability in Your Pocket: Why Trust Is the Biggest Attack Vector",
+    excerpt: "Two years after I first demoed it at PyCon Africa, the WhatsApp for Windows script execution flaw is still unpatched. A look back at Payload Paradise, and what it says about the trust we hand to the apps in our pocket.",
+    date: "2026-08-05",
+    readTime: "9 min read",
+    tags: ["WhatsApp", "Windows", "Python", "Payload Paradise", "Trust"],
+    content: `If you had to name the applications you trust most on your devices, what would they be?
+
+For over two billion people, one of those answers is almost certainly WhatsApp. We use it for everything. Coordinating with family. Sharing sensitive documents with colleagues. Sending contracts, IDs, boarding passes, medical results. Staying connected across borders and time zones.
+
+Because we trust the application, we implicitly trust the files we receive through it.
+
+And that is exactly where the problem begins.
+
+## Two Years On, Still Unpatched
+
+Two years ago I stood on a stage at PyCon Africa and walked a room full of engineers through a vulnerability in WhatsApp for Windows. I published a companion repository called **Payload Paradise** as a proof of concept, showing the different ways the flaw could be abused.
+
+I assumed, like most people in the room did, that within a release cycle or two it would be quietly patched. A footnote. A story I would retell as "remember when."
+
+It is 2026. The flaw is still there.
+
+Since early 2024 this issue has sat in plain sight. The vendor's response has been to decline a direct patch and lean on what they call "user caution" instead of expanding their client-side blocklists.
+
+When security relies entirely on an end user never making a mistake, the system is not secure. It is theatre.
+
+## The Illusion of Safety
+
+We have all been trained to spot the obvious stuff. If a stranger sends you a file called invoice.exe or tax_return.bat, alarm bells go off. Security vendors know this. Messaging platforms know this. That is why WhatsApp explicitly blocks dangerous file formats like .exe, .bat, and .scr from being easily opened.
+
+What it does not block, and does not warn about, are Python script extensions. Specifically **.pyz** (Python ZIP applications) and **.pyzw**.
+
+If the target has Python installed on their Windows machine, clicking "Open" on a .pyz file from inside a chat executes the embedded script immediately.
+
+The .pyzw variant is worse. It runs entirely in the background. No command prompt window flashes. No visible signal that anything has happened at all.
+
+## A Cascade of Behavioural Failures
+
+The real danger here is not just that WhatsApp lets the file open. It is the cascade of behavioural failures that happen across the operating system the moment that file executes.
+
+When a payload is delivered through this channel, it exploits the "halo effect" of the trusted application:
+
+1. **Windows Defender is bypassed.** Defender leans heavily on file signatures and metadata. Because WhatsApp initiates the execution and does not provide enough metadata for Defender to reason about, real time protection often lets it slide.
+2. **UAC stays silent.** User Account Control does not prompt for admin permission when these files execute. The content inherits the trust of its origin.
+3. **Antivirus tools miss the mark.** Traditional AV struggles to intercept the execution or block outbound payloads such as reverse shells, because deep packet inspection is not consistently applied to traffic that originates from a highly trusted parent process.
+
+The front door is not just unlocked. The security guards are holding it open and smiling at whoever walks through.
+
+## Welcome to Payload Paradise
+
+Back in 2024 I wanted to see exactly what the worst case looked like. How much damage could realistically be done with a single click inside a trusted chat window?
+
+To find out I built the proof of concept I called **Payload Paradise**. The rule I set for myself was simple. Standard Python libraries only. No exotic dependencies. Nothing that would fail inside a locked down corporate sandbox. If it needed pip, it did not count.
+
+The results were alarming then. They are more alarming now, because nothing about the underlying flaw has changed.
+
+I was able to trigger:
+
+1. **Silent data exfiltration.** Ripping saved Wi-Fi passwords and system environment variables, sending them out over ordinary HTTP that corporate firewalls happily ignored.
+2. **Reverse TCP connections.** Handing complete remote command line control of the machine to an attacker sitting on the other end.
+3. **Ransomware simulations.** Rapid localised file encryption that locked down documents in the user's profile before they realised what had happened.
+4. **System disruption payloads.** Hijacking system volume, text to speech engines, and default browsers to cause immediate chaos in an office environment.
+
+None of this required a zero day. None of it required a nation state. It required a Python interpreter, a trusted contact, and a user who did what users do, which is click.
+
+## The Bigger Picture
+
+The technical story here is interesting. The bigger story is more uncomfortable.
+
+We have collectively decided that some apps are "safe." We do not audit the files they hand us. We do not question the origin of a document if it arrives from a contact we know. Attackers understand this better than defenders do.
+
+The lesson from Payload Paradise was never really about Python or .pyz files. Those are just the delivery vehicle of the week. The lesson is that **trust is the biggest attack vector we have**, and it is the one we spend the least time defending.
+
+Vendors will keep shipping features faster than they patch edge cases. Regulators will keep writing frameworks that assume the client is hardened. And users will keep clicking, because we have trained them for years to treat the green tick and the familiar logo as proof of safety.
+
+If you are defending an environment today, a few things worth doing:
+
+1. **Treat messaging apps as ingestion points.** Anything that can deliver a file is part of your attack surface, not a productivity tool sitting outside it.
+2. **Constrain interpreters on endpoints.** If a machine does not need Python on the PATH, do not put it there. If it does, restrict what its interpreter is allowed to execute from user writable paths.
+3. **Watch the parent process.** Alerts that fire on "python.exe spawned from WhatsApp.exe" are cheap to build and enormously informative.
+4. **Stop outsourcing security to user caution.** It has never worked. It will not start working now.
+
+## Two Years Later
+
+I did not expect to still be writing about this in 2026. I expected the vendor to quietly close it, the way most of these stories end.
+
+Instead, the flaw is still there, the repo is still up, and every talk I give on it lands with the same reaction in the room. A pause. Then someone in the front row picking up their phone and checking whether they have Python installed on their work laptop.
+
+That reaction is the point. Not the exploit. The pause.
+
+Because the moment you realise that the app you trust most is also the app that can hand your machine to a stranger, you start asking better questions about everything else on your device.
+
+And better questions, honestly, are the only patch we have left.`,
+  },
+  {
     slug: "whatsapp-usernames-security",
     title: "WhatsApp Usernames Are a Bigger Security Win Than They Look",
     excerpt: "Why WhatsApp's new username feature is one of the most meaningful privacy improvements the platform has introduced in years.",
