@@ -85,12 +85,39 @@ The lesson from Payload Paradise was never really about Python or .pyz files. Th
 
 Vendors will keep shipping features faster than they patch edge cases. Regulators will keep writing frameworks that assume the client is hardened. And users will keep clicking, because we have trained them for years to treat the green tick and the familiar logo as proof of safety.
 
-If you are defending an environment today, a few things worth doing:
+## Why This Stays a Windows Problem
 
-1. **Treat messaging apps as ingestion points.** Anything that can deliver a file is part of your attack surface, not a productivity tool sitting outside it.
-2. **Constrain interpreters on endpoints.** If a machine does not need Python on the PATH, do not put it there. If it does, restrict what its interpreter is allowed to execute from user writable paths.
-3. **Watch the parent process.** Alerts that fire on "python.exe spawned from WhatsApp.exe" are cheap to build and enormously informative.
-4. **Stop outsourcing security to user caution.** It has never worked. It will not start working now.
+This flaw does not behave the same way everywhere. On Windows, WhatsApp hands the file to a shell that happily launches .pyz files against a Python interpreter many users already have installed. The rest of the ecosystem makes that chain much harder to complete.
+
+On macOS, Gatekeeper and notarization get in the way. A .pyz downloaded from a chat inherits a quarantine flag, and the system warns the user before opening it. Python is no longer shipped with macOS, so the file has nothing to execute against unless the user has gone out of their way to install it. The WhatsApp Mac client also lives inside a stricter app sandbox, so its ability to silently pass files to other processes is limited.
+
+On Linux, the desktop experience is more fragmented. Most distributions do not register .pyz as an executable file type by default, and even when Python is present the file usually needs to be marked executable or explicitly opened with the interpreter. Linux users also tend to run WhatsApp inside a browser tab or a thin Electron wrapper, neither of which has the same native file-association behaviour as the Windows client.
+
+On mobile, the idea barely gets off the ground. Android and iOS do not ship a Python interpreter, and both platforms aggressively sandbox what an app can launch. A .pyz file arriving on a phone is just a curious attachment with no obvious way to run.
+
+So the attack is not really about WhatsApp as a platform. It is about WhatsApp for Windows, the Windows file association model, and the assumption that a trusted messenger should be able to spawn an interpreter without friction. That combination is what keeps Payload Paradise relevant two years later.
+
+## Defenses That Actually Help
+
+The cleanest fix would come from the vendor: treat .pyz and .pyzw as executable file types and open them in a sandboxed viewer instead of the local shell. Until that happens, defenders have options.
+
+On the endpoint, the highest-leverage move is application control. Use Windows Defender Application Control, AppLocker, or Software Restriction Policies to stop python.exe from executing anything that lives inside user-writable or messaging-app temporary directories. If the interpreter cannot read files from those locations, the payload has nowhere to run.
+
+EDR and SIEM rules should watch the parent process. An alert for python.exe launched by WhatsApp.exe, or by any chat client, is cheap noise to tune and enormously valuable once it fires. The same goes for Python processes making unexpected outbound network connections, especially over plain HTTP.
+
+Network egress matters too. If a reverse shell or exfiltration payload cannot reach its command-and-control server, the attack stalls. DNS filtering, restrictive outbound firewall rules, and TLS inspection for non-browser processes all raise the cost for the attacker.
+
+User training still has a role, but only as a backstop. The goal is to make the safe choice the default choice. That means removing Python from the PATH for users who do not need it, blocking .pyz attachments at the email gateway, and making sure help-desk staff know what to do when someone reports a weird file from a contact.
+
+Finally, report it. Every ticket, every public write-up, and every conference demo adds pressure. Vendors patch what is embarrassing. Security teams should not be embarrassed for asking for a safer default.
+
+## The Repository
+
+If you want to see the proof of concept for yourself, or use it to test your own controls, the code is available on GitHub.
+
+[Payload Paradise](https://github.com/JustNunuz/PayloadParadise)
+
+It is intentionally written with standard-library Python only, so you can inspect it without installing a long dependency chain. Use it in a lab, point it at your own defences, and see where the gaps are.
 
 ## Two Years Later
 

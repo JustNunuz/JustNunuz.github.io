@@ -29,7 +29,53 @@ export default function BlogPost() {
     );
   }
 
-  // Simple markdown-like rendering for ## headings, ### subheadings, lists, and **bold**
+  // Render inline bold and markdown-style links
+  const renderInline = (text: string, keyPrefix: string): React.ReactNode[] => {
+    const nodes: React.ReactNode[] = [];
+    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+    let key = 0;
+
+    const renderBold = (segment: string) => {
+      const parts = segment.split(/\*\*(.*?)\*\*/g);
+      return parts.map((part, idx) =>
+        idx % 2 === 1 ? (
+          <span key={`${keyPrefix}-b-${key++}`} className="font-medium text-foreground">
+            {part}
+          </span>
+        ) : (
+          <span key={`${keyPrefix}-n-${key++}`}>{part}</span>
+        )
+      );
+    };
+
+    while ((match = linkRegex.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        nodes.push(...renderBold(text.slice(lastIndex, match.index)));
+      }
+      nodes.push(
+        <a
+          key={`${keyPrefix}-l-${key++}`}
+          href={match[2]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary hover:underline"
+        >
+          {match[1]}
+        </a>
+      );
+      lastIndex = match.index + match[0].length;
+    }
+
+    if (lastIndex < text.length) {
+      nodes.push(...renderBold(text.slice(lastIndex)));
+    }
+
+    return nodes;
+  };
+
+  // Simple markdown-like rendering for ## headings, ### subheadings, lists, bold, and links
   const renderContent = (content: string) => {
     const lines = content.split("\n");
     const elements: React.ReactNode[] = [];
@@ -57,27 +103,16 @@ export default function BlogPost() {
           elements.push(
             <div key={i} className="flex gap-3 mb-3 text-muted-foreground">
               <span className="text-primary font-mono text-sm">{match[1]}</span>
-              <p>
-                <span className="font-medium text-foreground">{match[2]}</span>
-                {match[3] && ` - ${match[3]}`}
-              </p>
+              <p>{renderInline(`${match[2]}${match[3] ? ` - ${match[3]}` : ""}`, `li-${i}`)}</p>
             </div>
           );
         }
       } else if (line.trim() === "") {
         // skip empty lines
       } else {
-        // Render bold text within paragraphs
-        const parts = line.split(/\*\*(.*?)\*\*/g);
         elements.push(
           <p key={i} className="text-muted-foreground leading-relaxed mb-4">
-            {parts.map((part, idx) =>
-              idx % 2 === 1 ? (
-                <span key={idx} className="font-medium text-foreground">{part}</span>
-              ) : (
-                part
-              )
-            )}
+            {renderInline(line, `p-${i}`)}
           </p>
         );
       }
