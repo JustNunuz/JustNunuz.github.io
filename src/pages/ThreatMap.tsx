@@ -1,11 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import worldTopo from "world-atlas/countries-110m.json";
 import { Layout } from "@/components/layout/Layout";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { supabase } from "@/integrations/supabase/client";
-import { Activity, Globe, RefreshCw, ShieldAlert, Radio, MapPin, X } from "lucide-react";
+import { blogPosts } from "@/data/blogPosts";
+import { Activity, ArrowRight, Globe, RefreshCw, ShieldAlert, Radio, MapPin, X } from "lucide-react";
+
+const RELATED_SLUGS = [
+  "honeypots-threat-detection",
+  "penetration-testing-methodology",
+  "sdwan-security-architecture",
+];
+
+const relatedNotes = RELATED_SLUGS.map((slug) => blogPosts.find((p) => p.slug === slug)).filter(
+  (p): p is (typeof blogPosts)[number] => Boolean(p),
+);
 
 type Kind = "malware_url" | "botnet_c2" | "malware_c2";
 
