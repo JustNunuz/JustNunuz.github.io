@@ -181,8 +181,73 @@ export default function BlogPost() {
           <div className="opacity-0 animate-fade-in-up stagger-2">
             {renderContent(post.content)}
           </div>
+
+          {/* Prev / next navigation */}
+          {(prev || next) && (
+            <nav className="mt-16 grid gap-4 sm:grid-cols-2 border-t border-border pt-8">
+              {prev ? (
+                <Link
+                  to={`/blog/${prev.slug}`}
+                  className="group rounded-lg border border-border bg-card p-5 hover:border-primary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-primary/80 mb-2">
+                    <ArrowLeft className="h-3 w-3" /> newer note
+                  </div>
+                  <div className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {prev.title}
+                  </div>
+                </Link>
+              ) : (
+                <span />
+              )}
+              {next && (
+                <Link
+                  to={`/blog/${next.slug}`}
+                  className="group rounded-lg border border-border bg-card p-5 hover:border-primary/50 transition-colors sm:text-right"
+                >
+                  <div className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-primary/80 mb-2 sm:justify-end">
+                    older note <ArrowRight className="h-3 w-3" />
+                  </div>
+                  <div className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {next.title}
+                  </div>
+                </Link>
+              )}
+            </nav>
+          )}
+
+          {/* Related posts */}
+          {related.length > 0 && (
+            <div className="mt-12">
+              <div className="font-mono text-xs text-primary mb-4">{"// "}related notes</div>
+              <ul className="space-y-3">
+                {related.map((r) => (
+                  <li key={r.slug}>
+                    <Link
+                      to={`/blog/${r.slug}`}
+                      className="group flex items-baseline gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <span className="font-mono text-xs text-primary/70">{"→"}</span>
+                      <span className="group-hover:underline">{r.title}</span>
+                      <span className="ml-auto font-mono text-[11px] whitespace-nowrap">{r.date}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="mt-12 border-t border-border pt-8">
+            <Button asChild variant="outline" size="sm">
+              <Link to="/blog">
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                All field notes
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
+
     </Layout>
   );
 }
