@@ -9,7 +9,15 @@ import { Button } from "@/components/ui/button";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
-  const post = blogPosts.find((p) => p.slug === slug);
+  const index = blogPosts.findIndex((p) => p.slug === slug);
+  const post = index >= 0 ? blogPosts[index] : undefined;
+  const prev = index > 0 ? blogPosts[index - 1] : null;
+  const next = index >= 0 && index < blogPosts.length - 1 ? blogPosts[index + 1] : null;
+  const related = post
+    ? blogPosts
+        .filter((p) => p.slug !== post.slug && p.tags.some((t) => post.tags.includes(t)))
+        .slice(0, 3)
+    : [];
 
   if (!post) {
     return (
