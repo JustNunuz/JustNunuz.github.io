@@ -671,11 +671,36 @@ export default function ThreatMap() {
             </div>
           </div>
 
+          <div className="mt-16">
+            <CodeDivider label="Related Field Notes" />
+            <div className="grid gap-4 md:grid-cols-3">
+              {relatedNotes.map((post) => (
+                <Link
+                  key={post.slug}
+                  to={`/blog/${post.slug}`}
+                  className="group rounded-lg border border-border bg-card p-5 hover:border-primary/50 transition-colors"
+                >
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-primary/80 mb-2">
+                    {"// "}field note
+                  </div>
+                  <h3 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground line-clamp-3 mb-3">{post.excerpt}</p>
+                  <span className="flex items-center gap-1 font-mono text-[11px] text-primary">
+                    Read <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
           <p className="mt-10 font-mono text-[11px] text-muted-foreground leading-relaxed">
             {"// "}sources: {(data?.sources ?? ["URLhaus", "ThreatFox", "Feodo Tracker"]).join(", ")} by
             abuse.ch, geolocated with ip-api.com. IPs are partially masked. This is open threat
             intelligence shown for research and awareness, not a blocklist.
           </p>
+
 
         </div>
       </section>
