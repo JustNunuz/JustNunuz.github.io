@@ -10,6 +10,105 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "behind-the-threat-map",
+    title: "Behind the Threat Map: Why I Built a Live View of the Internet's Background Noise",
+    excerpt: "Most security dashboards show you what already happened. I wanted something that shows what is happening right now, where it is coming from, and why that matters for defenders in Africa and everywhere else.",
+    date: "2026-08-06",
+    readTime: "8 min read",
+    tags: ["Threat Intelligence", "OSINT", "Malware", "Defense", "Africa"],
+    content: `There is a difference between knowing that the internet is dangerous and seeing it breathe.
+
+Every second, thousands of compromised hosts, botnet command-and-control servers, malware distribution sites, and opportunistic scanners are talking to each other across the open internet. Most of that conversation happens in the background, invisible to normal users, noisy but structured. If you know how to listen, the noise becomes signal.
+
+That is what the threat map is for.
+
+It is not a product. It is not a commercial threat intelligence platform. It is a live lens into the internet's background radiation, built because I got tired of reading reports that told me what happened last quarter when I wanted to know what was happening right now.
+
+## Why a Threat Map Matters
+
+Cybersecurity has a visibility problem. We spend enormous amounts of money on endpoint protection, firewalls, SIEMs, and awareness training, but many defenders still struggle to answer a simple question: where is the threat actually coming from?
+
+A good threat map answers that question at a glance. It turns abstract indicators, IP addresses, malware hashes, and command-and-control domains into something spatial and immediate. You stop thinking about a list of bad IPs and start thinking about patterns. Clusters. Asymmetric concentrations of hostile infrastructure in specific regions, networks, or hosting providers.
+
+That spatial awareness matters for several reasons.
+
+First, it helps with prioritization. If you see that a disproportionate volume of malware distribution is currently originating from a handful of ASNs or countries, you can tighten monitoring on traffic from those regions without blocking half the internet. Context beats blunt force.
+
+Second, it helps defenders understand their own exposure. A bank in Harare does not face the same threat profile as a startup in San Francisco. A map that highlights Southern Africa, Zimbabwe, and surrounding regions makes that difference concrete.
+
+Third, it is a teaching tool. I have sat in rooms where non-technical stakeholders genuinely believed cyber threats were vague, magical, or exclusively targeted at other people. Putting a live map on a screen changes that conversation instantly. Suddenly the threat is not theoretical. It is a dot, a country, a count, a trend.
+
+## How the Map Actually Works
+
+The map is fed by a small Supabase Edge Function that runs on a schedule. It pulls from multiple public, high-quality threat feeds, normalizes the data, geolocates the indicators, and stores the results in a cache table. The frontend then reads that cache and renders it as an interactive map, a ticker, and a set of analytics cards.
+
+Here is the rough pipeline.
+
+### 1. Ingestion
+
+The function collects from several open sources. URLhaus provides malware distribution URLs and the IPs hosting them. Feodo Tracker tracks command-and-control infrastructure for banking trojans and botnets. ThreatFox contributes a broader set of indicators including malware families, signatures, and associated metadata.
+
+Each source has its own format, its own quirks, and its own stale-data behavior. Some return JSON. Some return CSV. Some paginate. Some do not. The function handles the normalization so the frontend does not have to care where a particular indicator came from.
+
+### 2. Enrichment
+
+Raw indicators are useful, but enriched indicators are actionable. For every IP address, the function queries a geolocation service to attach country, region, city, ISP, and ASN information. This is what turns a flat list of IPs into a map you can actually look at.
+
+I also apply source balancing. Some feeds are naturally lopsided. URLhaus bare-IP hosts, for example, can cluster heavily in a few Chinese ASNs. Without balancing, the map would look like a single country was responsible for everything. By capping per-country contributions and mixing in C2 and broader IOC feeds, the distribution becomes more representative of the real landscape.
+
+### 3. Caching
+
+Geolocation is not free at scale, and threat feeds do not change every millisecond. The function caches the processed result in the backend, refreshing on a fixed interval. This keeps the frontend fast and avoids hammering the public feed providers.
+
+When you load the page, you are seeing the most recent successfully processed batch. If the cache is older than expected, a small banner tells you the data is stale. Refreshing the page pulls the latest cache entry. The backend does the heavy lifting in the background.
+
+### 4. Rendering
+
+The frontend takes the cached data and renders three things: a world map with clustered markers, a live ticker of recent indicators, and a set of analytics cards showing top origin countries, malware families, indicator age distribution, and Southern Africa counts.
+
+The map is interactive. Clicking a marker or a top-origin bar filters the indicator list to that country. Clicking an entry in the list shows details: the IP, the malware family or threat type, the port, the ISP, the ASN, and how long ago it was observed.
+
+## What I Look For When I Use It
+
+I do not use the map to panic. I use it to ask better questions.
+
+- Why is this particular ASN hosting so much malware right now?
+- Is this a new campaign, or is this the same old infrastructure rotated onto new IPs?
+- Are any of these indicators hitting the networks I am responsible for?
+- Which malware families are currently active, and does that match the phishing themes I am seeing in my inbox?
+- Is there any activity visible in Southern Africa, or are we mostly seeing traffic transit through Europe and Asia?
+
+Those questions lead to better blocklists, better detection rules, better incident response priorities, and better conversations with management.
+
+## The Africa Angle
+
+A lot of threat maps feel like they were built for a North American or European audience. They are useful, but they are not ours.
+
+I wanted this one to feel local without being parochial. Southern Africa gets its own callout. Zimbabwe, South Africa, Zambia, Botswana, and surrounding countries are tracked explicitly. If an indicator shows up inside the region, it is flagged. If the region is quiet, that is also useful information. Quiet does not mean safe. It often means we are not looking hard enough.
+
+The goal is to make the map useful for an African defender who is tired of threat intelligence that treats the continent as an afterthought.
+
+## It Is a Portfolio Piece, Not a Product
+
+I want to be clear about what this is and what it is not.
+
+It is not a replacement for a commercial threat intelligence platform. It does not have historical search, attribution, or machine-learning anomaly detection. It is a live, lightweight, opinionated view of public feed data, built to demonstrate how I think about operationalizing open-source intelligence.
+
+It is also a learning project. Every time I touch the pipeline I learn something new about feed reliability, geolocation accuracy, caching strategies, and the politics of indicator sharing. Building it has made me a better defender.
+
+## The Bigger Picture
+
+The internet is not getting safer. Botnets are getting bigger. Ransomware is getting faster. Attackers are getting better at hiding their infrastructure behind CDNs, bulletproof hosts, and compromised legitimate services.
+
+In that environment, the defenders who win are the ones who can see clearly. Not the ones with the most expensive tools, but the ones who can turn noise into signal quickly and act on it.
+
+The threat map is my attempt to practice what I preach. It is a live signal. A teaching tool. A reminder that the internet is alive, messy, and worth watching.
+
+If you have never watched a live threat feed before, spend five minutes with the map. Look at the clusters. Read the ticker. Click a marker.
+
+Then go check your own logs. I promise you will see them differently.`,
+  },
+  {
     slug: "whatsapp-windows-unpatched-two-years-later",
     title: "The Unpatched Vulnerability in Your Pocket: Why Trust Is the Biggest Attack Vector",
     excerpt: "Two years after I first demoed it at PyCon Africa, the WhatsApp for Windows script execution flaw is still unpatched. A look back at Payload Paradise, and what it says about the trust we hand to the apps in our pocket.",
