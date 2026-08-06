@@ -4,7 +4,7 @@ import { Seo } from "@/components/Seo";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { TechTag } from "@/components/ui/TechTag";
 import { blogPosts } from "@/data/blogPosts";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function BlogPost() {
