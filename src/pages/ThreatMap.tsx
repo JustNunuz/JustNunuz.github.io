@@ -1,11 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import worldTopo from "world-atlas/countries-110m.json";
 import { Layout } from "@/components/layout/Layout";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { supabase } from "@/integrations/supabase/client";
-import { Activity, Globe, RefreshCw, ShieldAlert, Radio, MapPin, X } from "lucide-react";
+import { blogPosts } from "@/data/blogPosts";
+import { Activity, ArrowRight, Globe, RefreshCw, ShieldAlert, Radio, MapPin, X } from "lucide-react";
+
+const RELATED_SLUGS = [
+  "honeypots-threat-detection",
+  "penetration-testing-methodology",
+  "sdwan-security-architecture",
+];
+
+const relatedNotes = RELATED_SLUGS.map((slug) => blogPosts.find((p) => p.slug === slug)).filter(
+  (p): p is (typeof blogPosts)[number] => Boolean(p),
+);
 
 type Kind = "malware_url" | "botnet_c2" | "malware_c2";
 
@@ -671,11 +683,36 @@ export default function ThreatMap() {
             </div>
           </div>
 
+          <div className="mt-16">
+            <CodeDivider label="Related Field Notes" />
+            <div className="grid gap-4 md:grid-cols-3">
+              {relatedNotes.map((post) => (
+                <Link
+                  key={post.slug}
+                  to={`/blog/${post.slug}`}
+                  className="group rounded-lg border border-border bg-card p-5 hover:border-primary/50 transition-colors"
+                >
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-primary/80 mb-2">
+                    {"// "}field note
+                  </div>
+                  <h3 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground line-clamp-3 mb-3">{post.excerpt}</p>
+                  <span className="flex items-center gap-1 font-mono text-[11px] text-primary">
+                    Read <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
           <p className="mt-10 font-mono text-[11px] text-muted-foreground leading-relaxed">
             {"// "}sources: {(data?.sources ?? ["URLhaus", "ThreatFox", "Feodo Tracker"]).join(", ")} by
             abuse.ch, geolocated with ip-api.com. IPs are partially masked. This is open threat
             intelligence shown for research and awareness, not a blocklist.
           </p>
+
 
         </div>
       </section>
