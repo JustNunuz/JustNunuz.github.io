@@ -7,7 +7,7 @@ import { CodeDivider } from "@/components/ui/CodeDivider";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { supabase } from "@/integrations/supabase/client";
 import { blogPosts } from "@/data/blogPosts";
-import { Activity, ArrowRight, Globe, RefreshCw, ShieldAlert, Radio, MapPin, X } from "lucide-react";
+import { Activity, ArrowRight, Globe, RefreshCw, ShieldAlert, Radio, MapPin, Radar, X } from "lucide-react";
 
 const RELATED_SLUGS = [
   "honeypots-threat-detection",
@@ -19,7 +19,7 @@ const relatedNotes = RELATED_SLUGS.map((slug) => blogPosts.find((p) => p.slug ==
   (p): p is (typeof blogPosts)[number] => Boolean(p),
 );
 
-type Kind = "malware_url" | "botnet_c2" | "malware_c2";
+type Kind = "malware_url" | "botnet_c2" | "malware_c2" | "scanner";
 
 interface ThreatEvent {
   ip: string;
@@ -50,6 +50,7 @@ interface FeedPayload {
     countries: number;
     africa?: number;
     southernAfrica?: number;
+    scanners?: number;
   };
   sources?: string[];
   perHour?: { hour: string; count: number }[];
@@ -62,12 +63,14 @@ const kindLabel: Record<Kind, string> = {
   malware_url: "MALWARE URL",
   botnet_c2: "BOTNET C2",
   malware_c2: "MALWARE C2",
+  scanner: "SCANNER / ABUSE",
 };
 
 const kindColor: Record<Kind, string> = {
   malware_url: "hsl(190 100% 55%)",
   botnet_c2: "hsl(240 100% 65%)",
   malware_c2: "hsl(280 90% 65%)",
+  scanner: "hsl(45 100% 60%)",
 };
 
 function maskIp(ip: string) {
@@ -99,8 +102,8 @@ export default function ThreatMap() {
   const [africaOnly, setAfricaOnly] = useState(false);
   const [tick, setTick] = useState(0);
 
-  const load = async () => {
-    setLoading(true);
+  const load = async (silent = false) => {
+    if (!silent) setLoading(true);
     setError(null);
     const { data: res, error: fnError } = await supabase.functions.invoke("threat-feed");
     if (fnError || !res || res.error) {
@@ -108,11 +111,20 @@ export default function ThreatMap() {
     } else {
       setData(res as FeedPayload);
     }
-    setLoading(false);
+    if (!silent) setLoading(false);
   };
 
   useEffect(() => {
     load();
+  }, []);
+
+  // Pull a new batch every 5 minutes without wiping the current view
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (typeof document !== "undefined" && document.hidden) return;
+      load(true);
+    }, 5 * 60 * 1000);
+    return () => clearInterval(id);
   }, []);
 
   // Rotating ticker index so the feed feels live
@@ -189,7 +201,7 @@ export default function ThreatMap() {
             <PageTitle
               title="Threat Map"
               meta="live.feed"
-              subtitle="A live view of malicious infrastructure that is currently online, built from open threat intelligence feeds. Each marker is a real host serving malware or acting as a command and control node, geolocated by IP and labelled with the malware family, port and network it sits on. Data refreshes every 10 minutes."
+              subtitle="A live view of malicious infrastructure that is currently online, built from open threat intelligence feeds. Each marker is a real host serving malware or acting as a command and control node, geolocated by IP and labelled with the malware family, port and network it sits on. The backend refreshes every 10 minutes and this page pulls a new batch every 5 minutes on its own."
             />
           </div>
         </div>
@@ -210,7 +222,7 @@ export default function ThreatMap() {
                   : "offline"}
             </div>
             <button
-              onClick={load}
+              onClick={() => load()}
               disabled={loading}
               className="flex items-center gap-2 font-mono text-xs text-primary border border-primary/30 rounded px-3 py-1.5 hover:bg-primary/10 transition-colors disabled:opacity-50"
             >
@@ -220,11 +232,12 @@ export default function ThreatMap() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
             {[
               { icon: Activity, label: "live indicators", value: data?.totals.events ?? 0, kind: null },
               { icon: ShieldAlert, label: "malware hosts", value: data?.totals.malwareUrls ?? 0, kind: "malware_url" as Kind },
               { icon: Radio, label: "C2 nodes", value: data?.totals.botnetC2 ?? 0, kind: "botnet_c2" as Kind },
+              { icon: Radar, label: "scanners", value: data?.totals.scanners ?? 0, kind: "scanner" as Kind },
               { icon: Globe, label: "countries", value: data?.totals.countries ?? 0, kind: null },
               { icon: MapPin, label: "africa hosted", value: data?.totals.africa ?? 0, kind: null, africa: true },
             ].map((stat) => {
@@ -708,7 +721,7 @@ export default function ThreatMap() {
           </div>
 
           <p className="mt-10 font-mono text-[11px] text-muted-foreground leading-relaxed">
-            {"// "}sources: {(data?.sources ?? ["URLhaus", "ThreatFox", "Feodo Tracker"]).join(", ")} by
+            {"// "}sources: {(data?.sources ?? ["URLhaus", "ThreatFox", "Feodo Tracker", "C2IntelFeeds", "IPsum"]).join(", ")} by
             abuse.ch, geolocated with ip-api.com. IPs are partially masked. This is open threat
             intelligence shown for research and awareness, not a blocklist.
           </p>
