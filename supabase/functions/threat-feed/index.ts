@@ -16,7 +16,7 @@ const AFRICA_CODES = new Set([
 
 const SOUTHERN_AFRICA = new Set(["ZW", "ZA", "ZM", "MZ", "BW", "NA", "MW", "LS", "SZ", "AO"]);
 
-type Kind = "malware_url" | "botnet_c2" | "malware_c2";
+type Kind = "malware_url" | "botnet_c2" | "malware_c2" | "scanner";
 
 interface RawRow {
   ip: string;
@@ -199,18 +199,86 @@ async function collectThreatFox(): Promise<RawRow[]> {
   }
 }
 
+async function collectC2Intel(): Promise<RawRow[]> {
+  try {
+    const res = await fetch(
+      "https://raw.githubusercontent.com/drb-ra/C2IntelFeeds/master/feeds/IPC2s-30day.csv",
+    );
+    if (!res.ok) return [];
+    const text = await res.text();
+    const rows: RawRow[] = [];
+    const seen = new Set<string>();
+    for (const line of text.split("\n")) {
+      if (!line || line.startsWith("#")) continue;
+      const [ip, ...rest] = line.trim().split(",");
+      if (!ip || !IPV4.test(ip) || seen.has(ip)) continue;
+      seen.add(ip);
+      const reason = rest.join(",").trim();
+      const family = titleCase(
+        (reason.replace(/possible/i, "").replace(/c2\s*ip/i, "").trim() || "Unknown C2"),
+      );
+      rows.push({
+        ip,
+        kind: "malware_c2",
+        family,
+        detail: `${family} command and control observed in the last 30 days`,
+        port: null,
+        source: "C2IntelFeeds",
+        seenAt: new Date(Date.now() - 3 * 86_400_000).toISOString(),
+      });
+      if (rows.length >= 120) break;
+    }
+    return rows;
+  } catch (err) {
+    console.error("c2intel fetch failed", err);
+    return [];
+  }
+}
+
+async function collectIpsum(): Promise<RawRow[]> {
+  try {
+    const res = await fetch("https://raw.githubusercontent.com/stamparm/ipsum/master/levels/6.txt");
+    if (!res.ok) return [];
+    const text = await res.text();
+    const rows: RawRow[] = [];
+    const seen = new Set<string>();
+    for (const line of text.split("\n")) {
+      const ip = line.trim();
+      if (!ip || ip.startsWith("#") || !IPV4.test(ip) || seen.has(ip)) continue;
+      seen.add(ip);
+      rows.push({
+        ip,
+        kind: "scanner",
+        family: "Mass Scanner",
+        detail: "Repeat offender listed on six or more public blocklists, scanning and brute force",
+        port: null,
+        source: "IPsum",
+        seenAt: new Date().toISOString(),
+      });
+      if (rows.length >= 100) break;
+    }
+    return rows;
+  } catch (err) {
+    console.error("ipsum fetch failed", err);
+    return [];
+  }
+}
+
 async function buildPayload() {
-  const [urlhaus, feodo, threatfox] = await Promise.all([
+
+  const [urlhaus, feodo, threatfox, c2intel, ipsum] = await Promise.all([
     collectUrlhaus(),
     collectFeodo(),
     collectThreatFox(),
+    collectC2Intel(),
+    collectIpsum(),
   ]);
 
   // Interleave sources so no single feed dominates the visible set
-  const buckets = [urlhaus, threatfox, feodo];
+  const buckets = [urlhaus, threatfox, feodo, c2intel, ipsum];
   const all: RawRow[] = [];
   const seenIps = new Set<string>();
-  for (let i = 0; i < 120; i++) {
+  for (let i = 0; i < 140; i++) {
     let added = false;
     for (const bucket of buckets) {
       const row = bucket[i];
@@ -285,13 +353,14 @@ async function buildPayload() {
     totals: {
       events: events.length,
       malwareUrls: events.filter((e) => e.kind === "malware_url").length,
-      botnetC2: events.filter((e) => e.kind !== "malware_url").length,
+      botnetC2: events.filter((e) => e.kind === "botnet_c2" || e.kind === "malware_c2").length,
+      scanners: events.filter((e) => e.kind === "scanner").length,
       countries: Object.keys(byCountry).length,
       africa: events.filter((e) => e.region === "africa").length,
       southernAfrica: events.filter((e) => SOUTHERN_AFRICA.has(e.countryCode)).length,
     },
     perHour: hourly,
-    sources: ["URLhaus", "ThreatFox", "Feodo Tracker"],
+    sources: ["URLhaus", "ThreatFox", "Feodo Tracker", "C2IntelFeeds", "IPsum"],
     generatedAt: new Date().toISOString(),
   };
 }
