@@ -222,7 +222,7 @@ export default function ThreatMap() {
                   : "offline"}
             </div>
             <button
-              onClick={load}
+              onClick={() => load()}
               disabled={loading}
               className="flex items-center gap-2 font-mono text-xs text-primary border border-primary/30 rounded px-3 py-1.5 hover:bg-primary/10 transition-colors disabled:opacity-50"
             >
