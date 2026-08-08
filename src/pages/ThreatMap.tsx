@@ -435,32 +435,49 @@ export default function ThreatMap() {
                   ))
                 }
               </Geographies>
-              {events.map((event, i) => (
-                <Marker
-                  key={`${event.ip}-${i}`}
-                  coordinates={[event.lon, event.lat]}
-                  onMouseEnter={() => setActive(event)}
-                  onMouseLeave={() => setActive(null)}
-                  onClick={() => setPinned((p) => (p?.ip === event.ip ? null : event))}
-                >
-                  {i === pulseIndex && (
+              {events.map((event) => {
+                const key = hashKey(event);
+                const isPinned = pinned?.ip === event.ip;
+                const isHovered = hoveredIp === event.ip;
+                const fresh = isFresh(event);
+                return (
+                  <Marker
+                    key={key}
+                    coordinates={[event.lon, event.lat]}
+                    onMouseEnter={() => {
+                      setActive(event);
+                      setHoveredIp(event.ip);
+                    }}
+                    onMouseLeave={() => {
+                      setActive(null);
+                      setHoveredIp(null);
+                    }}
+                    onClick={() => {
+                      setPinned((p) => (p?.ip === event.ip ? null : event));
+                      setCountryFilter((current) => (current === event.country ? null : event.country));
+                    }}
+                  >
+                    {(fresh || isPinned || isHovered) && (
+                      <circle
+                        r={isPinned ? 10 : 7}
+                        fill="none"
+                        stroke={kindColor[event.kind]}
+                        strokeWidth={isPinned ? 1.2 : 0.8}
+                        className={fresh ? "animate-ping" : ""}
+                        style={{ transformOrigin: "center" }}
+                      />
+                    )}
                     <circle
-                      r={9}
-                      fill="none"
-                      stroke={kindColor[event.kind]}
-                      strokeWidth={1}
-                      className="animate-ping"
-                      style={{ transformOrigin: "center" }}
+                      r={isPinned ? 4.4 : isHovered ? 3.4 : 2.6}
+                      fill={kindColor[event.kind]}
+                      fillOpacity={0.9}
+                      stroke={isPinned || isHovered ? "hsl(0 0% 98%)" : "none"}
+                      strokeWidth={0.6}
+                      style={{ cursor: "pointer" }}
                     />
-                  )}
-                  <circle
-                    r={pinned?.ip === event.ip ? 4.4 : 2.6}
-                    fill={kindColor[event.kind]}
-                    fillOpacity={0.85}
-                    style={{ cursor: "pointer" }}
-                  />
-                </Marker>
-              ))}
+                  </Marker>
+                );
+              })}
             </ComposableMap>
             </div>
 
