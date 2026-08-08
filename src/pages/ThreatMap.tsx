@@ -129,7 +129,10 @@ export default function ThreatMap() {
   const [countryFilter, setCountryFilter] = useState<string | null>(null);
   const [kindFilter, setKindFilter] = useState<Kind | null>(null);
   const [africaOnly, setAfricaOnly] = useState(false);
+  const [hoveredIp, setHoveredIp] = useState<string | null>(null);
   const [tick, setTick] = useState(0);
+  const [freshKeys, setFreshKeys] = useState<Set<string>>(new Set());
+  const previousKeys = useRef<Set<string>>(new Set());
 
   const load = async (silent = false) => {
     if (!silent) setLoading(true);
