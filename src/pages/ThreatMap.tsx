@@ -407,120 +407,95 @@ export default function ThreatMap() {
             </div>
           )}
 
+          {/* Mobile legend */}
+          <div className="md:hidden flex flex-wrap gap-4 mb-3 font-mono text-[10px] text-muted-foreground">
+            {(Object.keys(kindLabel) as Kind[]).map((k) => (
+              <button
+                key={k}
+                onClick={() => setKindFilter((v) => (v === k ? null : k))}
+                className={`flex items-center gap-1 transition-colors ${
+                  kindFilter === k ? "text-foreground" : ""
+                }`}
+              >
+                <span className="h-2 w-2 rounded-full inline-block" style={{ background: kindColor[k] }} />
+                {kindLabel[k].toLowerCase()}
+              </button>
+            ))}
+          </div>
+
           {/* Map */}
           <div className="relative rounded-lg border border-border bg-card overflow-x-auto md:overflow-hidden">
             <div className="min-w-[640px] md:min-w-0">
-            <ComposableMap
-              projection="geoEqualEarth"
-              projectionConfig={{ scale: 165 }}
-              width={900}
-              height={420}
-              style={{ width: "100%", height: "auto" }}
-            >
-              <Geographies geography={worldTopo as unknown as Record<string, unknown>}>
-                {({ geographies }) =>
-                  geographies.map((geo) => (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      fill="hsl(0 0% 10%)"
-                      stroke="hsl(0 0% 20%)"
-                      strokeWidth={0.4}
-                      style={{
-                        default: { outline: "none" },
-                        hover: { fill: "hsl(0 0% 14%)", outline: "none" },
-                        pressed: { outline: "none" },
-                      }}
-                    />
-                  ))
-                }
-              </Geographies>
-              {events.map((event) => {
-                const key = hashKey(event);
-                const isPinned = pinned?.ip === event.ip;
-                const isHovered = hoveredIp === event.ip;
-                const fresh = isFresh(event);
-                return (
-                  <Marker
-                    key={key}
-                    coordinates={[event.lon, event.lat]}
-                    onMouseEnter={() => {
-                      setActive(event);
-                      setHoveredIp(event.ip);
-                    }}
-                    onMouseLeave={() => {
-                      setActive(null);
-                      setHoveredIp(null);
-                    }}
-                    onClick={() => {
-                      setPinned((p) => (p?.ip === event.ip ? null : event));
-                      setCountryFilter((current) => (current === event.country ? null : event.country));
-                    }}
-                  >
-                    {(fresh || isPinned || isHovered) && (
-                      <circle
-                        r={isPinned ? 10 : 7}
-                        fill="none"
-                        stroke={kindColor[event.kind]}
-                        strokeWidth={isPinned ? 1.2 : 0.8}
-                        className={fresh ? "animate-ping" : ""}
-                        style={{ transformOrigin: "center" }}
+              <ComposableMap
+                projection="geoEqualEarth"
+                projectionConfig={{ scale: 165 }}
+                width={900}
+                height={420}
+                style={{ width: "100%", height: "auto" }}
+              >
+                <Geographies geography={worldTopo as unknown as Record<string, unknown>}>
+                  {({ geographies }) =>
+                    geographies.map((geo) => (
+                      <Geography
+                        key={geo.rsmKey}
+                        geography={geo}
+                        fill="hsl(0 0% 10%)"
+                        stroke="hsl(0 0% 20%)"
+                        strokeWidth={0.4}
+                        style={{
+                          default: { outline: "none" },
+                          hover: { fill: "hsl(0 0% 14%)", outline: "none" },
+                          pressed: { outline: "none" },
+                        }}
                       />
-                    )}
-                    <circle
-                      r={isPinned ? 4.4 : isHovered ? 3.4 : 2.6}
-                      fill={kindColor[event.kind]}
-                      fillOpacity={0.9}
-                      stroke={isPinned || isHovered ? "hsl(0 0% 98%)" : "none"}
-                      strokeWidth={0.6}
-                      style={{ cursor: "pointer" }}
-                    />
-                  </Marker>
-                );
-              })}
-            </ComposableMap>
-            </div>
-
-            {detail && (
-              <div className="md:absolute md:bottom-3 md:left-3 max-w-xs rounded border border-primary/40 bg-background/95 backdrop-blur p-3 font-mono text-[11px] space-y-0.5 mt-3 md:mt-0">
-                <div className="flex items-center justify-between gap-3">
-                  <span style={{ color: kindColor[detail.kind] }}>{kindLabel[detail.kind]}</span>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => copyToClipboard(`${detail.ip}${detail.port ? `:${detail.port}` : ""}`)}
-                      className="text-muted-foreground hover:text-primary"
-                      title="copy ioc"
+                    ))
+                  }
+                </Geographies>
+                {events.map((event) => {
+                  const key = hashKey(event);
+                  const isPinned = pinned?.ip === event.ip;
+                  const isHovered = hoveredIp === event.ip;
+                  const fresh = isFresh(event);
+                  return (
+                    <Marker
+                      key={key}
+                      coordinates={[event.lon, event.lat]}
+                      onMouseEnter={() => {
+                        setActive(event);
+                        setHoveredIp(event.ip);
+                      }}
+                      onMouseLeave={() => {
+                        setActive(null);
+                        setHoveredIp(null);
+                      }}
+                      onClick={() => {
+                        setPinned((p) => (p?.ip === event.ip ? null : event));
+                        setCountryFilter((current) => (current === event.country ? null : event.country));
+                      }}
                     >
-                      <Copy className="h-3 w-3" />
-                    </button>
-                    {pinned && (
-                      <button onClick={() => setPinned(null)} className="text-muted-foreground hover:text-primary">
-                        <X className="h-3 w-3" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-                <div className="text-foreground">{maskIp(detail.ip)}{detail.port ? `:${detail.port}` : ""}</div>
-                {detail.family && <div className="text-primary">family: {detail.family}</div>}
-                <div className="text-muted-foreground">
-                  {detail.city}, {detail.country}
-                </div>
-                <div className="text-muted-foreground">{detail.asn ?? detail.isp}</div>
-                <div className="text-muted-foreground">{detail.detail}</div>
-                {detail.source && <div className="text-muted-foreground">source: {detail.source}</div>}
-                {detail.countryCode === "ZW" && (
-                  <div className="text-primary pt-1">{"// "}hosted in Zimbabwe</div>
-                )}
-                {pinned && (
-                  <button
-                    onClick={() => setCountryFilter(detail.country)}
-                    className="text-primary hover:underline pt-1"
-                  >
-                    {"// filter by "}{detail.country}
-                  </button>
-                )}
-              </div>
-            )}
+                      {(fresh || isPinned || isHovered) && (
+                        <circle
+                          r={isPinned ? 10 : 7}
+                          fill="none"
+                          stroke={kindColor[event.kind]}
+                          strokeWidth={isPinned ? 1.2 : 0.8}
+                          className={fresh ? "animate-ping" : ""}
+                          style={{ transformOrigin: "center" }}
+                        />
+                      )}
+                      <circle
+                        r={isPinned ? 4.4 : isHovered ? 3.4 : 2.6}
+                        fill={kindColor[event.kind]}
+                        fillOpacity={0.9}
+                        stroke={isPinned || isHovered ? "hsl(0 0% 98%)" : "none"}
+                        strokeWidth={0.6}
+                        style={{ cursor: "pointer" }}
+                      />
+                    </Marker>
+                  );
+                })}
+              </ComposableMap>
+            </div>
 
             <div className="hidden md:flex absolute top-3 right-3 flex-wrap justify-end gap-3 font-mono text-[10px] text-muted-foreground">
               {(Object.keys(kindLabel) as Kind[]).map((k) => (
@@ -538,21 +513,46 @@ export default function ThreatMap() {
             </div>
           </div>
 
-          {/* Mobile legend */}
-          <div className="md:hidden flex flex-wrap gap-4 mt-3 font-mono text-[10px] text-muted-foreground">
-            {(Object.keys(kindLabel) as Kind[]).map((k) => (
-              <button
-                key={k}
-                onClick={() => setKindFilter((v) => (v === k ? null : k))}
-                className={`flex items-center gap-1 transition-colors ${
-                  kindFilter === k ? "text-foreground" : ""
-                }`}
-              >
-                <span className="h-2 w-2 rounded-full inline-block" style={{ background: kindColor[k] }} />
-                {kindLabel[k].toLowerCase()}
-              </button>
-            ))}
-          </div>
+          {detail && (
+            <div className="max-w-xs rounded border border-primary/40 bg-background/95 backdrop-blur p-3 font-mono text-[11px] space-y-0.5 mt-3">
+              <div className="flex items-center justify-between gap-3">
+                <span style={{ color: kindColor[detail.kind] }}>{kindLabel[detail.kind]}</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => copyToClipboard(`${detail.ip}${detail.port ? `:${detail.port}` : ""}`)}
+                    className="text-muted-foreground hover:text-primary"
+                    title="copy ioc"
+                  >
+                    <Copy className="h-3 w-3" />
+                  </button>
+                  {pinned && (
+                    <button onClick={() => setPinned(null)} className="text-muted-foreground hover:text-primary">
+                      <X className="h-3 w-3" />
+                    </button>
+                  )}
+                </div>
+              </div>
+              <div className="text-foreground">{maskIp(detail.ip)}{detail.port ? `:${detail.port}` : ""}</div>
+              {detail.family && <div className="text-primary">family: {detail.family}</div>}
+              <div className="text-muted-foreground">
+                {detail.city}, {detail.country}
+              </div>
+              <div className="text-muted-foreground">{detail.asn ?? detail.isp}</div>
+              <div className="text-muted-foreground">{detail.detail}</div>
+              {detail.source && <div className="text-muted-foreground">source: {detail.source}</div>}
+              {detail.countryCode === "ZW" && (
+                <div className="text-primary pt-1">{"// "}hosted in Zimbabwe</div>
+              )}
+              {pinned && (
+                <button
+                  onClick={() => setCountryFilter(detail.country)}
+                  className="text-primary hover:underline pt-1"
+                >
+                  {"// filter by "}{detail.country}
+                </button>
+              )}
+            </div>
+          )}
 
           {/* Live feed + breakdowns */}
           <div className="grid gap-8 lg:grid-cols-3 mt-12">
