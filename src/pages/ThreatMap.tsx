@@ -482,14 +482,23 @@ export default function ThreatMap() {
             </div>
 
             {detail && (
-              <div className="absolute bottom-3 left-3 max-w-xs rounded border border-primary/40 bg-background/95 backdrop-blur p-3 font-mono text-[11px] space-y-0.5">
+              <div className="md:absolute md:bottom-3 md:left-3 max-w-xs rounded border border-primary/40 bg-background/95 backdrop-blur p-3 font-mono text-[11px] space-y-0.5 mt-3 md:mt-0">
                 <div className="flex items-center justify-between gap-3">
                   <span style={{ color: kindColor[detail.kind] }}>{kindLabel[detail.kind]}</span>
-                  {pinned && (
-                    <button onClick={() => setPinned(null)} className="text-muted-foreground hover:text-primary">
-                      <X className="h-3 w-3" />
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => copyToClipboard(`${detail.ip}${detail.port ? `:${detail.port}` : ""}`)}
+                      className="text-muted-foreground hover:text-primary"
+                      title="copy ioc"
+                    >
+                      <Copy className="h-3 w-3" />
                     </button>
-                  )}
+                    {pinned && (
+                      <button onClick={() => setPinned(null)} className="text-muted-foreground hover:text-primary">
+                        <X className="h-3 w-3" />
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div className="text-foreground">{maskIp(detail.ip)}{detail.port ? `:${detail.port}` : ""}</div>
                 {detail.family && <div className="text-primary">family: {detail.family}</div>}
@@ -499,6 +508,9 @@ export default function ThreatMap() {
                 <div className="text-muted-foreground">{detail.asn ?? detail.isp}</div>
                 <div className="text-muted-foreground">{detail.detail}</div>
                 {detail.source && <div className="text-muted-foreground">source: {detail.source}</div>}
+                {detail.countryCode === "ZW" && (
+                  <div className="text-primary pt-1">{"// "}hosted in Zimbabwe</div>
+                )}
                 {pinned && (
                   <button
                     onClick={() => setCountryFilter(detail.country)}
