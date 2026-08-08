@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ComposableMap, Geographies, Geography, Marker } from "react-simple-mmaps";
+import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import worldTopo from "world-atlas/countries-110m.json";
 import { Layout } from "@/components/layout/Layout";
 import { CodeDivider } from "@/components/ui/CodeDivider";
