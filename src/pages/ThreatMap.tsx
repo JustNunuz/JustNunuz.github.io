@@ -412,6 +412,40 @@ export default function ThreatMap() {
             </div>
           </div>
 
+          {/* Hourly activity */}
+          {data?.perHour && data.perHour.length > 0 && (
+            <div className="rounded-lg border border-border bg-card p-4 mb-6">
+              <div className="flex items-center justify-between mb-3">
+                <div className="font-mono text-[10px] uppercase tracking-wider text-primary">
+                  <Clock className="h-3 w-3 inline-block mr-1" />
+                  last 24h activity
+                </div>
+                <div className="font-mono text-[10px] text-muted-foreground">
+                  {data.perHour.reduce((a, b) => a + b.count, 0)} indicators
+                </div>
+              </div>
+              <div className="flex items-end gap-1 h-20">
+                {data.perHour.map((hour, i) => {
+                  const max = Math.max(1, ...data.perHour.map((h) => h.count));
+                  const isLast = i === data.perHour.length - 1;
+                  return (
+                    <div key={hour.hour} className="flex-1 flex flex-col justify-end h-full group">
+                      <div
+                        title={`${hour.hour}: ${hour.count} indicators`}
+                        className={`w-full rounded-sm transition-colors ${isLast ? "bg-primary" : "bg-primary/50 group-hover:bg-primary"}`}
+                        style={{ height: `${Math.max(3, (hour.count / max) * 100)}%` }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex justify-between font-mono text-[9px] text-muted-foreground mt-2">
+                <span>{data.perHour[0]?.hour ?? ""}</span>
+                <span>now</span>
+              </div>
+            </div>
+          )}
+
           {error && (
             <div className="rounded-lg border border-destructive/40 bg-card p-4 font-mono text-sm text-destructive mb-8">
               {error}
