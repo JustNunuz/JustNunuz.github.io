@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import worldTopo from "world-atlas/countries-110m.json";
@@ -7,7 +7,7 @@ import { CodeDivider } from "@/components/ui/CodeDivider";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { supabase } from "@/integrations/supabase/client";
 import { blogPosts } from "@/data/blogPosts";
-import { Activity, ArrowRight, Globe, RefreshCw, ShieldAlert, Radio, MapPin, Radar, X } from "lucide-react";
+import { Activity, ArrowRight, Globe, RefreshCw, ShieldAlert, Radio, MapPin, Radar, X, Copy, Download, Clock } from "lucide-react";
 
 const RELATED_SLUGS = [
   "honeypots-threat-detection",
@@ -91,6 +91,35 @@ function shortenAsn(value?: string) {
   return value.length > 42 ? `${value.slice(0, 42)}...` : value;
 }
 
+function hashKey(event: ThreatEvent) {
+  return `${event.ip}-${event.kind}-${event.source ?? "unknown"}`;
+}
+
+function isFresh(event: ThreatEvent) {
+  const t = parseTs(event.seenAt);
+  if (!Number.isFinite(t)) return false;
+  return Date.now() - t < 24 * 60 * 60 * 1000;
+}
+
+function exportBlocklist(events: ThreatEvent[]) {
+  const lines = events.map((e) => (e.port ? `${e.ip}:${e.port}` : e.ip));
+  const blob = new Blob([lines.join("\n")], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `justnunuz-blocklist-${new Date().toISOString().slice(0, 10)}.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function copyToClipboard(text: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    // ignore
+  }
+}
+
 export default function ThreatMap() {
   const [data, setData] = useState<FeedPayload | null>(null);
   const [loading, setLoading] = useState(true);
@@ -100,7 +129,10 @@ export default function ThreatMap() {
   const [countryFilter, setCountryFilter] = useState<string | null>(null);
   const [kindFilter, setKindFilter] = useState<Kind | null>(null);
   const [africaOnly, setAfricaOnly] = useState(false);
+  const [hoveredIp, setHoveredIp] = useState<string | null>(null);
   const [tick, setTick] = useState(0);
+  const [freshKeys, setFreshKeys] = useState<Set<string>>(new Set());
+  const previousKeys = useRef<Set<string>>(new Set());
 
   const load = async (silent = false) => {
     if (!silent) setLoading(true);
@@ -109,7 +141,15 @@ export default function ThreatMap() {
     if (fnError || !res || res.error) {
       setError("Could not reach the threat feed right now.");
     } else {
-      setData(res as FeedPayload);
+      const payload = res as FeedPayload;
+      const nextKeys = new Set(payload.events.map(hashKey));
+      const newlyArrived = new Set([...nextKeys].filter((k) => !previousKeys.current.has(k)));
+      previousKeys.current = nextKeys;
+      setData(payload);
+      if (newlyArrived.size > 0) {
+        setFreshKeys(newlyArrived);
+        setTimeout(() => setFreshKeys(new Set()), 2000);
+      }
     }
     if (!silent) setLoading(false);
   };
@@ -221,14 +261,25 @@ export default function ThreatMap() {
                   ? `last sync ${new Date(data.generatedAt).toUTCString()}`
                   : "offline"}
             </div>
-            <button
-              onClick={() => load()}
-              disabled={loading}
-              className="flex items-center gap-2 font-mono text-xs text-primary border border-primary/30 rounded px-3 py-1.5 hover:bg-primary/10 transition-colors disabled:opacity-50"
-            >
-              <RefreshCw className={`h-3 w-3 ${loading ? "animate-spin" : ""}`} />
-              refresh
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => exportBlocklist(events)}
+                disabled={events.length === 0}
+                className="flex items-center gap-2 font-mono text-xs text-primary border border-primary/30 rounded px-3 py-1.5 hover:bg-primary/10 transition-colors disabled:opacity-50"
+                title="download visible indicators as blocklist"
+              >
+                <Download className="h-3 w-3" />
+                export
+              </button>
+              <button
+                onClick={() => load()}
+                disabled={loading}
+                className="flex items-center gap-2 font-mono text-xs text-primary border border-primary/30 rounded px-3 py-1.5 hover:bg-primary/10 transition-colors disabled:opacity-50"
+              >
+                <RefreshCw className={`h-3 w-3 ${loading ? "animate-spin" : ""}`} />
+                refresh
+              </button>
+            </div>
           </div>
 
           {/* Stats */}
@@ -361,97 +412,135 @@ export default function ThreatMap() {
             </div>
           </div>
 
+          {/* Hourly activity */}
+          {data?.perHour && data.perHour.length > 0 && (
+            <div className="rounded-lg border border-border bg-card p-4 mb-6">
+              <div className="flex items-center justify-between mb-3">
+                <div className="font-mono text-[10px] uppercase tracking-wider text-primary">
+                  <Clock className="h-3 w-3 inline-block mr-1" />
+                  last 24h activity
+                </div>
+                <div className="font-mono text-[10px] text-muted-foreground">
+                  {data.perHour.reduce((a, b) => a + b.count, 0)} indicators
+                </div>
+              </div>
+              <div className="flex items-end gap-1 h-20">
+                {data.perHour.map((hour, i) => {
+                  const max = Math.max(1, ...data.perHour.map((h) => h.count));
+                  const isLast = i === data.perHour.length - 1;
+                  return (
+                    <div key={hour.hour} className="flex-1 flex flex-col justify-end h-full group">
+                      <div
+                        title={`${hour.hour}: ${hour.count} indicators`}
+                        className={`w-full rounded-sm transition-colors ${isLast ? "bg-primary" : "bg-primary/50 group-hover:bg-primary"}`}
+                        style={{ height: `${Math.max(3, (hour.count / max) * 100)}%` }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex justify-between font-mono text-[9px] text-muted-foreground mt-2">
+                <span>{data.perHour[0]?.hour ?? ""}</span>
+                <span>now</span>
+              </div>
+            </div>
+          )}
+
           {error && (
             <div className="rounded-lg border border-destructive/40 bg-card p-4 font-mono text-sm text-destructive mb-8">
               {error}
             </div>
           )}
 
+          {/* Mobile legend */}
+          <div className="md:hidden flex flex-wrap gap-4 mb-3 font-mono text-[10px] text-muted-foreground">
+            {(Object.keys(kindLabel) as Kind[]).map((k) => (
+              <button
+                key={k}
+                onClick={() => setKindFilter((v) => (v === k ? null : k))}
+                className={`flex items-center gap-1 transition-colors ${
+                  kindFilter === k ? "text-foreground" : ""
+                }`}
+              >
+                <span className="h-2 w-2 rounded-full inline-block" style={{ background: kindColor[k] }} />
+                {kindLabel[k].toLowerCase()}
+              </button>
+            ))}
+          </div>
+
           {/* Map */}
           <div className="relative rounded-lg border border-border bg-card overflow-x-auto md:overflow-hidden">
             <div className="min-w-[640px] md:min-w-0">
-            <ComposableMap
-              projection="geoEqualEarth"
-              projectionConfig={{ scale: 165 }}
-              width={900}
-              height={420}
-              style={{ width: "100%", height: "auto" }}
-            >
-              <Geographies geography={worldTopo as unknown as Record<string, unknown>}>
-                {({ geographies }) =>
-                  geographies.map((geo) => (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      fill="hsl(0 0% 10%)"
-                      stroke="hsl(0 0% 20%)"
-                      strokeWidth={0.4}
-                      style={{
-                        default: { outline: "none" },
-                        hover: { fill: "hsl(0 0% 14%)", outline: "none" },
-                        pressed: { outline: "none" },
+              <ComposableMap
+                projection="geoEqualEarth"
+                projectionConfig={{ scale: 165 }}
+                width={900}
+                height={420}
+                style={{ width: "100%", height: "auto" }}
+              >
+                <Geographies geography={worldTopo as unknown as Record<string, unknown>}>
+                  {({ geographies }) =>
+                    geographies.map((geo) => (
+                      <Geography
+                        key={geo.rsmKey}
+                        geography={geo}
+                        fill="hsl(0 0% 10%)"
+                        stroke="hsl(0 0% 20%)"
+                        strokeWidth={0.4}
+                        style={{
+                          default: { outline: "none" },
+                          hover: { fill: "hsl(0 0% 14%)", outline: "none" },
+                          pressed: { outline: "none" },
+                        }}
+                      />
+                    ))
+                  }
+                </Geographies>
+                {events.map((event) => {
+                  const key = hashKey(event);
+                  const isPinned = pinned?.ip === event.ip;
+                  const isHovered = hoveredIp === event.ip;
+                  const fresh = isFresh(event);
+                  return (
+                    <Marker
+                      key={key}
+                      coordinates={[event.lon, event.lat]}
+                      onMouseEnter={() => {
+                        setActive(event);
+                        setHoveredIp(event.ip);
                       }}
-                    />
-                  ))
-                }
-              </Geographies>
-              {events.map((event, i) => (
-                <Marker
-                  key={`${event.ip}-${i}`}
-                  coordinates={[event.lon, event.lat]}
-                  onMouseEnter={() => setActive(event)}
-                  onMouseLeave={() => setActive(null)}
-                  onClick={() => setPinned((p) => (p?.ip === event.ip ? null : event))}
-                >
-                  {i === pulseIndex && (
-                    <circle
-                      r={9}
-                      fill="none"
-                      stroke={kindColor[event.kind]}
-                      strokeWidth={1}
-                      className="animate-ping"
-                      style={{ transformOrigin: "center" }}
-                    />
-                  )}
-                  <circle
-                    r={pinned?.ip === event.ip ? 4.4 : 2.6}
-                    fill={kindColor[event.kind]}
-                    fillOpacity={0.85}
-                    style={{ cursor: "pointer" }}
-                  />
-                </Marker>
-              ))}
-            </ComposableMap>
+                      onMouseLeave={() => {
+                        setActive(null);
+                        setHoveredIp(null);
+                      }}
+                      onClick={() => {
+                        setPinned((p) => (p?.ip === event.ip ? null : event));
+                        setCountryFilter((current) => (current === event.country ? null : event.country));
+                      }}
+                    >
+                      {(fresh || isPinned || isHovered) && (
+                        <circle
+                          r={isPinned ? 10 : 7}
+                          fill="none"
+                          stroke={kindColor[event.kind]}
+                          strokeWidth={isPinned ? 1.2 : 0.8}
+                          className={fresh ? "animate-ping" : ""}
+                          style={{ transformOrigin: "center" }}
+                        />
+                      )}
+                      <circle
+                        r={isPinned ? 4.4 : isHovered ? 3.4 : 2.6}
+                        fill={kindColor[event.kind]}
+                        fillOpacity={0.9}
+                        stroke={isPinned || isHovered ? "hsl(0 0% 98%)" : "none"}
+                        strokeWidth={0.6}
+                        style={{ cursor: "pointer" }}
+                      />
+                    </Marker>
+                  );
+                })}
+              </ComposableMap>
             </div>
-
-            {detail && (
-              <div className="absolute bottom-3 left-3 max-w-xs rounded border border-primary/40 bg-background/95 backdrop-blur p-3 font-mono text-[11px] space-y-0.5">
-                <div className="flex items-center justify-between gap-3">
-                  <span style={{ color: kindColor[detail.kind] }}>{kindLabel[detail.kind]}</span>
-                  {pinned && (
-                    <button onClick={() => setPinned(null)} className="text-muted-foreground hover:text-primary">
-                      <X className="h-3 w-3" />
-                    </button>
-                  )}
-                </div>
-                <div className="text-foreground">{maskIp(detail.ip)}{detail.port ? `:${detail.port}` : ""}</div>
-                {detail.family && <div className="text-primary">family: {detail.family}</div>}
-                <div className="text-muted-foreground">
-                  {detail.city}, {detail.country}
-                </div>
-                <div className="text-muted-foreground">{detail.asn ?? detail.isp}</div>
-                <div className="text-muted-foreground">{detail.detail}</div>
-                {detail.source && <div className="text-muted-foreground">source: {detail.source}</div>}
-                {pinned && (
-                  <button
-                    onClick={() => setCountryFilter(detail.country)}
-                    className="text-primary hover:underline pt-1"
-                  >
-                    {"// filter by "}{detail.country}
-                  </button>
-                )}
-              </div>
-            )}
 
             <div className="hidden md:flex absolute top-3 right-3 flex-wrap justify-end gap-3 font-mono text-[10px] text-muted-foreground">
               {(Object.keys(kindLabel) as Kind[]).map((k) => (
@@ -469,21 +558,46 @@ export default function ThreatMap() {
             </div>
           </div>
 
-          {/* Mobile legend */}
-          <div className="md:hidden flex flex-wrap gap-4 mt-3 font-mono text-[10px] text-muted-foreground">
-            {(Object.keys(kindLabel) as Kind[]).map((k) => (
-              <button
-                key={k}
-                onClick={() => setKindFilter((v) => (v === k ? null : k))}
-                className={`flex items-center gap-1 transition-colors ${
-                  kindFilter === k ? "text-foreground" : ""
-                }`}
-              >
-                <span className="h-2 w-2 rounded-full inline-block" style={{ background: kindColor[k] }} />
-                {kindLabel[k].toLowerCase()}
-              </button>
-            ))}
-          </div>
+          {detail && (
+            <div className="max-w-xs rounded border border-primary/40 bg-background/95 backdrop-blur p-3 font-mono text-[11px] space-y-0.5 mt-3">
+              <div className="flex items-center justify-between gap-3">
+                <span style={{ color: kindColor[detail.kind] }}>{kindLabel[detail.kind]}</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => copyToClipboard(`${detail.ip}${detail.port ? `:${detail.port}` : ""}`)}
+                    className="text-muted-foreground hover:text-primary"
+                    title="copy ioc"
+                  >
+                    <Copy className="h-3 w-3" />
+                  </button>
+                  {pinned && (
+                    <button onClick={() => setPinned(null)} className="text-muted-foreground hover:text-primary">
+                      <X className="h-3 w-3" />
+                    </button>
+                  )}
+                </div>
+              </div>
+              <div className="text-foreground">{maskIp(detail.ip)}{detail.port ? `:${detail.port}` : ""}</div>
+              {detail.family && <div className="text-primary">family: {detail.family}</div>}
+              <div className="text-muted-foreground">
+                {detail.city}, {detail.country}
+              </div>
+              <div className="text-muted-foreground">{detail.asn ?? detail.isp}</div>
+              <div className="text-muted-foreground">{detail.detail}</div>
+              {detail.source && <div className="text-muted-foreground">source: {detail.source}</div>}
+              {detail.countryCode === "ZW" && (
+                <div className="text-primary pt-1">{"// "}hosted in Zimbabwe</div>
+              )}
+              {pinned && (
+                <button
+                  onClick={() => setCountryFilter(detail.country)}
+                  className="text-primary hover:underline pt-1"
+                >
+                  {"// filter by "}{detail.country}
+                </button>
+              )}
+            </div>
+          )}
 
           {/* Live feed + breakdowns */}
           <div className="grid gap-8 lg:grid-cols-3 mt-12">
@@ -492,40 +606,71 @@ export default function ThreatMap() {
               <div className="rounded-lg border border-border bg-card divide-y divide-border font-mono text-xs">
                 {ticker.length === 0 && (
                   <div className="p-4 text-muted-foreground">
-                    {loading ? "waiting for data..." : "no indicators match these filters."}
+                    {loading
+                      ? "waiting for data..."
+                      : error
+                        ? "feed unavailable. try refreshing in a moment."
+                        : "no indicators match these filters."}
                   </div>
                 )}
-                {ticker.map((event, i) => (
-                  <button
-                    key={`${event.ip}-${i}`}
-                    type="button"
-                    onClick={() => setPinned((p) => (p?.ip === event.ip ? null : event))}
-                    className="w-full flex items-center gap-3 p-3 text-left hover:bg-muted/40 transition-colors"
-                  >
-                    <span
-                      className="h-1.5 w-1.5 rounded-full shrink-0"
-                      style={{ background: kindColor[event.kind] }}
-                    />
-                    <span className="text-primary w-28 shrink-0">
-                      {maskIp(event.ip)}
-                      {event.port ? <span className="text-muted-foreground">:{event.port}</span> : null}
-                    </span>
-                    <span className="text-muted-foreground w-8 shrink-0">{event.countryCode}</span>
-                    <span
-                      className="w-32 shrink-0 truncate"
-                      style={{ color: kindColor[event.kind] }}
-                      title={event.family}
+                {ticker.map((event) => {
+                  const key = hashKey(event);
+                  const isHovered = hoveredIp === event.ip;
+                  const isPinned = pinned?.ip === event.ip;
+                  const fresh = freshKeys.has(key);
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      onMouseEnter={() => {
+                        setActive(event);
+                        setHoveredIp(event.ip);
+                      }}
+                      onMouseLeave={() => {
+                        setActive(null);
+                        setHoveredIp(null);
+                      }}
+                      onClick={() => setPinned((p) => (p?.ip === event.ip ? null : event))}
+                      className={`w-full flex items-center gap-3 p-3 text-left transition-colors ${
+                        isHovered || isPinned ? "bg-muted/60" : "hover:bg-muted/40"
+                      } ${fresh ? "animate-flash-row" : ""}`}
                     >
-                      {event.family && event.family !== "Unclassified" ? event.family : "unlabelled"}
-                    </span>
-                    <span className="text-muted-foreground truncate" title={event.asn ?? event.isp}>
-                      {shortenAsn(event.asn ?? event.isp)}
-                    </span>
-                    <span className="text-muted-foreground/70 ml-auto shrink-0 hidden lg:inline">
-                      {kindLabel[event.kind]}
-                    </span>
-                  </button>
-                ))}
+                      <span
+                        className="h-1.5 w-1.5 rounded-full shrink-0"
+                        style={{ background: kindColor[event.kind] }}
+                      />
+                      <span className="text-primary w-28 shrink-0">
+                        {maskIp(event.ip)}
+                        {event.port ? <span className="text-muted-foreground">:{event.port}</span> : null}
+                      </span>
+                      <span className="text-muted-foreground w-8 shrink-0">{event.countryCode}</span>
+                      <span
+                        className="w-32 shrink-0 truncate"
+                        style={{ color: kindColor[event.kind] }}
+                        title={event.family}
+                      >
+                        {event.family && event.family !== "Unclassified" ? event.family : "unlabelled"}
+                      </span>
+                      <span className="text-muted-foreground truncate" title={event.asn ?? event.isp}>
+                        {shortenAsn(event.asn ?? event.isp)}
+                      </span>
+                      <span className="text-muted-foreground/70 ml-auto shrink-0 hidden lg:inline">
+                        {kindLabel[event.kind]}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          copyToClipboard(`${event.ip}${event.port ? `:${event.port}` : ""}`);
+                        }}
+                        className="shrink-0 text-muted-foreground hover:text-primary p-1"
+                        title="copy ioc"
+                      >
+                        <Copy className="h-3 w-3" />
+                      </button>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
