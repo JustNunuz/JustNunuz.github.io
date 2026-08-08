@@ -261,14 +261,25 @@ export default function ThreatMap() {
                   ? `last sync ${new Date(data.generatedAt).toUTCString()}`
                   : "offline"}
             </div>
-            <button
-              onClick={() => load()}
-              disabled={loading}
-              className="flex items-center gap-2 font-mono text-xs text-primary border border-primary/30 rounded px-3 py-1.5 hover:bg-primary/10 transition-colors disabled:opacity-50"
-            >
-              <RefreshCw className={`h-3 w-3 ${loading ? "animate-spin" : ""}`} />
-              refresh
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => exportBlocklist(events)}
+                disabled={events.length === 0}
+                className="flex items-center gap-2 font-mono text-xs text-primary border border-primary/30 rounded px-3 py-1.5 hover:bg-primary/10 transition-colors disabled:opacity-50"
+                title="download visible indicators as blocklist"
+              >
+                <Download className="h-3 w-3" />
+                export
+              </button>
+              <button
+                onClick={() => load()}
+                disabled={loading}
+                className="flex items-center gap-2 font-mono text-xs text-primary border border-primary/30 rounded px-3 py-1.5 hover:bg-primary/10 transition-colors disabled:opacity-50"
+              >
+                <RefreshCw className={`h-3 w-3 ${loading ? "animate-spin" : ""}`} />
+                refresh
+              </button>
+            </div>
           </div>
 
           {/* Stats */}
