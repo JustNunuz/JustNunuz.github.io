@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
+import { ComposableMap, Geographies, Geography, Marker } from "react-simple-mmaps";
 import worldTopo from "world-atlas/countries-110m.json";
 import { Layout } from "@/components/layout/Layout";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { supabase } from "@/integrations/supabase/client";
 import { blogPosts } from "@/data/blogPosts";
-import { Activity, ArrowRight, Globe, RefreshCw, ShieldAlert, Radio, MapPin, Radar, X } from "lucide-react";
+import { Activity, ArrowRight, Globe, RefreshCw, ShieldAlert, Radio, MapPin, Radar, X, Copy, Download, Clock } from "lucide-react";
 
 const RELATED_SLUGS = [
   "honeypots-threat-detection",
