@@ -633,7 +633,7 @@ export default function ThreatMap() {
                       onClick={() => setPinned((p) => (p?.ip === event.ip ? null : event))}
                       className={`w-full flex items-center gap-3 p-3 text-left transition-colors ${
                         isHovered || isPinned ? "bg-muted/60" : "hover:bg-muted/40"
-                      } ${fresh ? "animate-pulse bg-primary/5" : ""}`}
+                      } ${fresh ? "animate-flash-row" : ""}`}
                     >
                       <span
                         className="h-1.5 w-1.5 rounded-full shrink-0"
