@@ -606,40 +606,71 @@ export default function ThreatMap() {
               <div className="rounded-lg border border-border bg-card divide-y divide-border font-mono text-xs">
                 {ticker.length === 0 && (
                   <div className="p-4 text-muted-foreground">
-                    {loading ? "waiting for data..." : "no indicators match these filters."}
+                    {loading
+                      ? "waiting for data..."
+                      : error
+                        ? "feed unavailable. try refreshing in a moment."
+                        : "no indicators match these filters."}
                   </div>
                 )}
-                {ticker.map((event, i) => (
-                  <button
-                    key={`${event.ip}-${i}`}
-                    type="button"
-                    onClick={() => setPinned((p) => (p?.ip === event.ip ? null : event))}
-                    className="w-full flex items-center gap-3 p-3 text-left hover:bg-muted/40 transition-colors"
-                  >
-                    <span
-                      className="h-1.5 w-1.5 rounded-full shrink-0"
-                      style={{ background: kindColor[event.kind] }}
-                    />
-                    <span className="text-primary w-28 shrink-0">
-                      {maskIp(event.ip)}
-                      {event.port ? <span className="text-muted-foreground">:{event.port}</span> : null}
-                    </span>
-                    <span className="text-muted-foreground w-8 shrink-0">{event.countryCode}</span>
-                    <span
-                      className="w-32 shrink-0 truncate"
-                      style={{ color: kindColor[event.kind] }}
-                      title={event.family}
+                {ticker.map((event) => {
+                  const key = hashKey(event);
+                  const isHovered = hoveredIp === event.ip;
+                  const isPinned = pinned?.ip === event.ip;
+                  const fresh = freshKeys.has(key);
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      onMouseEnter={() => {
+                        setActive(event);
+                        setHoveredIp(event.ip);
+                      }}
+                      onMouseLeave={() => {
+                        setActive(null);
+                        setHoveredIp(null);
+                      }}
+                      onClick={() => setPinned((p) => (p?.ip === event.ip ? null : event))}
+                      className={`w-full flex items-center gap-3 p-3 text-left transition-colors ${
+                        isHovered || isPinned ? "bg-muted/60" : "hover:bg-muted/40"
+                      } ${fresh ? "animate-pulse bg-primary/5" : ""}`}
                     >
-                      {event.family && event.family !== "Unclassified" ? event.family : "unlabelled"}
-                    </span>
-                    <span className="text-muted-foreground truncate" title={event.asn ?? event.isp}>
-                      {shortenAsn(event.asn ?? event.isp)}
-                    </span>
-                    <span className="text-muted-foreground/70 ml-auto shrink-0 hidden lg:inline">
-                      {kindLabel[event.kind]}
-                    </span>
-                  </button>
-                ))}
+                      <span
+                        className="h-1.5 w-1.5 rounded-full shrink-0"
+                        style={{ background: kindColor[event.kind] }}
+                      />
+                      <span className="text-primary w-28 shrink-0">
+                        {maskIp(event.ip)}
+                        {event.port ? <span className="text-muted-foreground">:{event.port}</span> : null}
+                      </span>
+                      <span className="text-muted-foreground w-8 shrink-0">{event.countryCode}</span>
+                      <span
+                        className="w-32 shrink-0 truncate"
+                        style={{ color: kindColor[event.kind] }}
+                        title={event.family}
+                      >
+                        {event.family && event.family !== "Unclassified" ? event.family : "unlabelled"}
+                      </span>
+                      <span className="text-muted-foreground truncate" title={event.asn ?? event.isp}>
+                        {shortenAsn(event.asn ?? event.isp)}
+                      </span>
+                      <span className="text-muted-foreground/70 ml-auto shrink-0 hidden lg:inline">
+                        {kindLabel[event.kind]}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          copyToClipboard(`${event.ip}${event.port ? `:${event.port}` : ""}`);
+                        }}
+                        className="shrink-0 text-muted-foreground hover:text-primary p-1"
+                        title="copy ioc"
+                      >
+                        <Copy className="h-3 w-3" />
+                      </button>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
