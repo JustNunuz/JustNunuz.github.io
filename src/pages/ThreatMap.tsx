@@ -141,7 +141,15 @@ export default function ThreatMap() {
     if (fnError || !res || res.error) {
       setError("Could not reach the threat feed right now.");
     } else {
-      setData(res as FeedPayload);
+      const payload = res as FeedPayload;
+      const nextKeys = new Set(payload.events.map(hashKey));
+      const newlyArrived = new Set([...nextKeys].filter((k) => !previousKeys.current.has(k)));
+      previousKeys.current = nextKeys;
+      setData(payload);
+      if (newlyArrived.size > 0) {
+        setFreshKeys(newlyArrived);
+        setTimeout(() => setFreshKeys(new Set()), 2000);
+      }
     }
     if (!silent) setLoading(false);
   };
