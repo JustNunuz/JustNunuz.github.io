@@ -91,6 +91,35 @@ function shortenAsn(value?: string) {
   return value.length > 42 ? `${value.slice(0, 42)}...` : value;
 }
 
+function hashKey(event: ThreatEvent) {
+  return `${event.ip}-${event.kind}-${event.source ?? "unknown"}`;
+}
+
+function isFresh(event: ThreatEvent) {
+  const t = parseTs(event.seenAt);
+  if (!Number.isFinite(t)) return false;
+  return Date.now() - t < 24 * 60 * 60 * 1000;
+}
+
+function exportBlocklist(events: ThreatEvent[]) {
+  const lines = events.map((e) => (e.port ? `${e.ip}:${e.port}` : e.ip));
+  const blob = new Blob([lines.join("\n")], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `justnunuz-blocklist-${new Date().toISOString().slice(0, 10)}.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function copyToClipboard(text: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    // ignore
+  }
+}
+
 export default function ThreatMap() {
   const [data, setData] = useState<FeedPayload | null>(null);
   const [loading, setLoading] = useState(true);
