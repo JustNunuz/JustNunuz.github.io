@@ -89,7 +89,7 @@ export default function Contact() {
                 A tool, a research angle, a file format nobody has pulled apart
                 yet. Bring the idea, I'll bring Python.
               </p>
-              <span className="mt-5 inline-flex items-center font-mono text-xs text-muted-foreground group-hover:text-primary transition-colors">
+              <span className="mt-6 inline-flex items-center self-start gap-2 px-3 py-2 rounded-md border border-border font-mono text-xs text-muted-foreground group-hover:text-primary group-hover:border-primary/60 transition-colors">
                 See the repos
                 <ArrowRight className="ml-2 h-3.5 w-3.5" />
               </span>
@@ -113,7 +113,7 @@ export default function Contact() {
                 Ten-plus talks, from PyCon Zimbabwe to ISACA Harare. I make
                 security land with rooms full of non-specialists.
               </p>
-              <span className="mt-5 inline-flex items-center font-mono text-xs text-muted-foreground group-hover:text-primary transition-colors">
+              <span className="mt-6 inline-flex items-center self-start gap-2 px-3 py-2 rounded-md border border-border font-mono text-xs text-muted-foreground group-hover:text-primary group-hover:border-primary/60 transition-colors">
                 See the talk list
                 <ArrowRight className="ml-2 h-3.5 w-3.5" />
               </span>
@@ -139,7 +139,7 @@ export default function Contact() {
                 Penetration testing, network hardening, SD-WAN, or ZCDPA
                 compliance. Give me the scope, I'll tell you what's realistic.
               </p>
-              <span className="mt-5 inline-flex items-center font-mono text-xs text-muted-foreground group-hover:text-primary transition-colors">
+              <span className="mt-6 inline-flex items-center self-start gap-2 px-3 py-2 rounded-md border border-border font-mono text-xs text-muted-foreground group-hover:text-primary group-hover:border-primary/60 transition-colors">
                 Reveal & email me
                 <ArrowRight className="ml-2 h-3.5 w-3.5" />
               </span>
