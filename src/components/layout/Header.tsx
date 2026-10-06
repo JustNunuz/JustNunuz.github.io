@@ -14,7 +14,6 @@ const navItems = [
   { href: "/", label: "Overview" },
   { href: "/about", label: "whoami" },
   { href: "/work", label: "Tools" },
-  { href: "/threat-map", label: "Threats" },
   { href: "/blog", label: "Notes" },
   { href: "/contact", label: "Contact" },
 ];
@@ -25,14 +24,12 @@ const routePrefixes: Record<string, string> = {
   "/blog": "blog",
   "/about": "whoami",
   "/contact": "contact",
-  "/threat-map": "threats",
 };
 
 const routeHints: Record<string, string> = {
   "/": "// start here",
   "/about": "// about me",
   "/work": "// projects built",
-  "/threat-map": "// threat map",
   "/blog": "// blog posts",
   "/contact": "// reach out",
 };
