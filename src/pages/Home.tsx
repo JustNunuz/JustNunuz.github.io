@@ -233,15 +233,10 @@ export default function Home() {
 
           <div className="grid auto-rows-fr gap-6 md:grid-cols-2">
             {featuredProjects.map((project, index) => {
-              const isOddTail =
-                index === featuredProjects.length - 1 &&
-                featuredProjects.length % 2 === 1;
               return (
                 <div
                   key={project.name}
-                  className={`h-full opacity-0 animate-fade-in-up stagger-${Math.min(index + 1, 4)} ${
-                    isOddTail ? "md:col-span-2" : ""
-                  }`}
+                  className={`h-full opacity-0 animate-fade-in-up stagger-${Math.min(index + 1, 4)}`}
                 >
                   <ProjectCard {...project} className="hover-lift" />
                 </div>
