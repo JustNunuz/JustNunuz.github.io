@@ -146,7 +146,7 @@ export default function Work() {
               href={projects[0].url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block p-8 md:p-10 rounded-lg border border-border bg-card hover:border-primary/50 transition-all duration-300 relative overflow-hidden opacity-0 animate-fade-in-up mb-10"
+              className="group block p-8 md:p-10 rounded-lg border border-border bg-card hover:border-primary/50 transition-all duration-300 relative overflow-hidden opacity-0 animate-fade-in-up mb-6"
             >
               <div className="absolute top-4 right-4 font-mono text-[10px] uppercase tracking-wider text-primary/80 px-2 py-1 border border-primary/30 rounded">
                 // focus
@@ -174,11 +174,11 @@ export default function Work() {
           )}
 
           {/* Projects Grid */}
-          <div className="grid gap-8">
+          <div className="grid auto-rows-fr gap-6">
             {projects.slice(1).map((project, index) => (
               <div 
                 key={project.name}
-                className={`opacity-0 animate-fade-in-up stagger-${Math.min(index + 2, 4)}`}
+                className={`h-full opacity-0 animate-fade-in-up stagger-${Math.min(index + 2, 4)}`}
               >
                 <ProjectCard {...project} className="hover-lift" />
               </div>
