@@ -53,7 +53,7 @@ const featuredProjects = [
     name: "Z3ro Nois3",
     url: "https://github.com/JustNunuz/z3r0-Nois3",
     description:
-      "A linguistic engine that audits LLM inefficiencies to make AI cheaper and more secure for Bantu languages.",
+      "AI models are built around English, so Shona and other Bantu languages get fragmented into extra tokens and cost more to run. Z3ro Nois3 audits that inefficiency and shows where the waste sits, so AI can be cheaper, faster and more accurate for local languages.",
     stack: ["Data Science", "Analytics", "Lingustics", "Bantu Tax"],
     impact: "Linguistic auditing engine for LLM efficiency",
   },
@@ -61,7 +61,7 @@ const featuredProjects = [
     name: "Shona Rockyou",
     url: "https://github.com/JustNunuz/Shona-Rockyou",
     description:
-      "A localized wordlist of Shona names, totems, and linguistic mutations for accurate security audits.",
+      "Standard wordlists are built on English and miss how people here actually name things. Shona Rockyou builds a localized corpus of names, totems and the mutations people add, so password audits reflect real local patterns instead of guessing.",
     stack: ["Corpus", "Wordlist", "Paswords", "Shona"],
     impact: "Localized security wordlist for cultural naming patterns",
   },
@@ -69,7 +69,7 @@ const featuredProjects = [
     name: "Payload Paradise",
     url: "https://github.com/JustNunuz/PayloadParadise",
     description:
-      "Proof-of-concept scripts exploring script execution vulnerabilities using WhatsApp for Windows as a case study.",
+      "A collection of proof of concept scripts exploring what can go wrong when script execution is never flagged, using the WhatsApp for Windows flaw as a case study. It maps the ways the flaw can be triggered and which defenses actually stop it.",
     stack: ["Python", "Windows", "Remote Code Execution", "Reverse shell"],
     impact: "Proof-of-concept research on script execution flaws",
   },
@@ -77,7 +77,7 @@ const featuredProjects = [
     name: "Corrupt PDF",
     url: "https://github.com/JustNunuz/Corrupt-PDF",
     description:
-      "Exploring flaws within the architecture of the PDF file format that could be abused.",
+      "There are many ways to corrupt a PDF, especially with Python. This project breaks files on purpose to watch how parsers, viewers and scanners respond, exposing which malformed structures slip through and where the real risk sits.",
     stack: ["PDF", "Python", "File Corruption", "Vulnerabilities"],
     impact: "Architectural analysis of PDF file format vulnerabilities",
   },
