@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { Seo } from "@/components/Seo";
 import { Button } from "@/components/ui/button";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { ProjectCard } from "@/components/ui/ProjectCard";
@@ -86,6 +87,10 @@ const featuredProjects = [
 export default function Home() {
   return (
     <Layout>
+      <Seo
+        title="JustNunuz | Nunudzai Mrewa, Cybersecurity Consultant"
+        description="Nunudzai Mrewa (JustNunuz): cybersecurity and compliance consultant. Security tools, field notes, and talks on offensive testing, defensive architecture, and data protection."
+      />
       {/* Hero Section */}
       <section className="relative min-h-[72vh] flex items-center bg-grid pt-24 pb-16">
         <div className="container">

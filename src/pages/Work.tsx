@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { Seo } from "@/components/Seo";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { ProjectCard } from "@/components/ui/ProjectCard";
@@ -121,6 +122,10 @@ const speakingEngagements = [
 export default function Work() {
   return (
     <Layout>
+      <Seo
+        title="Tools & Experiments | JustNunuz"
+        description="Security tools and experiments by Nunudzai Mrewa: Mimir, Z3ro Nois3, Shona Rockyou, Payload Paradise, Corrupt PDF, plus speaking engagements."
+      />
       <section className="pt-20 pb-12 bg-grid">
         <div className="container">
           {/* Page Header */}
