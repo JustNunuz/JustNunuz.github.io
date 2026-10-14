@@ -219,7 +219,7 @@ export default function Home() {
         <div className="container">
           <div className="rounded-lg border border-border bg-card/60 p-6 md:p-7 opacity-0 animate-fade-in-up">
             <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-              <div className="max-w-xl">
+              <div className="max-w-2xl">
                 <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary/80 mb-2">
                   {"//"} currently
                 </p>
