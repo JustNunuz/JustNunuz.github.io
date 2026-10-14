@@ -218,30 +218,26 @@ export default function Home() {
       <section className="pb-16">
         <div className="container">
           <div className="rounded-lg border border-border bg-card/60 p-6 md:p-7 opacity-0 animate-fade-in-up">
-            <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-              <div className="max-w-2xl">
-                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary/80 mb-2">
-                  {"//"} currently
-                </p>
-                <h2 className="text-lg md:text-xl font-semibold text-foreground mb-2">
-                  I love cyber, but I'm currently a compliance consultant.
-                </h2>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Most of the week goes into policy, risk registers and audits.
-                  The offensive side never stops, it just runs after hours,
-                  which is where Mimir and the rest come from.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2 md:max-w-[240px] md:justify-end">
-                {currently.map((item) => (
-                  <span
-                    key={item}
-                    className="font-mono text-[11px] px-2.5 py-1 rounded border border-border text-muted-foreground whitespace-nowrap"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary/80 mb-2">
+              {"//"} currently
+            </p>
+            <h2 className="text-lg md:text-xl font-semibold text-foreground mb-2">
+              I love cyber, but I'm currently a compliance consultant.
+            </h2>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-5 max-w-2xl">
+              Most of the week goes into policy, risk registers and audits. The
+              offensive side never stops, it just runs after hours, which is
+              where Mimir and the rest come from.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {currently.map((item) => (
+                <span
+                  key={item}
+                  className="font-mono text-[11px] px-2.5 py-1 rounded border border-border text-muted-foreground whitespace-nowrap"
+                >
+                  {item}
+                </span>
+              ))}
             </div>
           </div>
         </div>
