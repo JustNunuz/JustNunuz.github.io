@@ -7,3 +7,4 @@
 - [x] Overview: stronger hero with a slogan
 - [x] whoami: make it more interesting
 - [x] Featured Tools: lengthen short descriptions so all five boxes read evenly
+- [x] Add August 2026 Cybersec Mindmap talk: "The Unpatched Vuln in Your Pocket"

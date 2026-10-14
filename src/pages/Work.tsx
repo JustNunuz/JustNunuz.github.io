@@ -46,6 +46,13 @@ const projects = [
 
 const speakingEngagements = [
   {
+    title: "The Unpatched Vuln in Your Pocket",
+    event: "Cybersec Mindmap Community",
+    date: "August 2026",
+    location: "Online / Harare",
+    topics: ["WhatsApp", "Meta", "Windows", "Reverse Shell", "Python"],
+  },
+  {
     title: "The Human Firewall",
     event: "Evolve Africa ICT Summit (Panel Moderator)",
     date: "June 2026",
