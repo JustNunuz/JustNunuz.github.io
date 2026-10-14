@@ -217,7 +217,7 @@ export default function Home() {
       {/* Currently */}
       <section className="pb-16">
         <div className="container">
-          <div className="rounded-lg border border-border bg-card/60 p-6 md:p-7 opacity-0 animate-fade-in-up">
+          <div className="rounded-lg border border-border bg-card/60 p-6 md:p-7 md:max-w-3xl opacity-0 animate-fade-in-up">
             <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary/80 mb-2">
               {"//"} currently
             </p>
