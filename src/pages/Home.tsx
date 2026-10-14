@@ -54,7 +54,7 @@ const featuredProjects = [
     url: "https://github.com/JustNunuz/z3r0-Nois3",
     description:
       "AI models are built around English, so Shona and other Bantu languages get fragmented into extra tokens and cost more to run. Z3ro Nois3 audits that inefficiency and shows where the waste sits, so AI can be cheaper, faster and more accurate for local languages.",
-    stack: ["Data Science", "Analytics", "Lingustics", "Bantu Tax"],
+    stack: ["Data Science", "Analytics", "Linguistics", "Bantu Tax"],
     impact: "Linguistic auditing engine for LLM efficiency",
   },
   {
@@ -62,7 +62,7 @@ const featuredProjects = [
     url: "https://github.com/JustNunuz/Shona-Rockyou",
     description:
       "Standard wordlists are built on English and miss how people here actually name things. Shona Rockyou builds a localized corpus of names, totems and the mutations people add, so password audits reflect real local patterns instead of guessing.",
-    stack: ["Corpus", "Wordlist", "Paswords", "Shona"],
+    stack: ["Corpus", "Wordlist", "Passwords", "Shona"],
     impact: "Localized security wordlist for cultural naming patterns",
   },
   {
