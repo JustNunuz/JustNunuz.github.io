@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { Seo } from "@/components/Seo";
 import { Button } from "@/components/ui/button";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { ProjectCard } from "@/components/ui/ProjectCard";
@@ -54,7 +55,7 @@ const featuredProjects = [
     url: "https://github.com/JustNunuz/z3r0-Nois3",
     description:
       "AI models are built around English, so Shona and other Bantu languages get fragmented into extra tokens and cost more to run. Z3ro Nois3 audits that inefficiency and shows where the waste sits, so AI can be cheaper, faster and more accurate for local languages.",
-    stack: ["Data Science", "Analytics", "Lingustics", "Bantu Tax"],
+    stack: ["Data Science", "Analytics", "Linguistics", "Bantu Tax"],
     impact: "Linguistic auditing engine for LLM efficiency",
   },
   {
@@ -62,7 +63,7 @@ const featuredProjects = [
     url: "https://github.com/JustNunuz/Shona-Rockyou",
     description:
       "Standard wordlists are built on English and miss how people here actually name things. Shona Rockyou builds a localized corpus of names, totems and the mutations people add, so password audits reflect real local patterns instead of guessing.",
-    stack: ["Corpus", "Wordlist", "Paswords", "Shona"],
+    stack: ["Corpus", "Wordlist", "Passwords", "Shona"],
     impact: "Localized security wordlist for cultural naming patterns",
   },
   {
@@ -86,6 +87,10 @@ const featuredProjects = [
 export default function Home() {
   return (
     <Layout>
+      <Seo
+        title="JustNunuz | Nunudzai Mrewa, Cybersecurity Consultant"
+        description="Nunudzai Mrewa (JustNunuz): cybersecurity and compliance consultant. Security tools, field notes, and talks on offensive testing, defensive architecture, and data protection."
+      />
       {/* Hero Section */}
       <section className="relative min-h-[72vh] flex items-center bg-grid pt-24 pb-16">
         <div className="container">

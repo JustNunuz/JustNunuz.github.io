@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { Seo } from "@/components/Seo";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { TechTag } from "@/components/ui/TechTag";
@@ -130,6 +131,10 @@ const currently = [
 export default function About() {
   return (
     <Layout>
+      <Seo
+        title="whoami | JustNunuz"
+        description="Nunudzai Mrewa: cybersecurity and compliance consultant. Offensive security, defensive architecture, data protection, and the tools and research behind them."
+      />
       <section className="pt-20 pb-12 bg-grid">
         <div className="container">
           <div className="max-w-3xl opacity-0 animate-fade-in-up">

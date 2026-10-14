@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { Seo } from "@/components/Seo";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { PageTitle } from "@/components/ui/PageTitle";
 import {
@@ -45,6 +46,10 @@ export default function Contact() {
 
   return (
     <Layout>
+      <Seo
+        title="Reach Out | JustNunuz"
+        description="Collab on a project, book Nunudzai Mrewa to speak, or hire him as a cybersecurity consultant. No forms, no ticket queues."
+      />
       <section className="pt-24 pb-14 bg-grid">
         <div className="container flex flex-col items-center text-center">
           <div className="max-w-3xl">

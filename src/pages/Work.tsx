@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { Seo } from "@/components/Seo";
 import { CodeDivider } from "@/components/ui/CodeDivider";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { ProjectCard } from "@/components/ui/ProjectCard";
@@ -17,14 +18,14 @@ const projects = [
     name: "Z3ro Nois3",
     url: "https://github.com/JustNunuz/z3r0-Nois3",
     description: "AI models are built for English, making them expensive and inaccurate for Shona speakers. I call this the \"Bantu Tax\" because Shona text gets fragmented, increasing processing costs. Z3ro Nois3 is a linguistic engine that audits these inefficiencies to make AI cheaper and more secure for our local languages.",
-    stack: ["Data Science", "Analytics", "Lingustics", "Bantu Tax"],
+    stack: ["Data Science", "Analytics", "Linguistics", "Bantu Tax"],
     impact: "Linguistic auditing engine for LLM efficiency",
   },
   {
     name: "Shona Rockyou",
     url: "https://github.com/JustNunuz/Shona-Rockyou",
     description: "Shona RockYou addresses the security gap where standard English wordlists fail to account for Shona names and cultural naming patterns. I am building a localized wordlist of names, totems, and linguistic mutations to enable accurate security audits for Shona-speaking users.",
-    stack: ["Corpus", "Wordlist", "Paswords", "Shona"],
+    stack: ["Corpus", "Wordlist", "Passwords", "Shona"],
     impact: "Localized security wordlist for cultural naming patterns",
   },
   {
@@ -121,6 +122,10 @@ const speakingEngagements = [
 export default function Work() {
   return (
     <Layout>
+      <Seo
+        title="Tools & Experiments | JustNunuz"
+        description="Security tools and experiments by Nunudzai Mrewa: Mimir, Z3ro Nois3, Shona Rockyou, Payload Paradise, Corrupt PDF, plus speaking engagements."
+      />
       <section className="pt-20 pb-12 bg-grid">
         <div className="container">
           {/* Page Header */}
